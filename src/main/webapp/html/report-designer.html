@@ -2,9 +2,28 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery/jquery-1.4.4.js"></script>
+<script type="text/javascript" src="../js/jquery/download/jquery-ui-1.8.10.custom/js/jquery-ui-1.8.10.custom.min.js"></script>
+<script type="text/javascript" src="../js/jquery/download/jquery.layout-latest.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var myLayout = $('body').layout({
+			applyDefaultStyles:true,
+			resizable:true,
+			north__resizable:false,
+			east__minSize:200,
+			west__minSize:200,
+			spacing_open:2,
+			spacing_close:4
+		});
+	})
+</script>
+<title>报表设计器</title>
 </head>
 <body>
-
+<div class="ui-layout-west"></div>
+<div class="ui-layout-north"></div>
+<div class="ui-layout-center"></div>
+<div class="ui-layout-east"></div>
 </body>
 </html>
