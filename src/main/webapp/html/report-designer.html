@@ -2,26 +2,42 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../css/layout-default-latest.css" />
+<link rel="stylesheet" href="../js/jquery/download/jquery-ui-1.8.10.custom/development-bundle/themes/base/jquery.ui.all.css">
+<link rel="stylesheet" href="../css/style.css">
 <script type="text/javascript" src="../js/jquery/jquery-1.4.4.js"></script>
 <script type="text/javascript" src="../js/jquery/download/jquery-ui-1.8.10.custom/js/jquery-ui-1.8.10.custom.min.js"></script>
 <script type="text/javascript" src="../js/jquery/download/jquery.layout-latest.js"></script>
 <script type="text/javascript">
 	$(function(){
 		var myLayout = $('body').layout({
-			applyDefaultStyles:true,
 			resizable:true,
 			north__resizable:false,
 			east__minSize:200,
 			west__minSize:200,
+			west__size:220,
 			spacing_open:2,
 			spacing_close:4
 		});
+		var acc = $("#accordion1").accordion({
+			fillSpace:true,
+			autoHeight:false
+		});
+		//工具栏容器
+		var toolBarContainer = myLayout.panes.north;
 	})
 </script>
 <title>报表设计器</title>
 </head>
 <body>
-<div class="ui-layout-west"></div>
+<div class="ui-layout-west">
+<div id="accordion1" class="basic">
+	<h3><a href="#">报表结构</a></h3>
+	<div></div>
+	<h3><a href="#">控件列表</a></h3>
+	<div></div>
+</div>
+</div>
 <div class="ui-layout-north"></div>
 <div class="ui-layout-center"></div>
 <div class="ui-layout-east"></div>

@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+.westaccordion{
+	padding:0;
+	height:100%;
+	width:100%;
+	margin:0;
+}
+
+.ui-layout-west{
+	padding:0;
+	overflow: hidden;
+} 
+
+h3{
+	padding:0;
+	margin:0;
+}
