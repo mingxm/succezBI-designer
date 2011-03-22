@@ -8,6 +8,9 @@
 <script type="text/javascript" src="../js/jquery/jquery-1.4.4.js"></script>
 <script type="text/javascript" src="../js/jquery/download/jquery-ui-1.8.10.custom/js/jquery-ui-1.8.10.custom.min.js"></script>
 <script type="text/javascript" src="../js/jquery/download/jquery.layout-latest.js"></script>
+<script type="text/javascript" src="../js/rptdsn/jquery.properies.editor.js"></script>
+<script type="text/javascript" src="../js/rptdsn/property-editor-control.js"></script>
+<script type="text/javascript" src="../js/rptdsn/editorcontrol.js"></script>
 <script type="text/javascript">
 	$(function(){
 		var myLayout = $('body').layout({
@@ -25,7 +28,8 @@
 		});
 		//工具栏容器
 		var toolBarContainer = myLayout.panes.north;
-		var propertiesContainer = myLayout.panes.east;
+		var propertiesContainer = myLayout.panes.east.addClass("eastproperties");
+		var _dsn = new ReportDesign();
 	})
 </script>
 <title>报表设计器</title>

@@ -6,10 +6,15 @@
 	margin:0;
 }
 
+.eastproperties{
+	padding:0;
+	margin:0;
+}
+
 .ui-layout-west{
 	padding:0;
 	overflow: hidden;
-} 
+}
 
 h3{
 	padding:0;
