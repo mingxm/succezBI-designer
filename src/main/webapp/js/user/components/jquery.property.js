@@ -73,11 +73,12 @@
 							var op = $('<option></option>').appendTo(obj);
 							$.each(item,function(key,val){
 								if(key == "caption"){
-									op.text(item[key]);
-								}else if(key == "selected" && val){
-									op.attr(key,true);
-								}else {
+									op.text(val);
+								}else{
 									op.attr(key,val);
+									if(key == "value" && val == info.defaultValue){
+										op.attr("selected",true);
+									}
 								}
 							});
 						})
@@ -88,25 +89,20 @@
 					if(!items || items.length == 0){
 						return;
 					}
-					var selectName = items[0].value;
+					 //初始化所有单选项
 					for(var j=0;j<items.length;j++){
 						var item = items[j];
-						if(item.checked){
-							selectName = item.value;
-						}
-						$('<input type="radio" name="'+name+'" value="'+item.value+'">'+item.caption+'<br>')
+						var $item = $('<input type="radio" name="'+name+'" value="'+item.value+'">'+item.caption+'<br>')
 							.appendTo(editor);
-					}
-					var rs = $('input:[name='+name+']:radio');
-					rs.each(function(index,item){
-						$item = $(item);
-						if($item.attr('value') == selectName){
-							$item.attr('checked',true);
+						//设置默认值所对应的项选择
+						if(item.value == info.defaultValue){
+							$item.attr("checked",true);
 						}
-						$.each(info.events,function(j,event){
+						//为每个单选项绑定时间，该控件与其他的不同，需要将事件的处理函数绑定到每个项上
+						$.each(info.events,function(index,event){
 							$item.bind(event.name,$item,event.fn);
-						})
-					});
+						});
+					}
 				}else if(type == 'editCanPick'){
 					var obj = $('<table></table>').appendTo(editor);
 					var r = $('<tr></tr>').appendTo(obj);

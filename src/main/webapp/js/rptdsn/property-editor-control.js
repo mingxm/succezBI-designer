@@ -149,9 +149,9 @@
 				},{
 					title:'每页行数',
 					type:'edit',
+					defaultValue:_self.obj.getRowCountPerPage(),
 					events:[{
 						name:'change',
-						defaultValue:_self.obj.getRowCountPerPage(),
 						fn:function(e){
 							_self.obj.setRowCountPerPage(e.data.attr("value"));
 						}

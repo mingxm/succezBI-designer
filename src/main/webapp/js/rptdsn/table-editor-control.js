@@ -38,9 +38,7 @@
  }
  
  TableEditorControl.prototype.setRowCountPerPage = function(value){
- 	if(typeof value == "number"){
- 		this.rowCountPerPage = value;
- 	}
+ 	this.rowCountPerPage = parseInt(value) || this.rowCountPerPage;
  }
  
  TableEditorControl.prototype.getRowCountPerPage = function(){
