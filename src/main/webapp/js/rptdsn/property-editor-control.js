@@ -1,44 +1,44 @@
 /**
  * 
  */
- function propertyEditorControl(container,reportControl){
+ function PropertyEditorControl(container,reportControl){
  	this.container = container;
  	this.reportControl = reportControl;
  	this.obj = reportControl;
- 	this.type = "report";
  	this._init();
  }
  
- propertyEditorControl.prototype._init = function(){
- 	this._updateDom()
- }
- 
- propertyEditorControl.prototype.switchByObj = function(obj,type){
- 	this.obj = obj;
- 	this.type = type;
+ PropertyEditorControl.prototype._init = function(){
  	this._updateDom();
  }
  
- propertyEditorControl.prototype._updateDom = function(){
+ PropertyEditorControl.prototype.switchByObj = function(obj){
+ 	this.obj = obj;
+ 	this._updateDom();
+ }
+ 
+ PropertyEditorControl.prototype._updateDom = function(){
  	this.container.empty();
- 	switch(this.type){
+ 	switch(this.obj.objtype){
  		case "text":
  		case "table":
+ 			this.updateDom_table();
+ 			return;
  		case "flashchart":
  		case "ditu":
  		case "report":
  			this.updateDom_report();
  			return;
- 		case "":
+ 		default:
  			this.updateDom_report();
  			return;
  	}
  }
  
- propertyEditorControl.prototype.updateDom_report = function() {
+ PropertyEditorControl.prototype.updateDom_report = function() {
  	var _self = this;
 	this.container.jproeditor({
-		    defaultType	: 'type',
+		    defaultType	: 'edit',
 		    items		    : [{
 			        title		: '报表名称',
 			        type		: 'edit',
@@ -57,8 +57,7 @@
 			        events	: [{
 				            name	: 'change',
 				            fn		: function(e) {
-					            var obj = e.data;
-					            _self.reportControl.setCaption(obj.attr("value"));
+					            _self.reportControl.setCaption(e.data.attr("value"));
 				            }
 			            }]
 		        }, {
@@ -68,8 +67,7 @@
 			        events	: [{
 				            name	: 'change',
 				            fn		: function(e) {
-					            var obj = e.data;
-					            _self.reportControl.hiddenGrid(obj.attr("checked"));
+					            _self.reportControl.hideGrid(e.data.attr("checked"));
 				            }
 			            }]
 		        }, {
@@ -98,19 +96,80 @@
 	    });
 }
  
- propertyEditorControl.prototype.updateDom_table = function(){
+ PropertyEditorControl.prototype.updateDom_table = function(){
+ 	var _self = this;
+ 	this.container.jproeditor({
+ 		defaultType:'edit',
+ 		items:[
+				{
+					title:'隐藏表格',
+					type:'checkbox',
+					defaultValue:_self.obj.isHiddenGrid(),
+					events:[{
+						name:'change',
+						fn:function(e){
+							_self.obj.hideGrid(e.data.attr("checked"));
+						}
+					}]
+				},{
+					title:'报表风格',
+					type:'combobox',
+					defaultValue:_self.obj.getReportStyle(),
+					options:[{
+						caption:'缺省',
+						value:'#B6CADD'
+					},{
+						caption:'橘黄',
+						value:'#E0C491'
+					},{
+						caption:'橘红',
+						value:'#DEBDDE'
+					},{
+						caption:'淡蓝',
+						value:'#AFD0A0'
+					},{
+						caption:'经典',
+						value:'#C0C0C0'
+					},{
+						caption:'红色',
+						value:'#FF0000'
+					},{
+						caption:'绿色',
+						value:'00FF00'
+					},{
+						caption:'蓝色',
+						value:'0000FF'
+					}],
+					events:[{
+						name:'change',
+						fn:function(e){
+							_self.obj.setReportStyle(e.data.attr("value"));
+						}
+					}]
+				},{
+					title:'每页行数',
+					type:'edit',
+					events:[{
+						name:'change',
+						defaultValue:_self.obj.getRowCountPerPage(),
+						fn:function(e){
+							_self.obj.setRowCountPerPage(e.data.attr("value"));
+						}
+					}]
+				}
+			]
+ 	});
+ }
+ 
+ PropertyEditorControl.prototype.updateDom_edit = function(){
  	
  }
  
- propertyEditorControl.prototype.updateDom_edit = function(){
+ PropertyEditorControl.prototype.updateDom_flash = function(){
  	
  }
  
- propertyEditorControl.prototype.updateDom_flash = function(){
- 	
- }
- 
- propertyEditorControl.prototype.updateDom_ditu = function(){
+ PropertyEditorControl.prototype.updateDom_ditu = function(){
  	
  }
  
