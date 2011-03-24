@@ -15,6 +15,7 @@
 <script type="text/javascript" src="../js/rptdsn/text-editor-control.js"></script>
 <script type="text/javascript" src="../js/rptdsn/rich-editor.js"></script>
 <script type="text/javascript" src="../js/rptdsn/editorcontrol.js"></script>
+<script type="text/javascript" src="../js/user/components/SzToolBar.js"></script>
 <script type="text/javascript">
 	$(function(){
 		var myLayout = $('body').layout({
@@ -37,6 +38,7 @@
 		var _dsn = new ReportDesign(myLayout.panes.center);
 		_dsn.addComponent("table");
 		_dsn.addComponent("text");
+		$("document").ToolBar()._create($(".ui-layout-north"),{_buttonsid:["Menu_New","Menu_Save","Menu_SaveAs"]});
 	})
 </script>
 <title>报表设计器</title>
@@ -50,7 +52,13 @@
 	<div></div>
 </div>
 </div>
-<div class="ui-layout-north"></div>
+<div class="ui-layout-north">
+
+<button type="button" id="Menu_New">New</button>
+<button type="button" id="Menu_Save">Save</button>
+<button type="button" id="Menu_SaveAs">SaveAs</button>	 
+
+</div>
 <div class="ui-layout-center"></div>
 <div class="ui-layout-east"></div>
 </body>

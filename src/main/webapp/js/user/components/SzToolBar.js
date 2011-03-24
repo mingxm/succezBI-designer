@@ -1,155 +1,268 @@
 /*
  * 该单元主要处理编辑器的工具栏，主要功能有：
- * 1、鼠标移进移出按钮的时候，按钮的颜色应该有变化
+ * 1、鼠标移进移出按钮的时候，按钮的颜色变化
  * 2、绑定好每个工具的点击事件
  * 3、支持每个工具的隐藏和显现
- * 4、tooltip提示
+ * 4、tooltip提示(这里不实现，可以用一个单独的插件实现)
  * 5、拖动工具按钮可以任意改变位置
+ * 6、当用户点击了菜单之后，要能够将用户这一行为通知出去，从而通知其他插件执行相应的操作
+ * 注意：
+ * 1、菜单上每个按钮的id名称是有限定的，必须用Menu_New、Menu_Save这种形式
  */
 (function($){
-	var oldcolor='';
-	$.fn.ToolBar=function(option){
-		var defaltSetting={
-	    	//工具按钮横向排列还是竖向排列，默认为横向排列
-			DisplayStyle:"horiz",
-			//工具按钮的数量，必传参数
-			count:0,
+	
+	//该插件的版本号
+	VERSION = '0.0.0.1';
+	
+	var _oldcolor='';
+	/*
+ 	 * 与菜单关联的编辑器，该编辑器中应该提供回调函数，供菜单调用以便改变编辑器中文字的大小，颜色
+ 	 * 以及对编辑内容的新建、保存、另存为等操作
+ 	 */
+	var _rptEditor={};
+
+	$.fn.ToolBar=function(){
+		/*
+		 * 缺省设置，有待增加内容
+		 */
+		var _pluginSetting={
 			/*
-			 * 因为每个按钮的背景图案是不一样的，而其他部分差不多，每个按钮背景图案样式
-			 * 可以放到一个css文件中，然后初始化的时候传进来，同时该样式名称+id也将作为按钮
-			 * 的id来使用，方便在html中调用，样式涉及到很多按钮的样式，所以传进来的是一个
-			 * 数组，该参数为必传参数
-			 * 更新：
-			 * 后来想想还是定义为json对象吧，因为可能不只需要图案还有可能需要tooltip信息
-			 * 传递参数的格式为:_buttons:[{cssStyle:'toolBarNew',tooltip:'新建'},{...},...]
-			 * 更新：
-			 * 其实传参数进行初始化感觉没有太大必要，那些按钮什么的完全可以在html里面进行定义，
-			 * 然后传个id过来，根据id分别执行不同的动作就可以了
-			 * 传参数的格式为_btttonsid{new:'szToolBarNew',save'szToolBarSave'}
-			 */
-			_buttonsid:{}
-						
+		 	 * 按钮的id，用来绑定事件 
+	     	 */
+	    	_buttonsid:[]						
+		};
+		//构造函数
+		this._create = function(m_element,option,rptEditor){
+			var buttonsid = option._buttonsid;			
+			$.extend(_pluginSetting._buttonsid,buttonsid);
+			_rptEditor = rptEditor;
+			toolBarInit(m_element,_pluginSetting);
+			alert("this plugin has been created");
 		}
-		//to-do:注意将html按钮元素的id设置为new，save等，这样就可以实现，一个循环将所有的事件全部
-		//绑定的效果
-	
+		//析构函数
+		this._destroy = function(param){
+			alert("this plugin has been destroy");
+		}
+		//返回插件的版本号函数
+		this._getvision = function(){
+			return VERSION;
+		}	
+		return this;
 	}
-/*	
- * 鼠标进入某个元素内部的时候发生的事件
- * @param m_element 元素
- */
-	
-	function mouseInTools(m_element){
-		oldcolor=$(m_element).css('background-color');
-		$(m_element).css('background-color','#8E8E8E');		
-	};
-/*
- * 鼠标移出某个按钮内部的时候发生的事件
- * @param m_element 元素
- */	
-	function mouseOutTools(m_element){
-		$(m_element).css('background-color',oldcolor);
+	/*
+	 * 初始化插件
+	 */
+	function toolBarInit(m_element,Setting){
+		/*
+		 * 首先绑定鼠标的in和out事件
+		 */
+		$.each(Setting._buttonsid,function(n,value){
+			$(m_element).find('#'+value).hover(function(){
+				mouseInTools();
+			},function(){
+				mouseOutTools()
+			});		
+		})
+		
+        /*
+		 * 绑定各个按钮的click事件，注意按钮的id是约定好的，html中必须按照该约定形式定义id
+		 */
+		$.each(Setting._buttonsid,function(n,value){
+			var tmpid = value.split('_')[1];
+			
+			if (tmpid == "New"){ 
+		    	$(m_element).find('#'+value).bind('click',function(e){
+		    		lbtnClickNew(e.target);
+		    	})	
+		    	.bind('mousedown',function(e){
+
+		    	})
+		    	.bind('mouseup',function(e){
+
+		    	})
+			}
+		    else if (tmpid == "Save")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickSave();
+		    })
+		    else if (tmpid == "SaveAs")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickSaveAs();
+		    })
+		    else if (tmpid == "Copy")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickCopy();
+		    })	
+		    else if (tmpid == "Cut")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickCut();
+		    }) 
+		    else if (tmpid == "Paste")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickPaste();
+		    })
+		    else if (tmpid == "Redo")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickRedo();
+		    })
+		    else if (tmpid == "Undo")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickUndo();
+		    })
+		    else if (tmpid == "Do")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickUnDo();
+		    })	
+		    else if (tmpid == "NewFxq")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickNewFxq();
+		    })
+		    else if (tmpid == "Chart")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickChart();
+		    })
+		    else if (tmpid == "Eraser")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickEraser();
+		    })
+		    else if (tmpid == "DrawForm")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickDrawForm();
+		    })
+		    else if (tmpid == "FormatBrush")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickFormatBrush();
+		    })	
+		    else if (tmpid == "Bold")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickBold();
+		    })
+		    else if (tmpid == "Italic")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickItalic();
+		    })	
+		    else if (tmpid == "Underline")
+		        $(m_element).find('#'+value).bind('click',function(){
+		        	lbtnClickUnderline();
+		    })			    
+		})		
 	}
-/*
- * '新建'按钮的点击事件
- */	
-	function lbtnClickNew(m_element){
-		alert("new button has been clicked");
-	}
-/*
- * '保存'按钮的点击事件
- */
-	function lbtnClickSave(m_element){
-		alert("save button has been clicked");
-	}
-/*
- * '另存为'按钮的点击事件
- */	
-	function lbtnClickSaveAs(m_element){
-		alert("saveAs button has been clicked");
-	}
-/*
- * '复制'按钮的点击事件
- */	
-	function lbtnClickCopy(m_element){
-		alert("copy button has been clicked");
-	}
-/*
- * '剪切'按钮的点击事件
- */	
-	function lbtnClickCut(m_element){
-		alert("cut button has been clicked");
-	}
-/*
- * '粘贴'按钮的点击事件
- */	
-	function lbtnClickPaste(m_element){
-		alert("paste button has been clicked");
-	}
-/*
- * '重做'按钮的点击事件
- */	
-	function lbtnClickRedo(m_element){
-		alert("redo button has been clicked");
-	}
-/*
- * '撤销'按钮的点击事件
- */	
-	function lbtnClickUndo(m_element){
-		alert("undo button has been clicked");
-	}
-/*
- * '计算'按钮的点击事件
- */
-	function lbtnClickDo(m_element){
-		alert("Do button has been clicked")
-	}
-/*
- * '创建分析区'按钮的点击事件
- */
-	function lbtnClickNewFxq(m_element){
-		alert("NewFxq button has been clicked")
-	}
-/*
- * '统计图'按钮的点击事件
- */	
-	function lbtnClickChart(m_element){
-		alert("chart button has been clicked");
-	}
-/*
- * '橡皮擦'按钮的点击事件
- */	
-	function lbtnClickEraser(m_element){
-		alert("eraser button has been clicked");
-	}
-/*
- * '绘表格'按钮的点击事件
- */
-	function lbtnClickDrawForm(m_element){
-		alert("drawForm button has been clicked");
-	}
-/*
- * '格式刷'按钮的点击事件
- */	
-	function lbtnClickFormatBrush(m_element){
-		alert("formatBrush button has been clicked");
-	}
-/*
- * '粗体'按钮的点击事件
- */	
-	function lbtnClickBold(m_element){
-		alert("bold button has been clicked");
-	}	
-/*
- * '斜体'按钮的点击事件
- */	
-	function lbtnClickItalic(m_element){
-		alert("italic button has been Clicked");
-	}
-/*
- * '下划线'按钮的点击事件
- */	
-	function lbtnClickUnderline(m_element){
-		alert("underline button has been Clicked");
-	}
+		/*	
+	 	* 鼠标进入某个元素内部的时候发生的事件
+	 	* @param m_element 元素
+	 	*/
+		function mouseInTools(m_element){
+			_oldcolor=$(m_element).css('background-color');
+			$(m_element).css('background-color','#FF0000');	
+		};
+		/*
+ 		* 鼠标移出某个按钮内部的时候发生的事件
+ 		* @param m_element 元素
+ 		*/	
+		function mouseOutTools(m_element){
+			$(m_element).css('background-color',_oldcolor);
+		}
+		/*
+ 		* '新建'按钮的点击事件
+ 		*/	
+		function lbtnClickNew(m_element){
+			$(m_element).fadeTo("slow",0.5);
+			alert("new button has been clicked");
+		}
+		/*
+ 		 * '保存'按钮的点击事件
+		 */
+		function lbtnClickSave(m_element){
+			alert("save button has been clicked");
+		}
+		/*
+ 		* '另存为'按钮的点击事件
+ 		*/	
+		function lbtnClickSaveAs(m_element){
+			alert("saveAs button has been clicked");
+		}
+		/*
+ 		* '复制'按钮的点击事件
+ 		*/	
+		function lbtnClickCopy(m_element){
+			alert("copy button has been clicked");
+		}
+		/*
+ 		* '剪切'按钮的点击事件
+ 		*/	
+		function lbtnClickCut(m_element){
+			alert("cut button has been clicked");
+		}
+		/*
+ 		* '粘贴'按钮的点击事件
+ 		*/	
+		function lbtnClickPaste(m_element){
+			alert("paste button has been clicked");
+		}
+		/*
+ 		* '重做'按钮的点击事件
+ 		*/	
+		function lbtnClickRedo(m_element){
+			alert("redo button has been clicked");
+		}
+		/*
+ 		* '撤销'按钮的点击事件
+ 		*/	
+		function lbtnClickUndo(m_element){
+			alert("undo button has been clicked");
+		}
+		/*
+		 * '计算'按钮的点击事件
+		 */
+		function lbtnClickDo(m_element){
+			alert("Do button has been clicked")
+		}
+		/*
+		 * '创建分析区'按钮的点击事件
+		 */
+		function lbtnClickNewFxq(m_element){
+			alert("NewFxq button has been clicked")
+		}
+		/*
+		 * '统计图'按钮的点击事件
+		 */	
+		function lbtnClickChart(m_element){
+			alert("chart button has been clicked");
+		}
+		/*
+ 		* '橡皮擦'按钮的点击事件
+ 		*/	
+		function lbtnClickEraser(m_element){
+			alert("eraser button has been clicked");
+		}
+		/*
+ 		 * '绘表格'按钮的点击事件
+		 */
+		function lbtnClickDrawForm(m_element){
+			alert("drawForm button has been clicked");
+		}
+		/*
+ 		* '格式刷'按钮的点击事件
+ 		*/	
+		function lbtnClickFormatBrush(m_element){
+			alert("formatBrush button has been clicked");
+		}
+		/*
+		 * '粗体'按钮的点击事件
+		 */	
+		function lbtnClickBold(m_element){
+			alert("bold button has been clicked");
+		}	
+		/*
+		 * '斜体'按钮的点击事件
+		 */	
+		function lbtnClickItalic(m_element){
+			alert("italic button has been Clicked");
+		}
+		/*
+		 * '下划线'按钮的点击事件
+		 */	
+		function lbtnClickUnderline(m_element){
+			alert("underline button has been Clicked");
+		}
 })(jQuery)
