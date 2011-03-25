@@ -6,9 +6,28 @@
 	margin:0;
 }
 
-.ui-layout-east,.ui-layout-center,.ui-layout-west,.ui-layout-north{
+.ui-layout-east,.ui-layout-center,.ui-layout-west{
 	padding:0;
 	margin:0;
+}
+.ui-layout-north{
+	padding:0px;
+	background-color:#E7E5E2;
+	margin:0px;
+}
+
+a{
+	outline: none;
+}
+a:active {
+	star:expression(this.onFocus=this.blur());
+}
+:focus{
+	 outline:0; 
+}
+
+img{
+	border:1px outset #E7E5E2;
 }
 
 .selected_component{

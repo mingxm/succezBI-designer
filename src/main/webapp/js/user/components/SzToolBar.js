@@ -14,7 +14,11 @@
 	//该插件的版本号
 	VERSION = '0.0.0.1';
 	
-	var _oldcolor='';
+	//按钮的状态
+	var boldTag = false,
+	italicTag = false,
+	underlineTag = false;
+	
 	/*
  	 * 与菜单关联的编辑器，该编辑器中应该提供回调函数，供菜单调用以便改变编辑器中文字的大小，颜色
  	 * 以及对编辑内容的新建、保存、另存为等操作
@@ -29,7 +33,7 @@
 			/*
 		 	 * 按钮的id，用来绑定事件 
 	     	 */
-	    	_buttonsid:[]						
+	    	_buttonsid:[]
 		};
 		//构造函数
 		this._create = function(m_element,option,rptEditor){
@@ -37,11 +41,11 @@
 			$.extend(_pluginSetting._buttonsid,buttonsid);
 			_rptEditor = rptEditor;
 			toolBarInit(m_element,_pluginSetting);
-			alert("this plugin has been created");
+			alert("ToolBar plugin has been created");
 		}
 		//析构函数
 		this._destroy = function(param){
-			alert("this plugin has been destroy");
+			alert("ToolBar plugin has been destroy");
 		}
 		//返回插件的版本号函数
 		this._getvision = function(){
@@ -49,6 +53,7 @@
 		}	
 		return this;
 	}
+
 	/*
 	 * 初始化插件
 	 */
@@ -57,10 +62,10 @@
 		 * 首先绑定鼠标的in和out事件
 		 */
 		$.each(Setting._buttonsid,function(n,value){
-			$(m_element).find('#'+value).hover(function(){
-				mouseInTools();
-			},function(){
-				mouseOutTools()
+			$(m_element).find('#'+value).find("img").hover(function(e){
+				mouseInTools(e.target)
+			},function(e){
+				mouseOutTools(e.target)
 			});		
 		})
 		
@@ -71,7 +76,7 @@
 			var tmpid = value.split('_')[1];
 			
 			if (tmpid == "New"){ 
-		    	$(m_element).find('#'+value).bind('click',function(e){
+		    	$(m_element).find('#'+value).find("img").bind('click',function(e){
 		    		lbtnClickNew(e.target);
 		    	})	
 		    	.bind('mousedown',function(e){
@@ -80,70 +85,74 @@
 		    	.bind('mouseup',function(e){
 
 		    	})
+		    	.bind('contextMenu',function(e){
+		    	
+		    	})
 			}
 		    else if (tmpid == "Save")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickSave();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickSave(e.target);
 		    })
 		    else if (tmpid == "SaveAs")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickSaveAs();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickSaveAs(e.target);
 		    })
 		    else if (tmpid == "Copy")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickCopy();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickCopy(e.target);
 		    })	
 		    else if (tmpid == "Cut")
-		        $(m_element).find('#'+value).bind('click',function(){
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
 		        	lbtnClickCut();
 		    }) 
 		    else if (tmpid == "Paste")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickPaste();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickPaste(e.target);
 		    })
 		    else if (tmpid == "Redo")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickRedo();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickRedo(e.target);
 		    })
 		    else if (tmpid == "Undo")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickUndo();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickUndo(e.target);
 		    })
 		    else if (tmpid == "Do")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickUnDo();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickDo(e.target);
 		    })	
 		    else if (tmpid == "NewFxq")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickNewFxq();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickNewFxq(e.target);
 		    })
 		    else if (tmpid == "Chart")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickChart();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickChart(e.target);
 		    })
 		    else if (tmpid == "Eraser")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickEraser();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickEraser(e.target);
 		    })
 		    else if (tmpid == "DrawForm")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickDrawForm();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickDrawForm(e.target);
 		    })
 		    else if (tmpid == "FormatBrush")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickFormatBrush();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickFormatBrush(e.target);
 		    })	
 		    else if (tmpid == "Bold")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickBold();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickBold(e.target);
 		    })
 		    else if (tmpid == "Italic")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickItalic();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickItalic(e.target);
 		    })	
 		    else if (tmpid == "Underline")
-		        $(m_element).find('#'+value).bind('click',function(){
-		        	lbtnClickUnderline();
+		        $(m_element).find('#'+value+" > img").bind('click',function(e){
+		        	lbtnClickUnderline(e.target);
+		        	this.blur();
 		    })			    
 		})		
 	}
@@ -152,21 +161,19 @@
 	 	* @param m_element 元素
 	 	*/
 		function mouseInTools(m_element){
-			_oldcolor=$(m_element).css('background-color');
-			$(m_element).css('background-color','#FF0000');	
+			$(m_element).css("border-color","#000000");
 		};
 		/*
  		* 鼠标移出某个按钮内部的时候发生的事件
  		* @param m_element 元素
  		*/	
 		function mouseOutTools(m_element){
-			$(m_element).css('background-color',_oldcolor);
+			$(m_element).css("border-color","#E7E5E2");	
 		}
 		/*
  		* '新建'按钮的点击事件
  		*/	
 		function lbtnClickNew(m_element){
-			$(m_element).fadeTo("slow",0.5);
 			alert("new button has been clicked");
 		}
 		/*
@@ -251,18 +258,30 @@
 		 * '粗体'按钮的点击事件
 		 */	
 		function lbtnClickBold(m_element){
-			alert("bold button has been clicked");
+			changeInOrOutSet(boldTag,m_element);
+			boldTag = !boldTag;
 		}	
 		/*
 		 * '斜体'按钮的点击事件
 		 */	
 		function lbtnClickItalic(m_element){
-			alert("italic button has been Clicked");
+			changeInOrOutSet(italicTag,m_element);
+			italicTag = !italicTag;
 		}
 		/*
 		 * '下划线'按钮的点击事件
 		 */	
 		function lbtnClickUnderline(m_element){
-			alert("underline button has been Clicked");
+			changeInOrOutSet(underlineTag,m_element);
+			underlineTag = !underlineTag;
+		}
+		/*
+		 * 改变元素的按下和谈起状态
+		 */
+		function changeInOrOutSet(flag,item){
+			if (flag)
+				$(item).css("border-style","outset");
+			else
+				$(item).css("border-style","inset");
 		}
 })(jQuery)
