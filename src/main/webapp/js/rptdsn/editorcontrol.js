@@ -2,16 +2,16 @@
  * 
  */
  
- function ReportDesign(container){
+ function ReportDesign(container,name,caption){
  	this.type = "ana_report";
  	this.objtype = "report";
  	this._hideGrid = false;
  	this.container = container;
- 	this.name = "";
- 	this.caption = "";
+ 	this.name = name || "";
+ 	this.caption = caption || "";
  	this.rptid = "";
- 	this.tables = [];
- 	this.headers = [];
+ 	this.tables = new Map();
+ 	this.headers = new Map();
  	this._init();
  }
 
@@ -37,8 +37,11 @@
  	if(this.isEditing()){
  		this.getTextEditor().endEdit();
  	}
- 	var th = new TextHeader(this.container,this,"",e.offsetX,e.offsetY);
- 	this.headers.push(th);
+ 	var config = {
+ 		x:e.offsetX,
+ 		y:e.offsetY
+ 	}
+ 	var th = this.addTextHeader(config);
  	th.beginEdit();
  }
  
@@ -82,13 +85,14 @@
  	this.type = value;
  }
  
- ReportDesign.prototype.addComponent = function(type){
+ ReportDesign.prototype.addComponent = function(type,defaultConfig){
+ 	defaultConfig = defaultConfig || {};
  	switch(type){
  		case "table":
- 			this.addTable();
+ 			this.addTable(defaultConfig);
  			return;
  		case "text":
- 			this.addTextHeader();
+ 			this.addTextHeader(defaultConfig);
  			return;
  	}
  }
@@ -104,15 +108,24 @@
  	$(".selected_component").removeClass("selected_component");
  }
  
- ReportDesign.prototype.addTable = function(){
+ ReportDesign.prototype.addTable = function(defaultConfig){
+ 	var x = defaultConfig.x || 10;
+ 	var y = defaultConfig.y || 100;
+ 	var name = defaultConfig.name || this.getUniqueTableName();
  	var div = $("<div/>").appendTo(this.container).draggable();
-	var table = new TableEditorControl(div,this);
-	this.tables.push(table);
+	var table = new TableEditorControl(div,this,name,x,y);
+	this.tables.put(table.getName(),table);
  }
  
- ReportDesign.prototype.addTextHeader = function(){
- 	var th = new TextHeader(this.container,this,"表头",100,100);
- 	this.headers.push(th);
+ ReportDesign.prototype.addTextHeader = function(defaultConfig){
+ 	var x = defaultConfig.x || 100;
+ 	var y = defaultConfig.y || 100;
+ 	var name = defaultConfig.name || this.getUniqueHeadersName();
+ 	var initValue = defaultConfig.value || "";
+ 	var div = $("<div/>").appendTo(this.container).draggable();
+ 	var th = new TextHeader(div,this,name,initValue,x,y);
+ 	this.headers.put(th.getName(),th);
+ 	return th;
  }
  
  ReportDesign.prototype.getTextEditor = function(){
@@ -127,8 +140,26 @@
  }
  
  ReportDesign.prototype.deleteHeader = function(th){
- 	var index = this.headers.valueOf(th);
- 	if(index != -1){
- 		this.headers.splice(index,1);
+ 	var name = typeof th == "string"?th:th.getName();
+ 	this.headers.remove(name);
+ }
+ 
+ ReportDesign.prototype.getUniqueTableName = function(){
+ 	var name = "table";
+ 	var i = 0;
+ 	while(this.tables.contains(name)){
+ 		name = "table"+i;
+ 		i++;
  	}
+ 	return name;
+ }
+ 
+ ReportDesign.prototype.getUniqueHeadersName = function(){
+ 	var name = "header";
+ 	var i = 0;
+ 	while(this.headers.contains(name)){
+ 		name = "header"+i;
+ 		i++;
+ 	}
+ 	return name;
  }

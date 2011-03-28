@@ -1,10 +1,13 @@
 /**
  * 
  */
- function TableEditorControl(container,owner){
+ function TableEditorControl(container,owner,name,x,y){
  	this._style = "default";
+ 	this.name = name;
  	this.objtype = "table";
  	this.owner = owner;
+ 	this.x = x;
+ 	this.y = y;
  	this.container = container;
  	this.rowCountPerPage = 1000;
  	this._hidegird = false;
@@ -13,6 +16,7 @@
  
  TableEditorControl.prototype._init = function(){
  	var _self = this;
+ 	this.container.css("left",this.x).css("top",this.y).css("position","absolute");
  	this.container.jTable({
  		defaultRowCount:10,
  		defaultColCount:10,
@@ -22,6 +26,21 @@
  	this.container.bind("click",function(e){
  		_self.onClick(e)
  	});
+ }
+ 
+ TableEditorControl.prototype.getName = function(){
+ 	return this.name;
+ }
+ 
+ TableEditorControl.prototype.setName = function(value){
+ 	if(this.name == value){
+ 		return;
+ 	}
+ 	if(this.owner.tables.contains(value)){
+ 		throwError("已经存在相同名称的表格！");
+ 	}else{
+ 		this.name = value;
+ 	}
  }
  
  TableEditorControl.prototype.setReportStyle = function(value){
