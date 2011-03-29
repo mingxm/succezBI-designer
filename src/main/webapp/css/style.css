@@ -16,6 +16,10 @@
 	margin:0px;
 }
 
+.ui-layout-north img{
+	border:1px outset #E7E5E2;
+}
+
 a{
 	outline: none;
 }
@@ -24,10 +28,6 @@ a:active {
 }
 :focus{
 	 outline:0; 
-}
-
-img{
-	border:1px outset #E7E5E2;
 }
 
 .selected_div{

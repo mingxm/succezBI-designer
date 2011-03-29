@@ -41,7 +41,6 @@
 			$.extend(_pluginSetting._buttonsid,buttonsid);
 			_rptEditor = rptEditor;
 			toolBarInit(m_element,_pluginSetting);
-			alert("ToolBar plugin has been created");
 		}
 		//析构函数
 		this._destroy = function(param){
@@ -156,132 +155,132 @@
 		    })			    
 		})		
 	}
-		/*	
-	 	* 鼠标进入某个元素内部的时候发生的事件
-	 	* @param m_element 元素
-	 	*/
-		function mouseInTools(m_element){
-			$(m_element).css("border-color","#000000");
-		};
-		/*
- 		* 鼠标移出某个按钮内部的时候发生的事件
- 		* @param m_element 元素
- 		*/	
-		function mouseOutTools(m_element){
-			$(m_element).css("border-color","#E7E5E2");	
-		}
-		/*
- 		* '新建'按钮的点击事件
- 		*/	
-		function lbtnClickNew(m_element){
-			alert("new button has been clicked");
-		}
-		/*
- 		 * '保存'按钮的点击事件
-		 */
-		function lbtnClickSave(m_element){
-			alert("save button has been clicked");
-		}
-		/*
- 		* '另存为'按钮的点击事件
- 		*/	
-		function lbtnClickSaveAs(m_element){
-			alert("saveAs button has been clicked");
-		}
-		/*
- 		* '复制'按钮的点击事件
- 		*/	
-		function lbtnClickCopy(m_element){
-			alert("copy button has been clicked");
-		}
-		/*
- 		* '剪切'按钮的点击事件
- 		*/	
-		function lbtnClickCut(m_element){
-			alert("cut button has been clicked");
-		}
-		/*
- 		* '粘贴'按钮的点击事件
- 		*/	
-		function lbtnClickPaste(m_element){
-			alert("paste button has been clicked");
-		}
-		/*
- 		* '重做'按钮的点击事件
- 		*/	
-		function lbtnClickRedo(m_element){
-			alert("redo button has been clicked");
-		}
-		/*
- 		* '撤销'按钮的点击事件
- 		*/	
-		function lbtnClickUndo(m_element){
-			alert("undo button has been clicked");
-		}
-		/*
-		 * '计算'按钮的点击事件
-		 */
-		function lbtnClickDo(m_element){
-			alert("Do button has been clicked")
-		}
-		/*
-		 * '创建分析区'按钮的点击事件
-		 */
-		function lbtnClickNewFxq(m_element){
-			alert("NewFxq button has been clicked")
-		}
-		/*
-		 * '统计图'按钮的点击事件
-		 */	
-		function lbtnClickChart(m_element){
-			alert("chart button has been clicked");
-		}
-		/*
- 		* '橡皮擦'按钮的点击事件
- 		*/	
-		function lbtnClickEraser(m_element){
-			alert("eraser button has been clicked");
-		}
-		/*
- 		 * '绘表格'按钮的点击事件
-		 */
-		function lbtnClickDrawForm(m_element){
-			alert("drawForm button has been clicked");
-		}
-		/*
- 		* '格式刷'按钮的点击事件
- 		*/	
-		function lbtnClickFormatBrush(m_element){
-			alert("formatBrush button has been clicked");
-		}
-		/*
-		 * '粗体'按钮的点击事件
-		 */	
-		function lbtnClickBold(m_element){
-			changeInOrOutSet(boldTag,m_element);
-			boldTag = !boldTag;
-		}	
-		/*
-		 * '斜体'按钮的点击事件
-		 */	
-		function lbtnClickItalic(m_element){
-			changeInOrOutSet(italicTag,m_element);
-			italicTag = !italicTag;
-		}
-		/*
-		 * '下划线'按钮的点击事件
-		 */	
-		function lbtnClickUnderline(m_element){
-			changeInOrOutSet(underlineTag,m_element);
-			underlineTag = !underlineTag;
-		}
-		/*
-		 * 改变元素的按下和谈起状态
-		 */
-		function changeInOrOutSet(flag,item){
-			if (flag)
-				$(item).css("border-style","outset");
-			else
-				$(item).css("border-style","inset");
-		}
+	/*	
+	 * 鼠标进入某个元素内部的时候发生的事件
+	 * @param m_element 元素
+	 */
+	function mouseInTools(m_element){
+		$(m_element).css("border-color","#000000");
+	};
+	/*
+ 	* 鼠标移出某个按钮内部的时候发生的事件
+ 	* @param m_element 元素
+ 	*/	
+	function mouseOutTools(m_element){
+		$(m_element).css("border-color","#E7E5E2");	
+	}
+	/*
+ 	* '新建'按钮的点击事件
+ 	*/	
+	function lbtnClickNew(m_element){
+		alert("new button has been clicked");
+	}
+	/*
+ 	* '保存'按钮的点击事件
+	*/
+	function lbtnClickSave(m_element){
+		alert("save button has been clicked");
+	}
+	/*
+ 	* '另存为'按钮的点击事件
+ 	*/	
+	function lbtnClickSaveAs(m_element){
+		alert("saveAs button has been clicked");
+	}
+	/*
+ 	* '复制'按钮的点击事件
+ 	*/	
+	function lbtnClickCopy(m_element){
+		alert("copy button has been clicked");
+	}
+	/*
+ 	* '剪切'按钮的点击事件
+ 	*/	
+	function lbtnClickCut(m_element){
+		alert("cut button has been clicked");
+	}
+	/*
+ 	* '粘贴'按钮的点击事件
+ 	*/	
+	function lbtnClickPaste(m_element){
+		alert("paste button has been clicked");
+	}
+	/*
+	* '重做'按钮的点击事件
+ 	*/	
+	function lbtnClickRedo(m_element){
+		alert("redo button has been clicked");
+	}
+	/*
+ 	* '撤销'按钮的点击事件
+ 	*/	
+	function lbtnClickUndo(m_element){
+		alert("undo button has been clicked");
+	}
+	/*
+	 * '计算'按钮的点击事件
+	 */
+	function lbtnClickDo(m_element){
+		alert("Do button has been clicked")
+	}
+	/*
+	 * '创建分析区'按钮的点击事件
+	 */
+	function lbtnClickNewFxq(m_element){
+		alert("NewFxq button has been clicked")
+	}
+	/*
+	 * '统计图'按钮的点击事件
+	 */	
+	function lbtnClickChart(m_element){
+		alert("chart button has been clicked");
+	}
+	/*
+ 	* '橡皮擦'按钮的点击事件
+ 	*/	
+	function lbtnClickEraser(m_element){
+		alert("eraser button has been clicked");
+	}
+	/*
+ 	 * '绘表格'按钮的点击事件
+	 */
+	function lbtnClickDrawForm(m_element){
+		alert("drawForm button has been clicked");
+	}
+	/*
+ 	* '格式刷'按钮的点击事件
+ 	*/	
+	function lbtnClickFormatBrush(m_element){
+		alert("formatBrush button has been clicked");
+	}
+	/*
+	 * '粗体'按钮的点击事件
+	 */	
+	function lbtnClickBold(m_element){
+		changeInOrOutSet(boldTag,m_element);
+		boldTag = !boldTag;
+	}	
+	/*
+	 * '斜体'按钮的点击事件
+	 */	
+	function lbtnClickItalic(m_element){
+		changeInOrOutSet(italicTag,m_element);
+		italicTag = !italicTag;
+	}
+	/*
+	 * '下划线'按钮的点击事件
+	 */	
+	function lbtnClickUnderline(m_element){
+		changeInOrOutSet(underlineTag,m_element);
+		underlineTag = !underlineTag;
+	}
+	/*
+	 * 改变元素的按下和谈起状态
+	 */
+	function changeInOrOutSet(flag,item){
+		if (flag)
+			$(item).css("border-style","outset");
+		else
+			$(item).css("border-style","inset");
+	}
 })(jQuery)
