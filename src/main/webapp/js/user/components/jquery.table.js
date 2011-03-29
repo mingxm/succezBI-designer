@@ -14,12 +14,12 @@
 			    var config = $.extend({}, defaultSetting, setting);
 			    var totalWidth = config.defaultColCount * config.defaultColWidth;
 			    this.css("width", totalWidth);
-			    var tobj = $("<table></table>").addClass("mytable").css("width", totalWidth).appendTo(this);
+			    var tobj = $("<table></table>").addClass("mytable").css("width", totalWidth).css("table-layout","fixed").appendTo(this);
 			    var cg = $("<colgroup></colgroup>").appendTo(tobj);
 			    for (var i = 0; i < config.defaultRowCount; i++) {
 				    var row = $("<tr></tr>").css("height", 24).appendTo(tobj);
 				    for (var j = 0; j < config.defaultColCount; j++) {
-					    $("<td></td>").appendTo(row);
+					    $("<td></td>").css("word-break","break-all").appendTo(row);
 					    if (i == 0) {
 						    $("<tc></tc>").css("width", config.defaultColWidth).appendTo(cg);
 					    }

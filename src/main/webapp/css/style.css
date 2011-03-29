@@ -38,3 +38,11 @@ h3{
 	padding:0;
 	margin:0;
 }
+
+.drag_handler{
+	width:10px;
+	height:10px;
+	position:absolute;
+	background:#CCCCCC;
+	cursor:move;
+}

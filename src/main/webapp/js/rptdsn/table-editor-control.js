@@ -17,14 +17,23 @@
  TableEditorControl.prototype._init = function(){
  	var _self = this;
  	this.container.css("left",this.x).css("top",this.y).css("position","absolute");
+ 	this.handler = $("<div/>").addClass("drag_handler").appendTo(this.container);
  	this.container.jTable({
  		defaultRowCount:10,
  		defaultColCount:10,
  		defaultRowHeight:24,
  		defaultColWidth:72
  	});
- 	this.container.bind("click",function(e){
- 		_self.onClick(e)
+ 	this._initEvents();
+ }
+ 
+ TableEditorControl.prototype._initEvents = function(){
+ 	var _self = this;
+ 	this.handler.bind("click",function(e){
+ 		_self.onClick(e);
+ 	});
+ 	this.container.find("td").each(function(index,item){
+ 		new CellEditor(_self,$(item));
  	});
  }
  

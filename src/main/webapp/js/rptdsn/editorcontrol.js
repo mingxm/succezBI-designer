@@ -12,6 +12,7 @@
  	this.rptid = "";
  	this.tables = new Map();
  	this.headers = new Map();
+ 	this.selects = [];
  	this._init();
  }
 
@@ -33,10 +34,14 @@
  	})
  }
  
- ReportDesign.prototype.onDBLClick = function(e){
+ ReportDesign.prototype.endEdit = function(){
  	if(this.isEditing()){
  		this.getTextEditor().endEdit();
  	}
+ }
+ 
+ ReportDesign.prototype.onDBLClick = function(e){
+ 	this.endEdit();
  	var config = {
  		x:e.offsetX,
  		y:e.offsetY
@@ -48,9 +53,7 @@
  ReportDesign.prototype.onClick = function(e){
  	this.clearAllSelected();
  	this.pControl.switchByObj(this);
- 	if(this.isEditing()){
- 		this.getTextEditor().endEdit();
- 	}
+ 	this.endEdit();
  }
  
  ReportDesign.prototype.getName = function(){
@@ -99,20 +102,24 @@
  
  ReportDesign.prototype.select = function(obj){
  	if(!obj) return;
- 	$(".selected_component").removeClass("selected_component");
+ 	this.clearAllSelected();
  	obj.container.addClass("selected_component");
  	this.pControl.switchByObj(obj);
+ 	this.selects.push(obj);
  }
  
  ReportDesign.prototype.clearAllSelected = function(){
- 	$(".selected_component").removeClass("selected_component");
+ 	$.each(this.selects,function(index,item){
+ 		item.container.removeClass("selected_component");
+ 	});
+ 	this.selects = [];
  }
  
  ReportDesign.prototype.addTable = function(defaultConfig){
  	var x = defaultConfig.x || 10;
  	var y = defaultConfig.y || 100;
  	var name = defaultConfig.name || this.getUniqueTableName();
- 	var div = $("<div/>").appendTo(this.container).draggable();
+ 	var div = $("<div/>").appendTo(this.container).draggable({handle:".drag_handler"});
 	var table = new TableEditorControl(div,this,name,x,y);
 	this.tables.put(table.getName(),table);
  }

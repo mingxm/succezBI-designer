@@ -28,6 +28,9 @@
  			return;
  		case "flashchart":
  		case "ditu":
+ 		case "cell":
+ 			this.updateDom_cell();
+ 			return;
  		case "report":
  			this.updateDom_report();
  			return;
@@ -187,6 +190,110 @@
  					}
  				}]
  			},{
+ 				title:"值",
+ 				defaultValue:_self.obj.getValue(),
+ 				events:[{
+ 					name:"change",
+ 					fn:function(e){
+ 						_self.obj.setValue(e.data.attr("value"));
+ 					}
+ 				}]
+ 			},{
+ 				title:"字体",
+ 				type:"combobox",
+ 				options:[{
+ 					caption:"Serif",
+ 					value:"Serif"
+ 				},{
+ 					caption:"Sans-serif",
+ 					value:"Sans-serif"
+ 				},{
+ 					caption:"Monospace",
+ 					value:"Monospace"
+ 				},{
+ 					caption:"Cursive",
+ 					value:"Cursive"
+ 				},{
+ 					caption:"Fantasy",
+ 					value:"Fantasy"
+ 				}],
+ 				defaultValue:_self.obj.getProperty("font-family"),
+ 				events:[{
+ 					name:"change",
+ 					fn:function(e){
+ 						_self.obj.setProperty("font-family",e.data.attr("value"));
+ 					}
+ 				}]
+ 			},{
+ 				title:"加粗",
+ 				type:"checkbox",
+ 				defaultValue:_self.obj.getProperty("font-weight") == "bold",
+ 				events:[{
+					name:"change",
+					fn:function(e){
+						_self.obj.setProperty("font-weight",e.data.attr("checked")?"bold":"normal");
+					}
+				}]
+ 			},{
+ 				title:"斜体",
+ 				type:"checkbox",
+ 				defaultValue:_self.obj.getProperty("font-style") == "italic",
+ 				events:[{
+ 					name:"change",
+ 					fn:function(e){
+ 						_self.obj.setProperty("font-style",e.data.attr("checked")?"italic":"normal");
+ 					}
+ 				}]
+ 			},{
+ 				title:"删除",
+ 				type:"checkbox",
+ 				defaultValue:_self.obj.getProperty("text-decoration") == "line-through",
+ 				events:[{
+ 					name:"change",
+ 					fn:function(e){
+ 						_self.obj.setProperty("text-decoration",e.data.attr("checked")?"line-through":"none");
+ 					}
+ 				}]
+ 			},{
+ 				title:"对齐",
+ 				type:"combobox",
+ 				defaultValue:_self.obj.getProperty("text-align"),
+ 				options:[{
+ 					caption:"居左",
+ 					value:"left"
+ 				},{
+ 					caption:"居中",
+ 					value:"center"
+ 				},{
+ 					caption:"居右",
+ 					value:"right"
+ 				}],
+ 				events:[{
+ 					name:"change",
+ 					fn:function(e){
+ 						_self.obj.setProperty("text-align",e.data.attr("value"));
+ 					}
+ 				}]
+ 			},{
+ 				title:"字间距",
+ 				defaultValue:_self.obj.getProperty("letter-spacing"),
+ 				events:[{
+ 					name:"change",
+ 					fn:function(e){
+ 						_self.obj.setProperty("letter-spacing",e.data.attr("value"));
+ 					}
+ 				}]
+ 			}
+ 		]
+ 	});
+ }
+ 
+ PropertyEditorControl.prototype.updateDom_cell = function(){
+ 	var _self = this;
+ 	this.container.jproeditor({
+ 		defaultType:"edit",
+ 		items:[
+ 			{
  				title:"值",
  				defaultValue:_self.obj.getValue(),
  				events:[{

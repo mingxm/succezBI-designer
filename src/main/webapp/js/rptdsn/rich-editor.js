@@ -1,7 +1,7 @@
 /**
  * 
  */
- EDIT_PROPERTIES = ["left","top","font-size","font-weight","font-style","text-decoration","font-family","text-align","letter-spacing"]
+ EDIT_PROPERTIES = ["left","top","height","font-size","font-weight","font-style","text-decoration","font-family","text-align","letter-spacing"]
  
  function RichEditor(container){
  	this.container = container;
@@ -19,12 +19,19 @@
  		this.editor.css(pname,obj.getProperty(pname));
  	}
  	this.editor.show();
- 	this.editor.attr("value",obj.getValue());
+ 	this.editor.attr("value",obj.getValue()).css("overflow","visible");
+ 	if(obj.objtype == "cell"){
+ 		this.setPosition(obj.getPosition());
+ 	}
  }
  
  RichEditor.prototype.endEdit = function(){
  	this._editObj.endEdit();
  	this.editor.hide();
+ }
+ 
+ RichEditor.prototype.setPosition = function(p){
+ 	this.editor.offset(p);
  }
  
  RichEditor.prototype.isEditing = function(){

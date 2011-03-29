@@ -15,7 +15,7 @@
  
  TextHeader.prototype._init = function(value){
  	this.container.text(value).css("left",this.x).css("top",this.y).css("position","absolute")
- 		.css("font",this.defaultFont).css("white-space","nowrap").data("control",this);
+ 		.css("font",this.defaultFont).css("white-space","nowrap").data("pControl",this);
  	this._initEvents();
  }
  
@@ -34,7 +34,7 @@
  }
  
  TextHeader.prototype.onDBLClick = function(e){
- 	this.container.data("control").beginEdit();
+ 	this.beginEdit();
  }
  
  TextHeader.prototype.beginEdit = function(){
@@ -45,6 +45,14 @@
  TextHeader.prototype.endEdit = function(){
  	this.setValue(this.owner.getTextEditor().getValue());
  	this.container.show();
+ }
+ 
+ TextHeader.prototype.getPosition = function(){
+ 	var offset = this.container.offset();
+ 	return {
+ 		left:offset.left,
+ 		top:offset.top
+ 	}
  }
  
  TextHeader.prototype.getName = function(){
