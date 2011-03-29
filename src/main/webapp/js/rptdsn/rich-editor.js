@@ -9,7 +9,7 @@
  }
  
  RichEditor.prototype._init = function(){
- 	this.editor = $("<input type='text'/>").css("overflow","visible").css("position","absolute").appendTo(this.container).hide();
+ 	this.editor = $("<textarea/>").addClass("text_editor").appendTo(this.container).hide();
  }
  
  RichEditor.prototype.edit = function(obj){
@@ -19,10 +19,11 @@
  		this.editor.css(pname,obj.getProperty(pname));
  	}
  	this.editor.show();
- 	this.editor.attr("value",obj.getValue()).css("overflow","visible");
+ 	this.editor.attr("value",obj.getValue());
  	if(obj.objtype == "cell"){
  		this.setPosition(obj.getPosition());
  	}
+ 	this.editor.focus();
  }
  
  RichEditor.prototype.endEdit = function(){
@@ -38,7 +39,11 @@
  	return this.editor.is(":visible");
  }
  
+ RichEditor.prototype.getHtml = function(){
+ 	return this.getValue().replace(/\n/g,"<br>");
+ }
+ 
  RichEditor.prototype.getValue = function(){
- 	return this.editor.attr("value");
+ 	return this.editor.html();
  }
  

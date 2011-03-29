@@ -30,8 +30,17 @@ img{
 	border:1px outset #E7E5E2;
 }
 
-.selected_component{
+.selected_div{
 	border:1px solid #EAF;
+	background-color:transparent;
+	position:absolute;
+}
+
+.text_editor{
+	overflow:visible;
+	position:absolute;
+	padding:0;
+	border:1px solid #E7E5E2;
 }
 
 h3{
@@ -45,4 +54,9 @@ h3{
 	position:absolute;
 	background:#CCCCCC;
 	cursor:move;
+}
+
+.textheader{
+	min-height:24px;
+	font:"18px/20px Sans-serif pre-wrap";
 }

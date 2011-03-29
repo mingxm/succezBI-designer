@@ -2,12 +2,13 @@
  * 
  */
  
- function CellEditor(owner,obj){
+ function CellEditor(container,owner){
  	this.objtype = "cell";
- 	this.container = obj;
- 	this.owner = owner;
+ 	rptdsnComponent.call(this,container,owner);
  	this._initEvents();
  }
+ 
+ _extendClass(CellEditor,rptdsnComponent,"CellEditor");
  
  CellEditor.prototype._initEvents = function(){
  	var _self = this;
@@ -25,18 +26,6 @@
  	this.owner.owner.select(this);
  }
  
- CellEditor.prototype.onDBLClick = function(e){
- 	this.beginEdit();
- }
- 
- CellEditor.prototype.getValue = function(){
- 	return this.container.text();
- }
- 
- CellEditor.prototype.setValue = function(value){
- 	this.container.text(value);
- }
- 
  CellEditor.prototype.beginEdit = function(){
  	this.owner.owner.getTextEditor().edit(this);
  }
@@ -49,18 +38,11 @@
  	//TODO
  }
  
- CellEditor.prototype.getPosition = function(){
- 	var offset = this.container.offset();
- 	return {
- 		left:offset.left,
- 		top:offset.top
- 	}
- }
- 
- CellEditor.prototype.getProperty = function(name){
- 	return this.container.css(name);
- }
- 
- CellEditor.prototype.setProperty = function(name,value){
- 	this.container.css(name,value);
+ CellEditor.prototype.getRect = function(){
+ 	var r = rptdsnComponent.prototype.getRect.call(this);
+ 	var off1 = this.container.offset();
+ 	var off2 = this.owner.owner.container.offset();
+ 	r.left = off1.left - off2.left;
+ 	r.top = off1.top - off2.top;
+ 	return r;
  }

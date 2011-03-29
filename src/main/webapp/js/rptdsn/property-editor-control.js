@@ -202,14 +202,14 @@
  				title:"字体",
  				type:"combobox",
  				options:[{
- 					caption:"Serif",
- 					value:"Serif"
- 				},{
  					caption:"Sans-serif",
  					value:"Sans-serif"
  				},{
  					caption:"Monospace",
  					value:"Monospace"
+ 				},{
+ 					caption:"Serif",
+ 					value:"Serif"
  				},{
  					caption:"Cursive",
  					value:"Cursive"

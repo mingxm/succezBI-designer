@@ -3,16 +3,16 @@
  */
  function TableEditorControl(container,owner,name,x,y){
  	this._style = "default";
- 	this.name = name;
  	this.objtype = "table";
- 	this.owner = owner;
  	this.x = x;
  	this.y = y;
- 	this.container = container;
  	this.rowCountPerPage = 1000;
  	this._hidegird = false;
+ 	rptdsnComponent.call(this,container,owner,name);
  	this._init();
  }
+ 
+ _extendClass(TableEditorControl,rptdsnComponent,"TableEditorControl");
  
  TableEditorControl.prototype._init = function(){
  	var _self = this;
@@ -33,12 +33,8 @@
  		_self.onClick(e);
  	});
  	this.container.find("td").each(function(index,item){
- 		new CellEditor(_self,$(item));
+ 		new CellEditor($(item),_self);
  	});
- }
- 
- TableEditorControl.prototype.getName = function(){
- 	return this.name;
  }
  
  TableEditorControl.prototype.setName = function(value){
@@ -79,8 +75,4 @@
  
  TableEditorControl.prototype.hideGrid = function(value){
  	this._hidegrid = !!value;
- }
- 
- TableEditorControl.prototype.onClick = function(e){
- 	this.owner.select(this);
  }

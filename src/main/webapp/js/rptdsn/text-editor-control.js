@@ -3,19 +3,18 @@
  */
  
  function TextHeader(container,owner,name,value,x,y){
- 	this.container = container;
  	this.objtype = "text";
- 	this.owner = owner;
- 	this.name = name;
  	this.x = x;
  	this.y = y;
- 	this.defaultFont = "18px/20px Sans-serif pre-wrap";
+ 	rptdsnComponent.call(this,container,owner,name);
  	this._init(value);
  }
  
+ _extendClass(TextHeader,rptdsnComponent,"TextHeader");
+ 
  TextHeader.prototype._init = function(value){
  	this.container.text(value).css("left",this.x).css("top",this.y).css("position","absolute")
- 		.css("font",this.defaultFont).css("white-space","nowrap").data("pControl",this);
+ 		.css("white-space","nowrap").data("pControl",this);
  	this._initEvents();
  }
  
@@ -29,34 +28,14 @@
  	})
  }
  
- TextHeader.prototype.onClick = function(e){
- 	this.owner.select(this);
- }
- 
- TextHeader.prototype.onDBLClick = function(e){
- 	this.beginEdit();
- }
- 
  TextHeader.prototype.beginEdit = function(){
  	this.container.hide();
  	this.owner.getTextEditor().edit(this);
  }
  
  TextHeader.prototype.endEdit = function(){
- 	this.setValue(this.owner.getTextEditor().getValue());
+ 	this.setValue(this.owner.getTextEditor().getHtml());
  	this.container.show();
- }
- 
- TextHeader.prototype.getPosition = function(){
- 	var offset = this.container.offset();
- 	return {
- 		left:offset.left,
- 		top:offset.top
- 	}
- }
- 
- TextHeader.prototype.getName = function(){
- 	return this.name;
  }
  
  TextHeader.prototype.setName = function(value){
@@ -70,24 +49,12 @@
  	}
  }
  
- TextHeader.prototype.getValue = function(){
- 	return this.container.html();
- }
- 
  TextHeader.prototype.setValue = function(value) {
 	if (value == "") {
 		this.container.remove();
 		this.owner.deleteHeader(this);
 	}
 	else {
-		this.container.html(value);
+		rptdsnComponent.prototype.setValue.call(this,value);
 	}
-}
- 
- TextHeader.prototype.getProperty = function(name){
- 	return this.container.css(name);
- }
- 
- TextHeader.prototype.setProperty = function(name,value){
- 	this.container.css(name,value);
  }

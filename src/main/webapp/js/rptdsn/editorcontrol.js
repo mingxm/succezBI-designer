@@ -103,15 +103,17 @@
  ReportDesign.prototype.select = function(obj){
  	if(!obj) return;
  	this.clearAllSelected();
- 	obj.container.addClass("selected_component");
+ 	var r = obj.getRect();
+ 	var div = $("<div/>").addClass("selected_div").appendTo(this.container);
+ 	$.each(r,function(key,value){
+ 		div.css(key,value);
+ 	});
  	this.pControl.switchByObj(obj);
  	this.selects.push(obj);
  }
  
  ReportDesign.prototype.clearAllSelected = function(){
- 	$.each(this.selects,function(index,item){
- 		item.container.removeClass("selected_component");
- 	});
+ 	this.container.find(".selected_div").remove();
  	this.selects = [];
  }
  
@@ -129,7 +131,7 @@
  	var y = defaultConfig.y || 100;
  	var name = defaultConfig.name || this.getUniqueHeadersName();
  	var initValue = defaultConfig.value || "";
- 	var div = $("<div/>").appendTo(this.container).draggable();
+ 	var div = $("<div/>").addClass("textheader").appendTo(this.container).draggable();
  	var th = new TextHeader(div,this,name,initValue,x,y);
  	this.headers.put(th.getName(),th);
  	return th;
