@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="../css/layout-default-latest.css" />
 <link rel="stylesheet" href="../js/jquery/download/jquery-ui-1.8.10.custom/development-bundle/themes/base/jquery.ui.all.css">
 <link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../js/jquery/download/simpletree/jquery.simple.tree.css">
 <script type="text/javascript" src="../js/user/lib/util.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-1.4.4.js"></script>
 <script type="text/javascript" src="../js/jquery/download/jquery-ui-1.8.10.custom/js/jquery-ui-1.8.10.custom.min.js"></script>
@@ -19,6 +20,7 @@
 <script type="text/javascript" src="../js/rptdsn/rich-editor.js"></script>
 <script type="text/javascript" src="../js/rptdsn/editorcontrol.js"></script>
 <script type="text/javascript" src="../js/user/components/SzToolBar.js"></script>
+<script type="text/javascript" src="../js/jquery/download/simpletree/jquery.simple.tree.js"></script>
 <script type="text/javascript">
 	$(function(){
 		var myLayout = $('body').layout({
@@ -59,7 +61,11 @@
 		                                                                   "Tool_Chart",
 		                                                                   "Tool_DrawForm"
 		                                                                   ]});
-	})
+		$(".simpleTree").simpleTree({
+			animate:true
+		});
+		
+	})	
 </script>
 <title>报表设计器</title>
 </head>
@@ -67,28 +73,71 @@
 <div class="ui-layout-west">
 <div id="accordion1" class="basic">
 	<h3><a href="#">报表结构</a></h3>
-	<div></div>
+	<div>
+		<ul class='simpleTree'>
+			<li class='root'><span>分析应用服务器</span>
+				<ul>
+					<li class="open"><span>医院统计</span>
+						<ul>
+							<li><span>主题表</span>
+								<ul>
+									<li><span>A1</span></li>
+									<li><span>A2</span></li>
+									<li><span>A3</span></li>
+								</ul>
+							</li>
+							<li><span>B34457</span></li>
+							<li><span>B34566</span></li>
+							<li><span>B34556</span></li>
+						</ul>
+					</li>
+					<li><span>重点税源</span>
+						<ul>
+							<li><span>主题表</span>
+								<ul>
+									<li><span>C1</span></li>
+									<li><span>C2</span></li>
+									<li><span>C3</span></li>
+								</ul>
+							</li>
+							<li><span>维表</span>
+								<ul>
+									<li><span>D1</span></li>
+									<li><span>D2</span></li>
+									<li><span>D3</span></li>
+								</ul>
+							</li>
+							<li><span>C32344</span></li>
+							<li><span>C32256</span></li>
+							<li><span>C35894</span></li>
+							<li><span>C31584</span></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>	
+	</div>
 	<h3><a href="#" >控件列表</a></h3>
 	<div></div>
 </div>
 </div>
 <div class="ui-layout-north">
-<tr>
-<td>
-<a href="#" id="Tool_Save"><img src="../../resources/image/save.gif"></img></a>
-<a href="#" id="Tool_Bold"><img src="../../resources/image/bold.gif"></img></a>
-<a href="#" id="Tool_Italic"><img src="../../resources/image/Itali.gif"></img></a>
-<a href="#" id="Tool_Underline"><img src="../../resources/image/underlin.gif"></img></a>
-<a href="#" id="Tool_Cut"><img src="../../resources/image/cut.gif"></img></a>
-<a href="#" id="Tool_Paste"><img src="../../resources/image/paste.gif"></img></a>
-<a href="#" id="Tool_Redo"><img src="../../resources/image/redo.gif"></img></a>
-<a href="#" id="Tool_Undo"><img src="../../resources/image/undo.gif"></img></a>
-<a href="#" id="Tool_Do"><img src="../../resources/image/run.gif"></img></a>
-<a href="#" id="Tool_NewFxq"><img src="../../resources/image/fxq.gif"></img></a>
-<a href="#" id="Tool_Chart"><img src="../../resources/image/chart.gif"></img></a>
-<a href="#" id="Tool_DrawForm"><img src="../../resources/image/drawtable.gif"></img></a>
-</td>
-</tr>
+	<tr>
+		<td>
+			<a href="#" id="Tool_Save"><img src="../../resources/image/save.gif"></img></a>
+			<a href="#" id="Tool_Bold"><img src="../../resources/image/bold.gif"></img></a>
+			<a href="#" id="Tool_Italic"><img src="../../resources/image/Itali.gif"></img></a>
+			<a href="#" id="Tool_Underline"><img src="../../resources/image/underlin.gif"></img></a>
+			<a href="#" id="Tool_Cut"><img src="../../resources/image/cut.gif"></img></a>
+			<a href="#" id="Tool_Paste"><img src="../../resources/image/paste.gif"></img></a>
+			<a href="#" id="Tool_Redo"><img src="../../resources/image/redo.gif"></img></a>
+			<a href="#" id="Tool_Undo"><img src="../../resources/image/undo.gif"></img></a>
+			<a href="#" id="Tool_Do"><img src="../../resources/image/run.gif"></img></a>
+			<a href="#" id="Tool_NewFxq"><img src="../../resources/image/fxq.gif"></img></a>
+			<a href="#" id="Tool_Chart"><img src="../../resources/image/chart.gif"></img></a>
+			<a href="#" id="Tool_DrawForm"><img src="../../resources/image/drawtable.gif"></img></a>
+		</td>
+	</tr>
 </div>
 <div class="ui-layout-center"></div>
 <div class="ui-layout-east"></div>
