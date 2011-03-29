@@ -33,6 +33,8 @@ img{
 .selected_div{
 	border:1px solid #EAF;
 	background-color:transparent;
+	filter:alpha(opacity=50);
+	opacity:0.5;
 	position:absolute;
 }
 

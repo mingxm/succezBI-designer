@@ -31,7 +31,7 @@
  }
  
  CellEditor.prototype.endEdit = function(){
- 	this.setValue(this.owner.owner.getTextEditor().getValue());
+ 	this.setValue(this.owner.owner.getTextEditor().getHtml());
  }
  
  CellEditor.prototype.setPosition = function(){
