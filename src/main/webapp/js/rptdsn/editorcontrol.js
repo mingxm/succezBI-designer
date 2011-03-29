@@ -42,9 +42,10 @@
  
  ReportDesign.prototype.onDBLClick = function(e){
  	this.endEdit();
+ 	var off = this.container.offset();
  	var config = {
- 		x:e.offsetX,
- 		y:e.offsetY
+ 		x:e.pageX - off.left,
+ 		y:e.pageY - off.top
  	}
  	var th = this.addTextHeader(config);
  	th.beginEdit();

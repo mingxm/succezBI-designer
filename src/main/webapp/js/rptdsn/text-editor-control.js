@@ -29,13 +29,16 @@
  }
  
  TextHeader.prototype.beginEdit = function(){
- 	this.container.hide();
+ 	this.owner.clearAllSelected();
+ 	//这两行代码顺序不能颠倒，否则在ff中会有问题
  	this.owner.getTextEditor().edit(this);
+ 	this.container.hide();
  }
  
  TextHeader.prototype.endEdit = function(){
- 	this.setValue(this.owner.getTextEditor().getHtml());
+ 	//这两行代码顺序不能颠倒，否则在ff中会有问题
  	this.container.show();
+ 	this.setValue(this.owner.getTextEditor().getHtml());
  }
  
  TextHeader.prototype.setName = function(value){

@@ -44,6 +44,6 @@
  }
  
  RichEditor.prototype.getValue = function(){
- 	return this.editor.html();
+ 	return this.editor.val();
  }
  

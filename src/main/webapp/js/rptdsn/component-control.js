@@ -17,7 +17,7 @@
  }
  
  rptdsnComponent.prototype.getValue = function(){
- 	return this.container.html().replace(/<BR>/g,"\n");
+ 	return this.container.html().replace(/<BR>/gi,"\n");
  }
  
  rptdsnComponent.prototype.setValue = function(value) {

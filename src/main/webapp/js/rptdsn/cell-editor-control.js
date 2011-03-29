@@ -27,6 +27,7 @@
  }
  
  CellEditor.prototype.beginEdit = function(){
+ 	this.owner.owner.clearAllSelected();
  	this.owner.owner.getTextEditor().edit(this);
  }
  
