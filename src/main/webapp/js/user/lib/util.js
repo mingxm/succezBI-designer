@@ -336,6 +336,46 @@ Map.prototype.toString = function() {
 
 StringMap = Map;
 
+/**
+ * 是方法 
+ * @ftype util.typecheck
+ * */
+function isFunction(a) {
+	return (a instanceof Function || typeof(a) == "function");
+}
+
+/**
+ * 是布尔 
+ * @ftype util.typecheck
+ * */
+function isBoolean(a) {
+	return (a instanceof Boolean || typeof(a) == "boolean");
+}
+
+/**
+ * 是数值 
+ * @ftype util.typecheck
+ * */
+function isNumber(a) {
+	return (a instanceof Number || typeof(a) == "number");
+}
+
+/**
+ * 是对象 
+ * @ftype util.typecheck
+ * */
+function isObject(a) {
+	return (a instanceof Object || typeof(a) == "object");
+}
+
+/**
+ * 是字符串 
+ * @ftype util.typecheck
+ * */
+function isString(a) {
+	return (a instanceof String || typeof(a) == "string");
+}
+
 function isUndefined(a) {
 	return ((a == undefined) && (typeof(a) == "undefined"));
 }
@@ -361,4 +401,13 @@ function _extendClass(fConstr, fSuperConstr, sName) {
 	}
 	p.constructor = fConstr;
 	return p;
+}
+
+/**
+ * 判断矩形r1是否包含在r2之中
+ * @param {} r1
+ * @param {} r2
+ */
+function rectInRect(r1,r2){
+	return r1.left>=r2.left && r1.top>=r2.top && r1.left+r1.width<=r2.left+r2.width && r1.top+r1.height<=r2.top+r2.height;
 }

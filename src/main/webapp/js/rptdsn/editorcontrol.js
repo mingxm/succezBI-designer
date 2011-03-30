@@ -13,25 +13,36 @@
  	this.tables = new Map();
  	this.headers = new Map();
  	this.selects = [];
+ 	this.mousedown = false;
  	this._init();
  }
 
  ReportDesign.prototype._init = function(){
  	var _self = this;
  	this.pControl = new PropertyEditorControl($(".ui-layout-east"),this);
+ 	this.selectFrame = $("<div/>").addClass("select_frame").appendTo(this.container);
  	this._initEvents();
  }
  
  ReportDesign.prototype._initEvents = function(){
  	var _self = this;
  	this.container.bind("click",function(e){
- 		if(e.target != this) return;
+ 		if(e.target != this) return true;
  		_self.onClick(e);
  	});
  	this.container.bind("dblclick",function(e){
- 		if(e.target != this) return;
+ 		if(e.target != this) return true;
  		_self.onDBLClick(e);
- 	})
+ 	});
+ 	this.container.bind("mousedown",function(e){
+ 		_self.onMouseDown(e);
+ 	});
+ 	this.container.bind("mousemove",function(e){
+ 		_self.onMouseMove(e);
+ 	});
+ 	this.container.bind("mouseup",function(e){
+ 		_self.onMouseUp(e);
+ 	});
  }
  
  ReportDesign.prototype.endEdit = function(){
@@ -52,9 +63,63 @@
  }
  
  ReportDesign.prototype.onClick = function(e){
- 	this.clearAllSelected();
- 	this.pControl.switchByObj(this);
  	this.endEdit();
+ }
+ 
+ ReportDesign.prototype.onMouseDown = function(e){
+ 	var target = $(e.target);
+ 	/**
+ 	 * 有可能是拖动界面上的某一个控件，那么这个时候就不需要有框选框
+ 	 */
+ 	if(target.hasClass("drag_handler") || !target.draggable("option","disabled")) return;
+ 	this.mousedown = true;
+ 	if(this.container[0].setCapture){
+ 		this.container[0].setCapture();
+ 	}else {
+ 		window.captureEvents("MouseUp");
+ 	}
+ 	this.mousedownPt = {
+ 		left:e.pageX,
+ 		top:e.pageY
+ 	}
+ }
+ 
+ ReportDesign.prototype.onMouseMove = function(e){
+ 	if(!this.mousedown) return;
+ 	/**
+ 	 * 在框选的过程中设置整个界面不允许选取文字，在鼠标松起的时候再unbind
+ 	 */
+ 	if (!this.onSelectStart) {
+		this.onSelectStart = function() {
+			return false;
+		}
+		$("body").bind("selectstart", this.onSelectStart);
+	}
+ 	this.selectFrame.show();
+ 	this.selectFrame.offset(this.mousedownPt);
+ 	var w = e.pageX - this.mousedownPt.left;
+ 	var h = e.pageY - this.mousedownPt.top;
+ 	this.selectFrame.css("width",w).css("height",h);
+ }
+ 
+ ReportDesign.prototype.onMouseUp = function(e){
+ 	this.mousedown = false;
+ 	if(this.container[0].releaseCapture){
+ 		this.container[0].releaseCapture();
+ 	}else {
+ 		window.releaseEvents("MouseUp");
+ 	}
+ 	var off = this.selectFrame.offset();
+ 	var r = {
+ 		left:off.left,
+ 		top:off.top,
+ 		width:this.selectFrame.width(),
+ 		height:this.selectFrame.height()
+ 	}
+ 	this.selectFrame.hide();
+ 	this.selectByRect(r);
+ 	$("body").unbind("selectstart",this.onSelectStart);
+ 	this.onSelectStart = false;
  }
  
  ReportDesign.prototype.getName = function(){
@@ -101,10 +166,15 @@
  	}
  }
  
- ReportDesign.prototype.select = function(obj){
+ ReportDesign.prototype.select = function(obj,multi){
  	if(!obj) return;
- 	this.clearAllSelected();
+ 	if(!multi){
+ 		this.clearAllSelected();
+ 	}
  	var r = obj.getRect();
+ 	var off = this.container.offset();
+ 	r.left = r.left - off.left-1;
+ 	r.top = r.top - off.top-1;
  	var div = $("<div/>").addClass("selected_div").appendTo(this.container);
  	$.each(r,function(key,value){
  		div.css(key,value);
@@ -113,9 +183,20 @@
  	this.selects.push(obj);
  }
  
+ ReportDesign.prototype.selectByRect = function(r){
+ 	this.clearAllSelected();
+ 	for(var i=0;i<this.headers.size();i++){
+ 		var obj = this.headers.get(i);
+ 		if(obj.inRect(r)){
+ 			this.select(obj,true);
+ 		}
+ 	}
+ }
+ 
  ReportDesign.prototype.clearAllSelected = function(){
  	this.container.find(".selected_div").remove();
  	this.selects = [];
+ 	this.pControl.switchByObj(this);
  }
  
  ReportDesign.prototype.addTable = function(defaultConfig){

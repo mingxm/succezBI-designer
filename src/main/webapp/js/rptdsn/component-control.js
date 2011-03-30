@@ -3,9 +3,24 @@
  */
  
  function rptdsnComponent(container,owner,name){
+ 	if(_biInPrototype) return;
  	this.owner = owner;
  	this.container = container;
  	this.name = name;
+ 	this._bindDragEvents();
+ }
+ 
+ /**
+  * 绑定控件的容器的拖动的相关事件，拖动的时候需要清空所有选中的对象，拖动结束后选中当前拖动的对象
+  */
+ rptdsnComponent.prototype._bindDragEvents = function(){
+ 	var _self = this;
+ 	this.container.bind("drag",function(e,ui){
+ 		_self.onDrag(e);
+ 	});
+ 	this.container.bind("dragstop",function(e,ui){
+ 		_self.onDragStop(e);
+ 	});
  }
  
  rptdsnComponent.prototype.getName = function(){
@@ -33,11 +48,12 @@
  }
  
  rptdsnComponent.prototype.getRect = function(){
+ 	var off = this.container.offset();
  	return{
- 		left:this.getProperty("left"),
- 		top:this.getProperty("top"),
- 		width:this.getProperty("width"),
- 		height:this.getProperty("height")
+ 		left:off.left,
+ 		top:off.top,
+ 		width:this.container.width(),
+ 		height:this.container.height()
  	}
  }
  
@@ -58,6 +74,18 @@
  	this.beginEdit(e);
  }
  
+ rptdsnComponent.prototype.onDrag = function(e){
+ 	this.owner.clearAllSelected();
+ }
+ 
+ rptdsnComponent.prototype.onDragStop = function(e){
+ 	this.owner.select(this);
+ }
+ 
  rptdsnComponent.prototype.beginEdit = function(e){
  	
+ }
+ 
+ rptdsnComponent.prototype.inRect = function(r){
+ 	return rectInRect(this.getRect(),r);
  }

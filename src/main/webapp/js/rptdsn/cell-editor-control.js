@@ -38,12 +38,3 @@
  CellEditor.prototype.setPosition = function(){
  	//TODO
  }
- 
- CellEditor.prototype.getRect = function(){
- 	var r = rptdsnComponent.prototype.getRect.call(this);
- 	var off1 = this.container.offset();
- 	var off2 = this.owner.owner.container.offset();
- 	r.left = off1.left - off2.left;
- 	r.top = off1.top - off2.top;
- 	return r;
- }

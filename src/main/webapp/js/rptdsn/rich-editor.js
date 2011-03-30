@@ -10,6 +10,16 @@
  
  RichEditor.prototype._init = function(){
  	this.editor = $("<textarea/>").addClass("text_editor").appendTo(this.container).hide();
+ 	this.editor.bind("mousedown",function(e){
+ 		e.stopPropagation();
+ 	});
+ 	this.editor.bind("mousemove",function(e){
+ 		e.stopPropagation();
+ 	});
+ 	this.editor.bind("mouseup",function(e){
+ 		e.stopPropagation();
+ 	});
+ 	
  }
  
  RichEditor.prototype.edit = function(obj){

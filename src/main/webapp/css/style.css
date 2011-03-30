@@ -38,7 +38,14 @@ a:active {
 	position:absolute;
 }
 
+.select_frame{
+	border:1px solid #CCCCCC;
+	background-color:transparent;
+	position:absolute;
+}
+
 .text_editor{
+	min-height:24px;
 	overflow:visible;
 	position:absolute;
 	padding:0;
@@ -59,6 +66,5 @@ h3{
 }
 
 .textheader{
-	min-height:24px;
 	font:"18px/20px Sans-serif pre-wrap";
 }
