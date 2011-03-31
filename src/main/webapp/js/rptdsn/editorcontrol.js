@@ -163,6 +163,16 @@
  		case "text":
  			this.addTextHeader(defaultConfig);
  			return;
+ 		case "toolbar":
+ 			/*
+ 		 	 * toolbar对象会开放一些函数出来，供reportDesign调用，从而来设置
+ 		 	 * 菜单的状态、按钮的属性等等
+ 		 	 */
+ 			this.toolbar = this.addToolBar(defaultConfig);
+ 			return;
+ 		case "reportStruct":
+ 			this.reportStruct = this.addSimpleTree(defaultConfig);
+ 			return; 			
  	}
  }
  
@@ -218,6 +228,28 @@
  	this.headers.put(th.getName(),th);
  	return th;
  }
+ 
+  ReportDesign.prototype.addToolBar = function(option){
+ 	var tb = option.m_element.ToolBar();
+ 	tb._create(option.m_element,option.setting,this);
+ 	return tb; 	
+  }
+  
+  ReportDesign.prototype.ToolBarVersion = function(){
+ 	alert(this.toolbar._getvision());
+  }
+  
+   /*
+  * 测试该函数
+  */
+  ReportDesign.prototype.setCellProperty = function(name,value){
+ 	alert("With this we can set other control's Propery");
+  }
+  
+  ReportDesign.prototype.addSimpleTree = function(option){
+ 	var rs =  option.m_element.simpleTree(option.setting);
+ 	return rs;
+  }
  
  ReportDesign.prototype.getTextEditor = function(){
  	if(!this.textEditor){

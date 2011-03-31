@@ -38,7 +38,7 @@
 			fillSpace:true,
 			autoHeight:false
 		});
-		//工具栏容器
+		//工具栏容器 
 		var toolBarContainer = myLayout.panes.north;
 		var _dsn = new ReportDesign(myLayout.panes.center,"B2390");
 		_dsn.addComponent("table");
@@ -48,23 +48,28 @@
 			y:150,
 			value:"这是一个表头"
 		});
-		$("document").ToolBar()._create($(".ui-layout-north"),{_buttonsid:["Tool_Save",
-		                                                                   "Tool_Bold",
-		                                                                   "Tool_Italic",
-		                                                                   "Tool_Underline",
-		                                                                   "Tool_Cut",
-		                                                                   "Tool_Paste",
-		                                                                   "Tool_Redo",
-		                                                                   "Tool_Undo",
-		                                                                   "Tool_Do",
-		                                                                   "Tool_NewFxq",
-		                                                                   "Tool_Chart",
-		                                                                   "Tool_DrawForm"
-		                                                                   ]});
-		$(".simpleTree").simpleTree({
-			animate:true
+		_dsn.addComponent("toolbar",{
+			m_element : $(".ui-layout-north"),
+			setting:{_buttonsid:["Tool_Save",
+                                "Tool_Bold",
+                                "Tool_Italic",
+                                "Tool_Underline",
+                                "Tool_Cut",
+                                "Tool_Paste",
+                                "Tool_Redo",
+                                "Tool_Undo",
+                                "Tool_Do",
+                                "Tool_NewFxq",
+                                "Tool_Chart",
+                                "Tool_DrawForm"
+                                ]}
 		});
-		
+		_dsn.addComponent("reportStruct",{
+			m_element : $(".simpleTree"),
+			setting : {
+				animate:true
+			}
+		})	
 	})	
 </script>
 <title>报表设计器</title>
@@ -73,44 +78,40 @@
 <div class="ui-layout-west">
 <div id="accordion1" class="basic">
 	<h3><a href="#">报表结构</a></h3>
-	<div>
+	<div style="padding-top:0px;padding-left:10px">
 		<ul class='simpleTree'>
-			<li class='root'><span>分析应用服务器</span>
+			<li class='root'><span>ReportDesinger</span>
 				<ul>
-					<li class="open"><span>医院统计</span>
+					<li class="open"><span>headers</span>
 						<ul>
-							<li><span>主题表</span>
+							<li><span>HHH0</span>
 								<ul>
-									<li><span>A1</span></li>
-									<li><span>A2</span></li>
-									<li><span>A3</span></li>
+									<li><span>text：表头表元</span></li>
+									<li><span>border：0px none #F5F5F5</span></li>
+									<li><span>x:234 y:586</span></li>
 								</ul>
 							</li>
-							<li><span>B34457</span></li>
-							<li><span>B34566</span></li>
-							<li><span>B34556</span></li>
+							<li><span>HHH1</span></li>
+							<li><span>HHH2</span></li>
+							<li><span>HHH3</span></li>
 						</ul>
 					</li>
-					<li><span>重点税源</span>
+					<li><span>tables</span>
 						<ul>
-							<li><span>主题表</span>
+							<li><span>tb1</span>
 								<ul>
-									<li><span>C1</span></li>
-									<li><span>C2</span></li>
-									<li><span>C3</span></li>
+									<li><span>Cell1</span></li>
+									<li><span>Cell2</span></li>
+									<li><span>Cell3</span></li>
+									<li><span>Cell4</span></li>
+									<li><span>Cell5</span></li>
+									<li><span>Cell6</span></li>
 								</ul>
 							</li>
-							<li><span>维表</span>
-								<ul>
-									<li><span>D1</span></li>
-									<li><span>D2</span></li>
-									<li><span>D3</span></li>
-								</ul>
-							</li>
-							<li><span>C32344</span></li>
-							<li><span>C32256</span></li>
-							<li><span>C35894</span></li>
-							<li><span>C31584</span></li>
+							<li><span>tb2</span></li>
+							<li><span>tb3</span></li>
+							<li><span>tb4</span></li>
+							<li><span>tb5</span></li>
 						</ul>
 					</li>
 				</ul>
@@ -118,7 +119,17 @@
 		</ul>	
 	</div>
 	<h3><a href="#" >控件列表</a></h3>
-	<div></div>
+	<div>
+		<ul class='controlList'>
+			<li><span>ReportDesignerTabel</span></li>
+			<li><span>ReportDesignerHeader</span></li>
+			<li><span>ReportDesignerChart</span></li>
+			<li><span>ReportDesignerEditer</span></li>
+			<li><span>ReportDesignerCheckBox</span></li>
+			<li><span>ReportDesignerButton</span></li>
+			<li><span>ReportDesignerImage</span></li>
+		</ul>
+	</div>
 </div>
 </div>
 <div class="ui-layout-north">

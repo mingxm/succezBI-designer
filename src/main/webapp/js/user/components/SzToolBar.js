@@ -35,7 +35,11 @@
 	     	 */
 	    	_buttonsid:[]
 		};
-		//构造函数
+		/*
+		 * 构造函数
+		 * @m_elment ：菜单原型所属的html对象
+		 * @option : _buttonsid ,每个菜单的id号
+		 */
 		this._create = function(m_element,option,rptEditor){
 			var buttonsid = option._buttonsid;			
 			$.extend(_pluginSetting._buttonsid,buttonsid);
@@ -179,7 +183,7 @@
  	* '保存'按钮的点击事件
 	*/
 	function lbtnClickSave(m_element){
-		alert("save button has been clicked");
+		_rptEditor.setCellProperty();
 	}
 	/*
  	* '另存为'按钮的点击事件
