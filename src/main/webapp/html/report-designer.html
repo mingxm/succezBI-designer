@@ -41,7 +41,7 @@
 		//工具栏容器 
 		var toolBarContainer = myLayout.panes.north;
 		var _dsn = new ReportDesign(myLayout.panes.center,"B2390");
-		_dsn.addComponent("table");
+		_dsn.addComponent("table",{});
 		_dsn.addComponent("text",{
 			name:"HHH0",
 			x:150,
@@ -150,7 +150,9 @@
 		</td>
 	</tr>
 </div>
-<div class="ui-layout-center"></div>
+<div class="ui-layout-center">
+	<div id="select_frameid" class="select_frame"></div>
+</div>
 <div class="ui-layout-east"></div>
 </body>
 </html>

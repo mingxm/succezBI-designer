@@ -19,8 +19,8 @@
  	this.container.css("left",this.x).css("top",this.y).css("position","absolute");
  	this.handler = $("<div/>").addClass("drag_handler").appendTo(this.container);
  	this.container.jTable({
- 		defaultRowCount:10,
- 		defaultColCount:10,
+ 		defaultRowCount:50,
+ 		defaultColCount:30,
  		defaultRowHeight:24,
  		defaultColWidth:72
  	});
@@ -29,12 +29,14 @@
  
  TableEditorControl.prototype._initEvents = function(){
  	var _self = this;
- 	this.handler.bind("click",function(e){
- 		_self.onClick(e);
- 	});
- 	this.container.find("td").each(function(index,item){
- 		new CellEditor($(item),_self);
- 	});
+ 	this.container.bind({
+		    "click"	: function(e) {
+			    _self.onClick(e);
+		    },
+		    "dblclick":function(e){
+		    	_self.onDBLClick(e);
+		    }
+	    });
  }
  
  TableEditorControl.prototype.setName = function(value){
@@ -75,4 +77,21 @@
  
  TableEditorControl.prototype.hideGrid = function(value){
  	this._hidegrid = !!value;
+ }
+ 
+ TableEditorControl.prototype.onClick = function(e){
+ 	var item = $(e.target);
+ 	if(item.is("td")){
+ 		this.owner.endEdit();
+ 		new CellEditor(item,this).onClick();
+ 	}else {
+ 		this.owner.select(this);
+ 	}
+ }
+ 
+ TableEditorControl.prototype.onDBLClick = function(e){
+ 	var item = $(e.target);
+ 	if(item.is("td")){
+ 		new CellEditor(item,this).beginEdit();
+ 	}
  }

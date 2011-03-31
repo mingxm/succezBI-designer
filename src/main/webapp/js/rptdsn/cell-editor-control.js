@@ -5,24 +5,11 @@
  function CellEditor(container,owner){
  	this.objtype = "cell";
  	rptdsnComponent.call(this,container,owner);
- 	this._initEvents();
  }
  
  _extendClass(CellEditor,rptdsnComponent,"CellEditor");
  
- CellEditor.prototype._initEvents = function(){
- 	var _self = this;
- 	this.container.bind("click",function(e){
- 		_self.onClick(e);
- 	});
- 	this.container.bind("dblclick",function(e){
- 		_self.onDBLClick(e);
- 	});
- 	this.container.data("pControl",this);
- }
- 
  CellEditor.prototype.onClick = function(e){
- 	this.owner.owner.endEdit();
  	this.owner.owner.select(this);
  }
  

@@ -20,7 +20,7 @@
  ReportDesign.prototype._init = function(){
  	var _self = this;
  	this.pControl = new PropertyEditorControl($(".ui-layout-east"),this);
- 	this.selectFrame = $("<div/>").addClass("select_frame").appendTo(this.container);
+ 	this.selectFrame = this.container.find("#select_frameid");
  	this._initEvents();
  }
  
@@ -71,7 +71,7 @@
  	/**
  	 * 有可能是拖动界面上的某一个控件，那么这个时候就不需要有框选框
  	 */
- 	if(target.hasClass("drag_handler") || !target.draggable("option","disabled")) return;
+ 	if(target.hasClass("drag_handler") || !target.draggable("option","disabled") || target.is("th")) return;
  	this.mousedown = true;
  	if(this.container[0].setCapture){
  		this.container[0].setCapture();
@@ -213,7 +213,12 @@
  	var x = defaultConfig.x || 10;
  	var y = defaultConfig.y || 100;
  	var name = defaultConfig.name || this.getUniqueTableName();
- 	var div = $("<div/>").appendTo(this.container).draggable({handle:".drag_handler"});
+ 	var div = $("<div/>").appendTo(this.container).draggable({
+ 		handle:".drag_handler",
+ 		refreshPositions:false,
+ 		addClass:false,
+ 		grid:[10,10]
+ 	});
 	var table = new TableEditorControl(div,this,name,x,y);
 	this.tables.put(table.getName(),table);
  }

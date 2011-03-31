@@ -68,3 +68,21 @@ h3{
 .textheader{
 	font:"18px/20px Sans-serif pre-wrap";
 }
+
+.col_change_line{
+	width:1px;
+	height:100%;
+	top:0px;
+	border-left:1px solid #EE0000; 
+	position:absolute;
+	display:none
+}
+
+.mytable{
+	table-layout:fixed;
+}
+
+.draggdiv{
+	border:1px solid #EAF;
+	background-color:transparent;
+}
