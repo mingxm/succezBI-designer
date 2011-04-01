@@ -37,12 +37,6 @@
  	this.container.bind("mousedown",function(e){
  		_self.onMouseDown(e);
  	});
- 	this.container.bind("mousemove",function(e){
- 		_self.onMouseMove(e);
- 	});
- 	this.container.bind("mouseup",function(e){
- 		_self.onMouseUp(e);
- 	});
  }
  
  ReportDesign.prototype.endEdit = function(){
@@ -52,6 +46,9 @@
  }
  
  ReportDesign.prototype.onDBLClick = function(e){
+ 	if(this._clicktimeid){
+ 		clearTimeout(this._clicktimeid);
+ 	}
  	this.endEdit();
  	var off = this.container.offset();
  	var config = {
@@ -63,7 +60,13 @@
  }
  
  ReportDesign.prototype.onClick = function(e){
- 	this.endEdit();
+ 	if(this._clicktimeid){
+ 		clearTimeout(this._clicktimeid);
+ 	}
+ 	var self = this;
+ 	this._clicktimeid = setTimeout(function(){
+ 		self.endEdit();
+ 	},100);
  }
  
  ReportDesign.prototype.onMouseDown = function(e){
@@ -73,6 +76,11 @@
  	 */
  	if(target.hasClass("drag_handler") || !target.draggable("option","disabled") || target.is("th")) return;
  	this.mousedown = true;
+ 	var _self = this;
+ 	this.container.bind({
+ 		"mousemove":function(e){_self.onMouseMove(e)},
+ 		"mouseup":function(e){_self.onMouseUp(e)}
+ 	});
  	if(this.container[0].setCapture){
  		this.container[0].setCapture();
  	}else {
@@ -103,12 +111,23 @@
  }
  
  ReportDesign.prototype.onMouseUp = function(e){
+ 	if(!this.mousedown) return;
+ 	this.clearAllSelected();
+ 	var target = $(e.target);
  	this.mousedown = false;
+ 	$("body").unbind("selectstart",this.onSelectStart);
+ 	this.onSelectStart = false;
+ 	var _self = this;
+ 	this.container.unbind({
+ 		"mousemove":function(e){_self.onMouseMove(e)},
+ 		"mouseup":function(e){_self.onMouseUp(e)}
+ 	});
  	if(this.container[0].releaseCapture){
  		this.container[0].releaseCapture();
  	}else {
  		window.releaseEvents("MouseUp");
  	}
+ 	if(this.mousedownPt.left == e.pageX && this.mousedownPt.top == e.pageY) return true;
  	var off = this.selectFrame.offset();
  	var r = {
  		left:off.left,
@@ -118,8 +137,6 @@
  	}
  	this.selectFrame.hide();
  	this.selectByRect(r);
- 	$("body").unbind("selectstart",this.onSelectStart);
- 	this.onSelectStart = false;
  }
  
  ReportDesign.prototype.getName = function(){
@@ -194,7 +211,6 @@
  }
  
  ReportDesign.prototype.selectByRect = function(r){
- 	this.clearAllSelected();
  	for(var i=0;i<this.headers.size();i++){
  		var obj = this.headers.get(i);
  		if(obj.inRect(r)){
@@ -204,13 +220,14 @@
  }
  
  ReportDesign.prototype.clearAllSelected = function(){
+ 	if(this.selects.length == 0) return;
  	this.container.find(".selected_div").remove();
  	this.selects = [];
  	this.pControl.switchByObj(this);
  }
  
  ReportDesign.prototype.addTable = function(defaultConfig){
- 	var x = defaultConfig.x || 10;
+ 	var x = defaultConfig.x || 100;
  	var y = defaultConfig.y || 100;
  	var name = defaultConfig.name || this.getUniqueTableName();
  	var div = $("<div/>").appendTo(this.container).draggable({

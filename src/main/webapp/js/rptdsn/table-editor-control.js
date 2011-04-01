@@ -19,7 +19,7 @@
  	this.container.css("left",this.x).css("top",this.y).css("position","absolute");
  	this.handler = $("<div/>").addClass("drag_handler").appendTo(this.container);
  	this.container.jTable({
- 		defaultRowCount:50,
+ 		defaultRowCount:100,
  		defaultColCount:30,
  		defaultRowHeight:24,
  		defaultColWidth:72
@@ -79,7 +79,7 @@
  	this._hidegrid = !!value;
  }
  
- TableEditorControl.prototype.onClick = function(e){
+ TableEditorControl.prototype.doClick = function(e){
  	var item = $(e.target);
  	if(item.is("td")){
  		this.owner.endEdit();
@@ -89,7 +89,7 @@
  	}
  }
  
- TableEditorControl.prototype.onDBLClick = function(e){
+ TableEditorControl.prototype.doDBLClick = function(e){
  	var item = $(e.target);
  	if(item.is("td")){
  		new CellEditor(item,this).beginEdit();

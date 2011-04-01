@@ -36,6 +36,10 @@ a:active {
 	filter:progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=60);
 	pointer-events:none;
 	position:absolute;
+	height:100px;
+	width:100px;
+	left:100px;
+	top:100px;
 }
 
 .select_frame{

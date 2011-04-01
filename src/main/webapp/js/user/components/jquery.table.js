@@ -30,40 +30,29 @@
 			    }
 			    tobj.html(arr.join(""));
 			    tobj.attr("frame", "border");
-				    tobj.attr("rules", "all");
+			    tobj.attr("rules", "all");
 			    
 			    var onSelectStart = false;
 			    var lineMove = false;
 			    var line = $("<div/>").addClass("col_change_line").appendTo(this);
-			    var onMouseMove = function(event){
-			    	if(lineMove){
-			    	if (!onSelectStart) {
-							        onSelectStart = function() {
-								        return false
-							        };
-							        $("body").css("-moz-user-select","none");
-							        $("body").bind("selectstart", onSelectStart);
-						        }
-						        line.offset({
-							            "left"	: event.pageX
-						            }).show();
-			    	}
+			    var onMouseMove = function(event) {
+				    if (lineMove) {
+					    $("body").css("-moz-user-select", "none");
+					    line.offset({
+						        "left"	: event.pageX
+					        }).show();
+				    }
 			    }
 			    
-			    var onMouseUp = function(event){
-			    	if(lineMove){
-			    		line.hide();
-						        lineMove = false;
-						        var pos = currTh.offset();
-						        var index = currTh.prevAll().length;
-						        currTh.width(event.clientX - pos.left);
-						        if (this.releaseCapture) {
-							        this.releaseCapture();
-						        }
-						        $("body").unbind("selectstart", onSelectStart);
-						        $("body").css("-moz-user-select","-moz-all");
-						        onSelectStart = false;
-			    	}
+			    var onMouseUp = function(event) {
+				    if (lineMove) {
+					    line.hide();
+					    lineMove = false;
+					    var pos = currTh.offset();
+					    var index = currTh.prevAll().length;
+					    currTh.width(event.clientX - pos.left);
+					    $("body").css("-moz-user-select", "-moz-all");
+				    }
 			    }
 
 			    this.find("th").bind({

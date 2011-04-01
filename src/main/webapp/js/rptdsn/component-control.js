@@ -65,13 +65,33 @@
  	this.container.css(name,value);
  }
  
- rptdsnComponent.prototype.onClick = function(e){
+ rptdsnComponent.prototype.doClick = function(e){
  	this.owner.endEdit();
  	this.owner.select(this);
  }
  
- rptdsnComponent.prototype.onDBLClick = function(e){
+ rptdsnComponent.prototype.onClick = function(e){
+ 	e.stopPropagation();
+ 	if(this._clicktimeid){
+ 		clearTimeout(this._clicktimeid);
+ 	}
+ 	var self = this;
+ 	this._clicktimeid = setTimeout(function(){
+ 		self.doClick(e);
+ 		self._clicktimeid = 0;
+ 	},100);
+ }
+ 
+ rptdsnComponent.prototype.doDBLClick = function(e){
  	this.beginEdit(e);
+ }
+ 
+ rptdsnComponent.prototype.onDBLClick = function(e){
+ 	e.stopPropagation();
+ 	if(this._clicktimeid){
+ 		clearTimeout(this._clicktimeid);
+ 	}
+ 	this.doDBLClick(e);
  }
  
  rptdsnComponent.prototype.onDrag = function(e){
