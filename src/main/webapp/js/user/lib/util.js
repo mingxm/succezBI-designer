@@ -411,3 +411,52 @@ function _extendClass(fConstr, fSuperConstr, sName) {
 function rectInRect(r1,r2){
 	return r1.left>=r2.left && r1.top>=r2.top && r1.left+r1.width<=r2.left+r2.width && r1.top+r1.height<=r2.top+r2.height;
 }
+
+/**
+ *  功能绑定
+ @example
+ 通常写法
+ var self = this;
+ setTimeout(function(){self.test(100,200);}, 1000);
+ 新的写法
+ setTimeout(this.test.bind(this, 100, 200), 1000); 
+ * @deprecated 使用bind2
+ * @param {obj} context
+ * @return {obj}
+ */
+Function.prototype.bind = function(context) {
+	var args = Array.prototype.slice.call(arguments, 1);
+	// this.context = context;
+
+	/**
+	 * 创建200次参数面板，每个参数面板有10个edit，IE6，7，8会有20M内存的涨幅。如果把context设置为空，IE内存基本上不变。
+	 * 
+	 * 测试用例：xui/ctrls/test/testmemleak/testcalcparams/cp-edit.html
+	 */
+	// context = null;
+	/**
+	 * 把参数不能直接赋值在this指针上，如果同一个函数调用多次bind，会导致始终记录的是最后一次bind的对象
+	 */
+
+	var __method = this;
+	return function() {
+		return __method.apply(context, args.concat(Array.prototype.slice.call(arguments, 0)));
+	};
+};
+
+function log(message) {  
+    if (!log.window_ || log.window_.closed) {  
+        var win = window.open("", null, "width=400,height=200," +  
+                              "scrollbars=yes,resizable=yes,status=no," +  
+                              "location=no,menubar=no,toolbar=no");  
+        if (!win) return;  
+        var doc = win.document;  
+        doc.write("<html><head><title>Debug Log</title></head>" +  
+                  "<body></body></html>");  
+        doc.close();  
+        log.window_ = win;  
+    }  
+    var logLine = log.window_.document.createElement("div");  
+    logLine.appendChild(log.window_.document.createTextNode(message));  
+    log.window_.document.body.appendChild(logLine);  
+} 

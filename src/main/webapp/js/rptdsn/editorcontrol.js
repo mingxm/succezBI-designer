@@ -46,6 +46,8 @@
  }
  
  ReportDesign.prototype.onDBLClick = function(e){
+ 	log("开始执行ReportDesign.prototype.onDBLClick方法");
+	var t1 = new Date().getTime();
  	if(this._clicktimeid){
  		clearTimeout(this._clicktimeid);
  	}
@@ -57,9 +59,12 @@
  	}
  	var th = this.addTextHeader(config);
  	th.beginEdit();
+	log("执行ReportDesign.prototype.onDBLClick完毕！耗时"+(new Date().getTime()-t1)+"ms");
  }
  
  ReportDesign.prototype.onClick = function(e){
+ 	log("开始执行ReportDesign.prototype.onClick方法");
+	var t1 = new Date().getTime();
  	if(this._clicktimeid){
  		clearTimeout(this._clicktimeid);
  	}
@@ -67,9 +72,12 @@
  	this._clicktimeid = setTimeout(function(){
  		self.endEdit();
  	},100);
+	log("执行ReportDesign.prototype.onClick完毕！耗时"+(new Date().getTime()-t1)+"ms");
  }
  
  ReportDesign.prototype.onMouseDown = function(e){
+ 	log("开始执行ReportDesign.prototype.onMouseDown方法");
+	var t1 = new Date().getTime();
  	var target = $(e.target);
  	/**
  	 * 有可能是拖动界面上的某一个控件，那么这个时候就不需要有框选框
@@ -77,9 +85,13 @@
  	if(target.hasClass("drag_handler") || !target.draggable("option","disabled") || target.is("th")) return;
  	this.mousedown = true;
  	var _self = this;
+	if(!this._mouseMoveEvent)
+		this._mouseMoveEvent = this.onMouseMove.bind(this);
+	if(!this._mouseUpEvent)
+		this._mouseUpEvent = this.onMouseUp.bind(this);
  	this.container.bind({
- 		"mousemove":function(e){_self.onMouseMove(e)},
- 		"mouseup":function(e){_self.onMouseUp(e)}
+ 		"mousemove":this._mouseMoveEvent,
+ 		"mouseup":this._mouseUpEvent
  	});
  	if(this.container[0].setCapture){
  		this.container[0].setCapture();
@@ -90,9 +102,12 @@
  		left:e.pageX,
  		top:e.pageY
  	}
+	log("执行ReportDesign.prototype.onMouseDown完毕！耗时"+(new Date().getTime()-t1)+"ms");
  }
  
  ReportDesign.prototype.onMouseMove = function(e){
+ 	log("开始执行ReportDesign.prototype.onMouseMove方法");
+	var t1 = new Date().getTime();
  	if(!this.mousedown) return;
  	/**
  	 * 在框选的过程中设置整个界面不允许选取文字，在鼠标松起的时候再unbind
@@ -108,9 +123,12 @@
  	var w = e.pageX - this.mousedownPt.left;
  	var h = e.pageY - this.mousedownPt.top;
  	this.selectFrame.css("width",w).css("height",h);
+	log("执行ReportDesign.prototype.onMouseMove完毕！耗时"+(new Date().getTime()-t1)+"ms");
  }
  
  ReportDesign.prototype.onMouseUp = function(e){
+ 	log("开始执行ReportDesign.prototype.onMouseUp方法");
+	var t1 = new Date().getTime();
  	if(!this.mousedown) return;
  	this.clearAllSelected();
  	var target = $(e.target);
@@ -119,8 +137,8 @@
  	this.onSelectStart = false;
  	var _self = this;
  	this.container.unbind({
- 		"mousemove":function(e){_self.onMouseMove(e)},
- 		"mouseup":function(e){_self.onMouseUp(e)}
+ 		"mousemove":this._mouseMoveEvent,
+ 		"mouseup":this._mouseUpEvent
  	});
  	if(this.container[0].releaseCapture){
  		this.container[0].releaseCapture();
@@ -137,6 +155,7 @@
  	}
  	this.selectFrame.hide();
  	this.selectByRect(r);
+	log("执行ReportDesign.prototype.onMouseUp完毕！耗时"+(new Date().getTime()-t1)+"ms");
  }
  
  ReportDesign.prototype.getName = function(){
