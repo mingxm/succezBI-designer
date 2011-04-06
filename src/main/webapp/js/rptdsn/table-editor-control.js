@@ -80,6 +80,8 @@
  }
  
  TableEditorControl.prototype.doClick = function(e){
+ 	log("开始执行TableEditorControl.prototype.doClick方法");
+	var t1 = new Date().getTime();
  	var item = $(e.target);
  	if(item.is("td")){
  		this.owner.endEdit();
@@ -87,11 +89,15 @@
  	}else {
  		this.owner.select(this);
  	}
+	log("执行TableEditorControl.prototype.doClick完毕！耗时"+(new Date().getTime()-t1)+"ms");
  }
  
  TableEditorControl.prototype.doDBLClick = function(e){
+ 	log("开始执行TableEditorControl.prototype.doDBLClick方法");
+	var t1 = new Date().getTime();
  	var item = $(e.target);
  	if(item.is("td")){
  		new CellEditor(item,this).beginEdit();
  	}
+	log("执行TableEditorControl.prototype.doDBLClick完毕！耗时"+(new Date().getTime()-t1)+"ms");
  }
