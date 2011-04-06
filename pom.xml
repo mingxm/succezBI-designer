@@ -1,21 +1,229 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>succezBI</groupId>
-  <artifactId>designer</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>designer Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <build>
-    <finalName>designer</finalName>
-  </build>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>succezBI</groupId>
+	<artifactId>designer</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<url>www.succezbi.com</url>
+	<description>succezBI</description>
+
+	<build>
+		<outputDirectory>target/classes</outputDirectory>
+		<finalName>designer</finalName>
+
+		<plugins>
+
+			<!-- 通过配置编译插件的属性来定义编译参数，原先的脚本是通过properties标签来定义这些参数的 -->
+			<!-- 但是我使用的Maven 2.0.11好像不识别properties标签定义的参数，非得通过下面这种方式 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<fork>true</fork>
+					<encoding>utf-8</encoding><!-- BI及其所依赖的工程源文件编码为UTF-8 -->
+					<meminitial>128m</meminitial><!-- 编译时分配给JVM的最小内存 -->
+					<maxmem>512m</maxmem><!-- 编译时分配给JVM的最大内存 -->
+					<source>1.5</source><!-- 源代码编译级别 -->
+					<target>1.5</target><!-- class文件级别 -->
+					<verbose>true</verbose>
+				</configuration>
+			</plugin>
+
+			<!-- 执行：mvn site，生成工程的网站。这个网站将包括：javadoc、test-javadoc、测试报告、codestyle检查报告 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0-beta-2</version>
+				<configuration>
+					<inputEncoding>utf-8</inputEncoding><!-- 源代码文件的编码 -->
+					<outputEncoding>utf-8</outputEncoding><!-- 生成报告文件的编码 -->
+
+					<reportPlugins>
+						<!-- 输出工程的基本信息， 比如依赖哪些jar包 -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-project-info-reports-plugin</artifactId>
+							<version>2.0.1</version>
+						</plugin>
+
+						<!-- 生成javadoc -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<version>2.7</version>
+							<configuration>
+								<bottom><!-- 页面底眉 -->
+						<![CDATA[ Copyright &#169; {inceptionYear}-{currentYear} <a href="http://www.esensoft.com">esensoft</a>,Inc. All Rights Reserved. ]]>
+								</bottom>
+								<encoding>utf-8</encoding><!-- 源代码文件的编码 -->
+								<minmemory>128m</minmemory><!-- 和javac一样，javadoc也蛮耗内存。如果不设置，可能出现内存溢出的情况 -->
+								<maxmemory>512m</maxmemory>
+							</configuration>
+						</plugin>
+
+						<!-- 将源码生成html，方便在ie中浏览源码. -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-jxr-plugin</artifactId>
+							<version>2.1</version>
+							<configuration>
+								<aggregate>true</aggregate>
+								<inputEncoding>utf-8</inputEncoding><!-- 源代码文件的编码 -->
+								<outputEncoding>utf-8</outputEncoding><!-- 生成报告文件的编码 -->
+							</configuration>
+						</plugin>
+
+						<!-- 运行单元测试，会自动运行所有testcase -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-report-plugin</artifactId>
+							<version>2.6</version>
+						</plugin>
+
+						<!-- 检测单元测试的覆盖率，生成覆盖率报告 -->
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>cobertura-maven-plugin</artifactId>
+							<version>2.4</version>
+							<configuration>
+								<formats>
+									<format>xml</format>
+									<format>html</format>
+								</formats>
+								<encoding>utf-8</encoding>
+								<instrumentation><!--排除测试代码，测试代码不用检测覆盖率 -->
+									<excludes>
+										<exclude>**/Test*.class</exclude>
+									</excludes>
+								</instrumentation>
+							</configuration>
+						</plugin>
+
+						<!-- 检测代码风格 -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-checkstyle-plugin</artifactId>
+							<version>2.6</version>
+							<configuration>
+								<encoding>utf-8</encoding>
+							</configuration>
+						</plugin>
+					</reportPlugins>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>servlet-api</artifactId> 
+			<version>2.4</version> <scope>provided</scope> </dependency> -->
+		<dependency>
+			<groupId>org.apache.tapestry</groupId>
+			<artifactId>tapestry-core</artifactId>
+			<version>${tapestry-release-version}</version>
+		</dependency>
+
+		<!-- 
+		<dependency>
+			<groupId>org.apache.tapestry</groupId>
+			<artifactId>tapestry-hibernate</artifactId>
+			<version>${tapestry-release-version}</version>
+		</dependency>
+		-->
+
+		<!-- A dependency on either JUnit or TestNG is required, or the surefire 
+			plugin (which runs the tests) will fail, preventing Maven from packaging 
+			the WAR. Tapestry includes a large number of testing facilities designed 
+			for use with TestNG (http://testng.org/), so it's recommended. -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>5.8</version>
+			<classifier>jdk15</classifier>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>2.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- tapestry-test will conflict with RunJettyRun inside Eclipse. tapestry-test 
+			brings in Selenium, which is based on Jetty 5.1; RunJettyRun uses Jetty 6. 
+			<dependency> <groupId>org.apache.tapestry</groupId> <artifactId>tapestry-test</artifactId> 
+			<version>${tapestry-release-version}</version> <scope>test</scope> </dependency> -->
+
+		<!-- Provided by the servlet container, but sometimes referenced in the 
+			application code. -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.7</version>
+		</dependency>
+		 -->
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>esenSnapshots</id>
+			<name>esenSnapshots</name>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
+			<url>http://cc:8081/nexus/content/groups/public</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+
+		<!-- As above, this can be commented out when access to the snapshot version 
+			of a Tapestry Maven plugin is not required. -->
+		<pluginRepository>
+			<id>tapestry-snapshots</id>
+			<url>http://tapestry.formos.com/maven-snapshot-repository/</url>
+		</pluginRepository>
+
+	</pluginRepositories>
+
+	<properties>
+		<tapestry-release-version>5.2.5</tapestry-release-version>
+	</properties>
 </project>
