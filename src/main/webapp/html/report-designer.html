@@ -5,15 +5,30 @@
 <link rel="stylesheet" type="text/css" href="../css/layout-default-latest.css" />
 <link rel="stylesheet" href="../js/jquery/download/jquery-ui-1.8.10.custom/development-bundle/themes/base/jquery.ui.all.css">
 <link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../js/jquery/download/simpletree/jquery.simple.tree.css">
+<script type="text/javascript" src="../js/user/lib/util.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-1.4.4.js"></script>
 <script type="text/javascript" src="../js/jquery/download/jquery-ui-1.8.10.custom/js/jquery-ui-1.8.10.custom.min.js"></script>
 <script type="text/javascript" src="../js/jquery/download/jquery.layout-latest.js"></script>
+<script type="text/javascript" src="../js/user/components/jquery.property.js"></script>
+<script type="text/javascript" src="../js/user/components/jquery.table.js"></script>
+<script type="text/javascript" src="../js/rptdsn/property-editor-control.js"></script>
+<script type="text/javascript" src="../js/rptdsn/component-control.js"></script>
+<script type="text/javascript" src="../js/rptdsn/cell-editor-control.js"></script>
+<script type="text/javascript" src="../js/rptdsn/table-editor-control.js"></script>
+<script type="text/javascript" src="../js/rptdsn/text-editor-control.js"></script>
+<script type="text/javascript" src="../js/rptdsn/rich-editor.js"></script>
+<script type="text/javascript" src="../js/rptdsn/editorcontrol.js"></script>
+<script type="text/javascript" src="../js/user/components/SzToolBar.js"></script>
+<script type="text/javascript" src="../js/jquery/download/simpletree/jquery.simple.tree.js"></script>
 <script type="text/javascript">
 	$(function(){
 		var myLayout = $('body').layout({
 			resizable:true,
 			north__resizable:false,
+			north__size:25,
 			east__minSize:200,
+			east__size:250,
 			west__minSize:200,
 			west__size:220,
 			spacing_open:2,
@@ -23,9 +38,39 @@
 			fillSpace:true,
 			autoHeight:false
 		});
-		//工具栏容器
+		//工具栏容器 
 		var toolBarContainer = myLayout.panes.north;
-	})
+		var _dsn = new ReportDesign(myLayout.panes.center,"B2390");
+		_dsn.addComponent("table",{});
+		_dsn.addComponent("text",{
+			name:"HHH0",
+			x:150,
+			y:150,
+			value:"这是一个表头"
+		});
+		_dsn.addComponent("toolbar",{
+			m_element : $(".ui-layout-north"),
+			setting:{_buttonsid:["Tool_Save",
+                                "Tool_Bold",
+                                "Tool_Italic",
+                                "Tool_Underline",
+                                "Tool_Cut",
+                                "Tool_Paste",
+                                "Tool_Redo",
+                                "Tool_Undo",
+                                "Tool_Do",
+                                "Tool_NewFxq",
+                                "Tool_Chart",
+                                "Tool_DrawForm"
+                                ]}
+		});
+		_dsn.addComponent("reportStruct",{
+			m_element : $(".simpleTree"),
+			setting : {
+				animate:true
+			}
+		})	
+	})	
 </script>
 <title>报表设计器</title>
 </head>
@@ -33,13 +78,81 @@
 <div class="ui-layout-west">
 <div id="accordion1" class="basic">
 	<h3><a href="#">报表结构</a></h3>
-	<div></div>
-	<h3><a href="#">控件列表</a></h3>
-	<div></div>
+	<div style="padding-top:0px;padding-left:10px">
+		<ul class='simpleTree'>
+			<li class='root'><span>ReportDesinger</span>
+				<ul>
+					<li class="open"><span>headers</span>
+						<ul>
+							<li><span>HHH0</span>
+								<ul>
+									<li><span>text：表头表元</span></li>
+									<li><span>border：0px none #F5F5F5</span></li>
+									<li><span>x:234 y:586</span></li>
+								</ul>
+							</li>
+							<li><span>HHH1</span></li>
+							<li><span>HHH2</span></li>
+							<li><span>HHH3</span></li>
+						</ul>
+					</li>
+					<li><span>tables</span>
+						<ul>
+							<li><span>tb1</span>
+								<ul>
+									<li><span>Cell1</span></li>
+									<li><span>Cell2</span></li>
+									<li><span>Cell3</span></li>
+									<li><span>Cell4</span></li>
+									<li><span>Cell5</span></li>
+									<li><span>Cell6</span></li>
+								</ul>
+							</li>
+							<li><span>tb2</span></li>
+							<li><span>tb3</span></li>
+							<li><span>tb4</span></li>
+							<li><span>tb5</span></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>	
+	</div>
+	<h3><a href="#" >控件列表</a></h3>
+	<div>
+		<ul class='controlList'>
+			<li><span>ReportDesignerTabel</span></li>
+			<li><span>ReportDesignerHeader</span></li>
+			<li><span>ReportDesignerChart</span></li>
+			<li><span>ReportDesignerEditer</span></li>
+			<li><span>ReportDesignerCheckBox</span></li>
+			<li><span>ReportDesignerButton</span></li>
+			<li><span>ReportDesignerImage</span></li>
+		</ul>
+	</div>
 </div>
 </div>
-<div class="ui-layout-north"></div>
-<div class="ui-layout-center"></div>
+<div class="ui-layout-north">
+	<tr>
+		<td>
+			<a href="#" id="Tool_Save"><img src="../../resources/image/save.gif"></img></a>
+			<a href="#" id="Tool_Bold"><img src="../../resources/image/bold.gif"></img></a>
+			<a href="#" id="Tool_Italic"><img src="../../resources/image/Itali.gif"></img></a>
+			<a href="#" id="Tool_Underline"><img src="../../resources/image/underlin.gif"></img></a>
+			<a href="#" id="Tool_Cut"><img src="../../resources/image/cut.gif"></img></a>
+			<a href="#" id="Tool_Paste"><img src="../../resources/image/paste.gif"></img></a>
+			<a href="#" id="Tool_Redo"><img src="../../resources/image/redo.gif"></img></a>
+			<a href="#" id="Tool_Undo"><img src="../../resources/image/undo.gif"></img></a>
+			<a href="#" id="Tool_Do"><img src="../../resources/image/run.gif"></img></a>
+			<a href="#" id="Tool_NewFxq"><img src="../../resources/image/fxq.gif"></img></a>
+			<a href="#" id="Tool_Chart"><img src="../../resources/image/chart.gif"></img></a>
+			<a href="#" id="Tool_DrawForm"><img src="../../resources/image/drawtable.gif"></img></a>
+		</td>
+	</tr>
+</div>
+<div class="ui-layout-center">
+	<div id="select_frameid" class="select_frame"></div>
+</div>
 <div class="ui-layout-east"></div>
 </body>
 </html>
