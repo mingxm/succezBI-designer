@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title>easyolap</title>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+		<link href="../js/jquery/download/jquery-treeview/css/jquery.treeview.css" rel="stylesheet"/>
+        <script src="../js/jquery/jquery-1.5.2rc1.js">
+        </script>
+        <script src="../js/jquery/download/jquery.layout-latest.js">
+        </script>
+        <script src="../js/jquery/download/jquery-treeview/js/jquery.treeview.js">
+        </script>
+        <script src="../js/easyolap/easyolap.js">
+        </script>
+		<style type="text/css">
+			body {}
+			#settingPanel {background-color:#f8d080;width:800px;display:none}
+			#filterPanel {background-color:#ffffff;width:800px;}
+			#rpt_header {font-size:20px;font-weight:bold}
+		</style>
+    </head>
+    <body>
+        <DIV class="ui-layout-center">
+            <div id="settingPanel">
+            	
+            </div>
+            	
+            <div id="resultPanel" style="width:600px">
+            	<table><tr><td align="center" id="rpt_header" cellPadding="10px" cellSpacing="0px" width="200px">收入</td></tr></table>
+            	<table border="1" id="resultTable" cellPadding="5px" cellSpacing="0px">
+            		<tr><td>行业代码</td><td>投资总额</td><td>收入</td></tr>
+					<tr><td>制造业</td><td>1000万</td><td>500万</td></tr>
+					<tr><td>文化体育</td><td>1000万</td><td>500万</td></tr>
+					<tr><td>教育</td><td>1000万</td><td>500万</td></tr>
+					<tr><td>水利</td><td>1000万</td><td>500万</td></tr>
+					<tr><td>房地产</td><td>1000万</td><td>500万</td></tr>
+					<tr><td>金融</td><td>1000万</td><td>500万</td></tr>
+					<tr><td>餐饮</td><td>1000万</td><td>500万</td></tr>
+				</table>
+            </div>
+			
+            <div id="filterPanel">
+            	<table border="0" cellPadding="5px" cellSpacing="0px" style="font-size:12px">
+            		<tr id=""><td>过滤条件:<a href="">bbq()=2008</a></td></tr>
+            		<tr><td>结果集过滤:</td><td></td></tr>
+            		<tr><td>排序:</td><td></td></tr>
+				</table>
+            </div>
+            
+        </DIV>
+        <DIV class="ui-layout-north">
+            <table>
+            	<tr>
+            		<td><input type="button" value="设置" id="btn_setting"/></td>
+            		<td><input type="button" value="计算"/></td>
+					<td><input type="button" value="Undo"/></td>
+					<td><input type="button" value="Redo"/></td>
+				</tr>
+            </table>
+        </DIV>
+        <DIV class="ui-layout-west">
+        	<span>维度和度量</span>
+            <ul id="tree">
+            	<li>维
+					<ul>
+						<li>行业代码</li>
+						<li>经济类型</li>
+						<li>报表期</li>
+					</ul>
+				</li>
+            	<li>指标
+					<ul>
+						<li>投资总额</li>
+						<li>收入</li>
+						<li>支出</li>
+					</ul>
+				</li>
+            </ul>
+        </DIV>
+    </body>
+    <script language="JavaScript">
+
+    </script>
+        <script src="easyolap.js">
+        </script>
+</html>
