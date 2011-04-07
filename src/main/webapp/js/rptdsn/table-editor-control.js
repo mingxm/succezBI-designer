@@ -49,7 +49,11 @@
  		this.name = value;
  	}
  }
- 
+
+ TableEditorControl.prototype.getName = function(){
+ 	return this.name;
+ }
+  
  TableEditorControl.prototype.setReportStyle = function(value){
  	this._style = value;
 	var table = this.container.find("table");

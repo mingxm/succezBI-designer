@@ -11,7 +11,9 @@
  */
 (function($){
 	
-	//该插件的版本号
+	//该插件的
+	
+	//版本号
 	VERSION = '0.0.0.1';
 	
 	//按钮的状态
@@ -24,7 +26,6 @@
  	 * 以及对编辑内容的新建、保存、另存为等操作
  	 */
 	var _rptEditor={};
-
 	$.fn.ToolBar=function(){
 		/*
 		 * 缺省设置，有待增加内容
@@ -279,7 +280,7 @@
 		underlineTag = !underlineTag;
 	}
 	/*
-	 * 改变元素的按下和谈起状态
+	 * 改变元素的按下和弹起状态
 	 */
 	function changeInOrOutSet(flag,item){
 		if (flag)
