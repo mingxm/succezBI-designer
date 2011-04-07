@@ -281,7 +281,7 @@
   }
 
   ReportDesign.prototype.addReportStruct = function(option){
- 	var rs = new ReportStructControl($(".simpleTree"),this,option);
+ 	var rs = $(".simpleTree").ReportStructControl(this,option);
 	return rs;
   }  
   
