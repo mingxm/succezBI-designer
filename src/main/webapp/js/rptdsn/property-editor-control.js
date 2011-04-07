@@ -6,6 +6,7 @@
  	this.reportControl = reportControl;
  	this.obj = reportControl;
  	this._init();
+ 	this._delayUpdateid = false;
  }
  
  PropertyEditorControl.prototype._init = function(){
@@ -14,7 +15,14 @@
  
  PropertyEditorControl.prototype.switchByObj = function(obj){
  	this.obj = obj;
- 	this._updateDom();
+ 	if(this._delayUpdateid){
+ 		clearTimeout(this._delayUpdateid);
+ 		this._delayUpdateid = false;
+ 	}
+ 	var self = this;
+ 	this._delayUpdateid = setTimeout(function(){
+ 		self._updateDom();
+ 	},300);
  }
  
  PropertyEditorControl.prototype._updateDom = function(){

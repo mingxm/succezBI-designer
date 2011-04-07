@@ -67,6 +67,7 @@
 	var t1 = new Date().getTime();
  	if(this._clicktimeid){
  		clearTimeout(this._clicktimeid);
+ 		this._clicktimeid = false;
  	}
  	var self = this;
  	this._clicktimeid = setTimeout(function(){
@@ -118,7 +119,7 @@
 		}
 		$("body").bind("selectstart", this.onSelectStart);
 	}
- 	this.selectFrame.show();
+ 	this.selectFrame.css("visibility","inherit");
  	this.selectFrame.offset(this.mousedownPt);
  	var w = e.pageX - this.mousedownPt.left;
  	var h = e.pageY - this.mousedownPt.top;
@@ -153,7 +154,7 @@
  		width:this.selectFrame.width(),
  		height:this.selectFrame.height()
  	}
- 	this.selectFrame.hide();
+ 	this.selectFrame.css("visibility","hidden");
  	this.selectByRect(r);
 	log("执行ReportDesign.prototype.onMouseUp完毕！耗时"+(new Date().getTime()-t1)+"ms");
  }
@@ -240,9 +241,12 @@
  
  ReportDesign.prototype.clearAllSelected = function(){
  	if(this.selects.length == 0) return;
+ 	log("开始执行ReportDesign.prototype.clearAllSelected方法");
+	var t1 = new Date().getTime();
  	this.container.find(".selected_div").remove();
  	this.selects = [];
  	this.pControl.switchByObj(this);
+ 	log("执行ReportDesign.prototype.clearAllSelected完毕！耗时"+(new Date().getTime()-t1)+"ms");
  }
  
  ReportDesign.prototype.addTable = function(defaultConfig){
@@ -251,9 +255,9 @@
  	var name = defaultConfig.name || this.getUniqueTableName();
  	var div = $("<div/>").appendTo(this.container).draggable({
  		handle:".drag_handler",
- 		refreshPositions:false,
- 		addClass:false,
- 		grid:[10,10]
+ 	//	refreshPositions:false,
+ 		addClass:false
+ 	//	grid:[10,10]
  	});
 	var table = new TableEditorControl(div,this,name,x,y);
 	this.tables.put(table.getName(),table);

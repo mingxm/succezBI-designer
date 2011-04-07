@@ -40,7 +40,10 @@
  }
  
  rptdsnComponent.prototype.getPosition = function(){
+ 	log("开始执行rptdsnComponent.prototype.getPosition方法");
+ 	var t1 = new Date().getTime();
  	var offset = this.container.offset();
+ 	log("执行rptdsnComponent.prototype.getPosition完毕！耗时"+(new Date().getTime()-t1)+"ms,x:"+offset.left+",y:"+offset.top);
  	return {
  		left:offset.left,
  		top:offset.top
@@ -79,7 +82,7 @@
  	this._clicktimeid = setTimeout(function(){
  		self.doClick(e);
  		self._clicktimeid = 0;
- 	},100);
+ 	},300);
  }
  
  rptdsnComponent.prototype.doDBLClick = function(e){
