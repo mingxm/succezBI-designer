@@ -5,11 +5,11 @@
 		<link href="../js/jquery/download/jquery-treeview/css/jquery.treeview.css" rel="stylesheet"/>
         <script src="../js/jquery/jquery-1.5.2rc1.js">
         </script>
-        <script src="../js/jquery/download/jquery.layout-latest.js">
+        <script src="../js/jquery/download/jquery-layout/jquery.layout-latest.js">
         </script>
         <script src="../js/jquery/download/jquery-treeview/js/jquery.treeview.js">
         </script>
-        <script src="../js/easyolap/easyolap.js">
+        <script src="easyolap.js">
         </script>
 		<style type="text/css">
 			body {}
