@@ -64,12 +64,7 @@
                                 "Tool_DrawForm"
                                 ]}
 		});
-		_dsn.addComponent("reportStruct",{
-			m_element : $(".simpleTree"),
-			setting : {
-				animate:true
-			}
-		})	
+        _dsn.addComponent("reportStruct",{drag:false,animate:true});		
 	})	
 </script>
 <title>报表设计器</title>
@@ -78,58 +73,9 @@
 <div class="ui-layout-west">
 <div id="accordion1" class="basic">
 	<h3><a href="#">报表结构</a></h3>
-	<div style="padding-top:0px;padding-left:10px">
-		<ul class='simpleTree'>
-			<li class='root'><span>ReportDesinger</span>
-				<ul>
-					<li class="open"><span>headers</span>
-						<ul>
-							<li><span>HHH0</span>
-								<ul>
-									<li><span>text：表头表元</span></li>
-									<li><span>border：0px none #F5F5F5</span></li>
-									<li><span>x:234 y:586</span></li>
-								</ul>
-							</li>
-							<li><span>HHH1</span></li>
-							<li><span>HHH2</span></li>
-							<li><span>HHH3</span></li>
-						</ul>
-					</li>
-					<li><span>tables</span>
-						<ul>
-							<li><span>tb1</span>
-								<ul>
-									<li><span>Cell1</span></li>
-									<li><span>Cell2</span></li>
-									<li><span>Cell3</span></li>
-									<li><span>Cell4</span></li>
-									<li><span>Cell5</span></li>
-									<li><span>Cell6</span></li>
-								</ul>
-							</li>
-							<li><span>tb2</span></li>
-							<li><span>tb3</span></li>
-							<li><span>tb4</span></li>
-							<li><span>tb5</span></li>
-						</ul>
-					</li>
-				</ul>
-			</li>
-		</ul>	
-	</div>
+	<ul class='simpleTree' style="padding-top:0px;padding-left:10px"></ul>
 	<h3><a href="#" >控件列表</a></h3>
-	<div>
-		<ul class='controlList'>
-			<li><span>ReportDesignerTabel</span></li>
-			<li><span>ReportDesignerHeader</span></li>
-			<li><span>ReportDesignerChart</span></li>
-			<li><span>ReportDesignerEditer</span></li>
-			<li><span>ReportDesignerCheckBox</span></li>
-			<li><span>ReportDesignerButton</span></li>
-			<li><span>ReportDesignerImage</span></li>
-		</ul>
-	</div>
+
 </div>
 </div>
 <div class="ui-layout-north">

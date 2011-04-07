@@ -67,6 +67,21 @@ $.fn.simpleTree = function(opt){
 		 */
 		$.extend(this, {getSelected: function(){
 			return $('span.active', this).parent();
+		//add by wangyg
+		//@param target为设置选中的节点对象			
+		},setSelected:function(target){
+			$('.active',TREE).attr('class','text');
+			if(target.className=='text')
+			{
+				target.className='active';
+			}
+			if(typeof TREE.option.afterClick == 'function')
+			{
+				TREE.option.afterClick($(target).parent());
+			}
+			return false;
+		},test:function(){
+			alert(2);	
 		}});
 		TREE.closeNearby = function(obj)
 		{
@@ -148,16 +163,8 @@ $.fn.simpleTree = function(opt){
 			.bind('selectstart', function() {
 				return false;
 			}).click(function(){
-				$('.active',TREE).attr('class','text');
-				if(this.className=='text')
-				{
-					this.className='active';
-				}
-				if(typeof TREE.option.afterClick == 'function')
-				{
-					TREE.option.afterClick($(this).parent());
-				}
-				return false;
+				//modified by wangyg
+				TREE.setSelected(this);
 			}).dblclick(function(){
 				mousePressed = false;
 				TREE.nodeToggle($(this).parent().get(0));
@@ -450,7 +457,7 @@ $.fn.simpleTree = function(opt){
 				callback(dragNode_destination);
 			}
 		};
-
+		
 		TREE.init = function(obj)
 		{
 			TREE.setTreeNodes(obj, false);			

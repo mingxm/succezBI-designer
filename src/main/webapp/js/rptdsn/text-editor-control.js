@@ -51,7 +51,11 @@
  		this.name = value;
  	}
  }
- 
+
+ TextHeader.prototype.getName = function(){
+ 	return this.name;
+ }
+  
  TextHeader.prototype.setValue = function(value) {
 	if (value == "") {
 		this.container.remove();
