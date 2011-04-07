@@ -53,9 +53,11 @@
  	}
  	this.endEdit();
  	var off = this.container.offset();
+ 	var ot = this.container.scrollTop();
+ 	var ol = this.container.scrollLeft();
  	var config = {
- 		x:e.pageX - off.left,
- 		y:e.pageY - off.top
+ 		x:e.pageX - off.left+ol,
+ 		y:e.pageY - off.top+ot
  	}
  	var th = this.addTextHeader(config);
  	th.beginEdit();
@@ -218,14 +220,12 @@
  	if(!multi){
  		this.clearAllSelected();
  	}
- 	var r = obj.getRect();
- 	var off = this.container.offset();
- 	r.left = r.left - off.left-1;
- 	r.top = r.top - off.top-1;
- 	var div = $("<div/>").addClass("selected_div").appendTo(this.container);
- 	$.each(r,function(key,value){
- 		div.css(key,value);
- 	});
+ 	var div = $("<div/>").addClass("selected_div").css({
+ 		"left":obj.getLeft(),
+ 		"top":obj.getTop(),
+ 		"width":obj.getWidth(),
+ 		"height":obj.getHeight()
+ 	}).appendTo(this.container);
  	this.pControl.switchByObj(obj);
  	this.selects.push(obj);
  }

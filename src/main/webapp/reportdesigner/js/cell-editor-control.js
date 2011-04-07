@@ -29,15 +29,10 @@
  	//TODO
  }
  
- /**
-  * 获取表元的属性，如果是位置的话需要特殊处理，先获取它相对于父节点的偏移量，再加上父节点的相对位置
-  * @param {} name
-  * @return {}
-  */
- CellEditor.prototype.getProperty = function(name){
- 	if(name == "left" || name == "top"){
- 		return this.container.position()[name]+this.owner.container.position()[name];
- 	}else {
- 		return this.container.css(name);
- 	}
+ CellEditor.prototype.getLeft = function(){
+ 	return this.container.position().left+this.owner.container.position().left+this.owner.owner.container.scrollLeft();
+ }
+ 
+ CellEditor.prototype.getTop = function(){
+ 	return this.container.position().top+this.owner.container.position().top+this.owner.owner.container.scrollTop();
  }

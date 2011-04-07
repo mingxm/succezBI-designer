@@ -19,7 +19,7 @@
  	this.container.css("left",this.x).css("top",this.y).css("position","absolute");
  	this.handler = $("<div/>").addClass("drag_handler").appendTo(this.container);
  	this.container.jTable({
- 		defaultRowCount:300,
+ 		defaultRowCount:30,
  		defaultColCount:30,
  		defaultRowHeight:24,
  		defaultColWidth:72

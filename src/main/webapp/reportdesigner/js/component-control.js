@@ -50,18 +50,52 @@
  	}
  }
  
+ /**
+  * 获取控件的矩形区域，这个区域的坐标是相对于这个页面的绝对坐标
+  * @return {}
+  */
  rptdsnComponent.prototype.getRect = function(){
  	var off = this.container.offset();
  	return{
  		left:off.left,
  		top:off.top,
- 		width:this.container.width(),
- 		height:this.container.height()
+ 		width:this.getWidth(),
+ 		height:this.getHeight()
  	}
  }
  
+ /**
+  * 获取控件的left，相对坐标，相对于报表区域的坐标，考虑了报表区域的滚动条
+  * @return {}
+  */
+ rptdsnComponent.prototype.getLeft = function(){
+ 	return this.container.position().left + this.owner.container.scrollLeft();
+ }
+ 
+ /**
+  * 获取控件的top，相对坐标，相对于报表区域的坐标，考虑了报表区域的滚动条
+  * @return {}
+  */
+ rptdsnComponent.prototype.getTop = function(){
+ 	return this.container.position().top + this.owner.container.scrollTop();
+ }
+ 
+ rptdsnComponent.prototype.getWidth = function(){
+ 	return this.container.width();
+ }
+ 
+ rptdsnComponent.prototype.getHeight = function(){
+ 	return this.container.height();
+ }
+ 
  rptdsnComponent.prototype.getProperty = function(name){
- 	return this.container.css(name);
+ 	if(name == "left"){
+ 		return this.getLeft();
+ 	}else if(name == "top"){
+ 		return this.getTop();
+ 	}else {
+ 		return this.container.css(name);
+ 	}
  }
  
  rptdsnComponent.prototype.setProperty = function(name,value){
@@ -109,6 +143,11 @@
  	
  }
  
+ /**
+  * 判断控件是否在矩形r区域中，r坐标应该是页面的绝对坐标
+  * @param {} r
+  * @return {}
+  */
  rptdsnComponent.prototype.inRect = function(r){
  	return rectInRect(this.getRect(),r);
  }
