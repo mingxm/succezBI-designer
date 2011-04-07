@@ -20,7 +20,7 @@
  	this.handler = $("<div/>").addClass("drag_handler").appendTo(this.container);
  	this.container.jTable({
  		defaultRowCount:30,
- 		defaultColCount:30,
+ 		defaultColCount:40,
  		defaultRowHeight:24,
  		defaultColWidth:72
  	});

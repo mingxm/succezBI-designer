@@ -13,7 +13,6 @@
 			    }
 			    var config = $.extend({}, defaultSetting, setting);
 			    var totalWidth = config.defaultColCount * config.defaultColWidth;
-			    this.css("width", totalWidth);
 			    var arr = [];
 			    var tobj = $("<table></table>").addClass("mytable").css("width", totalWidth).appendTo(this);
 			    arr.push("<thead height='20px'>");
@@ -24,7 +23,7 @@
 			    for (var i = 0; i < config.defaultRowCount; i++) {
 			    	arr.push("<tr height='"+config.defaultRowHeight+"px'>");
 				    for (var j = 0; j < config.defaultColCount; j++) {
-				    	arr.push("<td style='word-break:break-all;'/>")
+				    	arr.push("<td style='word-break:break-all;width:"+(config.defaultColWidth+20)+"px;'/>");
 				    }
 				    arr.push("</tr>");
 			    }
@@ -59,7 +58,7 @@
 				        "mousemove"	: function(event) {
 				        	if (!lineMove) {
 						        var th = $(this);
-						        if (th.prevAll().length <= 1 || th.nextAll().length < 1) {
+						        if (th.prevAll().length < 1) {
 							        return;
 						        }
 						        var left = th.offset().left;
@@ -85,7 +84,7 @@
 				        },
 				        "mousedown"	: function(event) {
 					        var th = $(this);
-					        if (th.prevAll().length <= 1 | th.nextAll().length < 1) {
+					        if (th.prevAll().length < 1) {
 						        return;
 					        }
 					        var pos = th.offset();
