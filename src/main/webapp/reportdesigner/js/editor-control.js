@@ -215,7 +215,10 @@
 			 * _update;_addNode(name);_deleteNode;_selectNode(name);_renameNode;_test
 			 */
 			this.reportStruct = this.addReportStruct(defaultConfig);
- 			return;			
+ 			return;
+		case "toolsControl":
+			this.toolsControl = this.addToolsControl(defaultConfig);
+		return;				
  	}
  }
  
@@ -288,6 +291,11 @@
  	var rs = $(".simpleTree").ReportStructControl(this,option);
 	return rs;
   }  
+  
+  ReportDesign.prototype.addToolsControl = function(option){
+  	var tc = $("#szDesignTools",document.body).DesignToolsControl(this,option)
+	return tc;
+  }
   
   ReportDesign.prototype.ToolBarVersion = function(){
  	alert(this.toolbar._getvision());
