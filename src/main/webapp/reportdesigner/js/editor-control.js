@@ -81,6 +81,7 @@
  ReportDesign.prototype.onMouseDown = function(e){
  	log("开始执行ReportDesign.prototype.onMouseDown方法");
 	var t1 = new Date().getTime();
+	if(e.which !=1) return;
  	var target = $(e.target);
  	/**
  	 * 有可能是拖动界面上的某一个控件，那么这个时候就不需要有框选框
@@ -230,12 +231,28 @@
  	this.selects.push(obj);
  }
  
- ReportDesign.prototype.selectByRect = function(r){
+ ReportDesign.prototype.selectCellByRect = function(r){
+ 	for(var i=0;i<this.tables.size();i++){
+ 		var table = this.tables.get(i);
+ 		table.selectCellByRect(r);
+ 	}
+ }
+ 
+ ReportDesign.prototype.selectHeaderByRect = function(r){
+ 	var hasSelected = false;
  	for(var i=0;i<this.headers.size();i++){
  		var obj = this.headers.get(i);
  		if(obj.inRect(r)){
  			this.select(obj,true);
+ 			hasSelected = true;
  		}
+ 	}
+ 	return hasSelected;
+ }
+ 
+ ReportDesign.prototype.selectByRect = function(r){
+ 	if(!this.selectHeaderByRect(r)){
+ 		this.selectCellByRect(r);
  	}
  }
  

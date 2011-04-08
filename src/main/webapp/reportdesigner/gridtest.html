@@ -4,56 +4,41 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="../js/jquery/jquery-1.4.4.js"></script>
+<script type="text/javascript" src="table.js"></script>
 <script type="text/javascript">
-	var index = 0;
-	function init1(){
-		var t1 = new Date().getTime();
-		var tobj = $("#mytable");
-		var ths = $("<thead/>").appendTo(tobj);
-		for(var i=0;i<100;i++){
-			$("<th/>").css("width",72).appendTo(ths);
-		}
-		for(var i=0;i<100;i++){
-			var row = $("<tr/>").css("height",24).appendTo(tobj);
-			for(var j=0;j<100;j++){
-				$("<td/>").css("word-break","break-all").appendTo(row);
-			}
-		}
-		tobj.attr("border","frame");
-		tobj.attr("rules","all");
-		var t2 = new Date().getTime() - t1;
-		alert(t2);
-	}
-	function init() {
-		var t1 = new Date().getTime();
-		var arr = [];
-		arr.push("<table width='7200px' border='frame' rules='all'>");
-		arr.push("<thead height='20px'>");
-		for ( var i = 0; i < 100; i++) {
-			arr.push("<th width='72px' id='hhh"+i+"'>A</th>");
-		}
-		arr.push("</thead>");
-		for ( var i = 0; i < 100; i++) {
-			arr.push("<tr height='24px'>");
-			for ( var j = 0; j < 100; j++) {
-				arr.push("<td style='word-break:break-all;'/>")
-			}
-			arr.push("</tr>");
-		}
-		arr.push("</table>");
-		document.getElementById("mytable").innerHTML = arr.join("");
-		var t2 = new Date().getTime() - t1;
-		alert(t2);
-	}
+$(function(){
+    function init(){
+        var t1 = new Date().getTime();
+        var arr = [];
+        arr.push("<table width='720px' border='frame' rules='all' id='tt'>");
+        arr.push("<thead height='20px'>");
+        for (var i = 0; i < 10; i++) {
+            arr.push("<th width='72px' id='hhh" + i + "'>A</th>");
+        }
+        arr.push("</thead>");
+        for (var i = 0; i < 10; i++) {
+            arr.push("<tr height='24px'>");
+            for (var j = 0; j < 10; j++) {
+                arr.push("<td style='word-break:break-all;'/>")
+            }
+            arr.push("</tr>");
+        }
+        arr.push("</table>");
+        document.getElementById("mytable").innerHTML = arr.join("");
+        var t2 = new Date().getTime() - t1;
+    }
 	function myclick() {
-		var div = document.getElementById("mydiv");
-		div.style.top = "100px";
-		//document.getElementById("hhh"+index++).style.width = "100px";
+		$.tableSpan.table_rowspan("#tt",2,1,3);
+		$.tableSpan.table_colspan("#tt",3,3,5);
+	//	$.tableSpan.table_rowspan("#tt",4,1,3);
 	}
+	init();
+	$("#bb").bind("click",myclick);
+});
 </script>
 </head>
-<body onload="init()">
-<button onclick="myclick();">click</button>
+<body>
+<button id="bb">click</button>
 <div id="mydiv" style="width:100;height:30;border:1px solid #ff0000;position:absolute;zindex:99;">dsafsdfa</div>
 <div id="mytable"></div>
 

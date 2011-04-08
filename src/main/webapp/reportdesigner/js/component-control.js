@@ -108,7 +108,7 @@
  }
  
  rptdsnComponent.prototype.onClick = function(e){
- 	e.stopPropagation();
+ //	e.stopPropagation();
  	if(this._clicktimeid){
  		clearTimeout(this._clicktimeid);
  	}

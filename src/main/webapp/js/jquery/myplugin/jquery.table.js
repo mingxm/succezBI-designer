@@ -53,7 +53,7 @@
 					    $("body").css("-moz-user-select", "-moz-all");
 				    }
 			    }
-
+			    
 			    this.find("th").bind({
 				        "mousemove"	: function(event) {
 				        	if (!lineMove) {
@@ -129,7 +129,6 @@
 					        }
 				        }
 			        });
-
 		    }
 	    });
  	function int2char(i){
