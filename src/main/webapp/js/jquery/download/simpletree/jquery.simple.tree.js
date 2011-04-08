@@ -75,10 +75,6 @@ $.fn.simpleTree = function(opt){
 			{
 				target.className='active';
 			}
-			if(typeof TREE.option.afterClick == 'function')
-			{
-				TREE.option.afterClick($(target).parent());
-			}
 			return false;
 		},test:function(){
 			alert(2);	
@@ -165,6 +161,10 @@ $.fn.simpleTree = function(opt){
 			}).click(function(){
 				//modified by wangyg
 				TREE.setSelected(this);
+				if(typeof TREE.option.afterClick == 'function')
+				{
+					TREE.option.afterClick($(this).parent());
+				}
 			}).dblclick(function(){
 				mousePressed = false;
 				TREE.nodeToggle($(this).parent().get(0));

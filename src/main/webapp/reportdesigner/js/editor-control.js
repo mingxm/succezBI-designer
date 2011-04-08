@@ -211,8 +211,15 @@
  			this.toolbar = this.addToolBar(defaultConfig);
  			return;
 	    case "reportStruct":
-			this.reportStruct = $(".simpleTree").append(this.getReportStruct()).simpleTree(defaultConfig);		
- 			return;			
+			/*
+			 * 可以通过调用该对象内部提供的方法来对结构树的节点进行操作，内部的方法列表如下：
+			 * _update;_addNode(name);_deleteNode;_selectNode(name);_renameNode;_test
+			 */
+			this.reportStruct = this.addReportStruct(defaultConfig);
+ 			return;
+		case "toolsControl":
+			this.toolsControl = this.addToolsControl(defaultConfig);
+		return;				
  	}
  }
  
@@ -296,58 +303,28 @@
  	tb._create(option.m_element,option.setting,this);
  	return tb; 	
   }
+
+  ReportDesign.prototype.addReportStruct = function(option){
+ 	var rs = $(".simpleTree").ReportStructControl(this,option);
+	return rs;
+  }  
+  
+  ReportDesign.prototype.addToolsControl = function(option){
+  	var tc = $("#szDesignTools",document.body).DesignToolsControl(this,option)
+	return tc;
+  }
   
   ReportDesign.prototype.ToolBarVersion = function(){
  	alert(this.toolbar._getvision());
   }
   
-   /*
+ /*
   * 测试该函数
   */
   ReportDesign.prototype.setCellProperty = function(name,value){
  	alert("With this we can set other control's Propery");
   }
-  
- /*
-  * 获取控件结构，该结构不需保存，只是在初始化的时候随设计器的创建而动态的创建
-  * 该函数的返回一个html，从而对结构树控件执行初始化
-  */
- ReportDesign.prototype.getReportStruct = function(){
-	var Structhtml =$("<li class='root'><span>ReportDesinger Structs</span></li>");
-	var self = this;
-	var node = $("<ul></ul>");
-	var name = '';
-	//如果存在表格，那么将表格加进来
-	if (self.tables.len > 0){
-		for (var key in self.tables.elements) {
-			name = self.tables.elements[key].getName();
-			node.append($("<li id ="+"reportStuct_"+name+"><span>"+name+"</span></li>"));
-    	};	
-		node.appendTo(Structhtml);
-	}
-	//如果有表头，那么将表头加进来
-	if (self.headers.len > 0) {
-		node = $("<ul></ul>")
-		for (var key in self.headers.elements) {
-			name = self.headers.elements[key].getName();
-			node.append($("<li id ="+"reportStuct_"+name+"><span>"+name+"</span></li>"));
-		}
-		node.appendTo(Structhtml);
-	}
-	return Structhtml;
- };
- 
-  /*
-   * 当设计器上的元素被选中的情况下，设置树节点的相应节点也为选中的状态
-   * @param id节点的id
-   * 元素id前可以统一加上struct_就变成书节点的id，如Struct_A1,Struct_HHH0
-   */
- ReportDesign.prototype.setNodeSeleced = function(id){
- 	var tempId = 'reportStruct_'+id;
-	var _self = this.reportStruct;
-  	_self.setSelected($('#'+tempId));
- }
-  
+   
  ReportDesign.prototype.getTextEditor = function(){
  	if(!this.textEditor){
  		this.textEditor = new RichEditor(this.container);
