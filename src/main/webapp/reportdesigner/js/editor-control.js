@@ -210,7 +210,11 @@
  			this.toolbar = this.addToolBar(defaultConfig);
  			return;
 	    case "reportStruct":
-			this.addReportStruct(defaultConfig);
+			/*
+			 * 可以通过调用该对象内部提供的方法来对结构树的节点进行操作，内部的方法列表如下：
+			 * _update;_addNode(name);_deleteNode;_selectNode(name);_renameNode;_test
+			 */
+			this.reportStruct = this.addReportStruct(defaultConfig);
  			return;			
  	}
  }

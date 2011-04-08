@@ -46,8 +46,13 @@
 				var tempId = 'reportStruct_'+name;
 				_reportStruct.setSelected($('#'+tempId));				
 			},
+			
 			_renameNode:function(){
 				
+			},
+			//测试该这种形式的方法能否正常工作
+			_test:function(){
+				alert('this is a test!');
 			}			
 		});
 		
