@@ -1,21 +1,22 @@
-#szDesignTools
+#szDesignTools,#toolContainer
 {
 	padding-left:0px;
 	padding-top:0px;
 	padding-right:1px;
+	-moz-user-select:none;
 }
 
-#szDesignTools ul
+#szDesignTools ul,#toolContainer ul 
 {
 	list-style:none;
 	padding-left:12px;
 }
 
-#szDesignTools li
+#szDesignTools li,#toolContainer li
 {
-	padding-left:40px;
+	padding-left:20px;
 	padding-top:5px;
-	padding-bottom:10px;
+	padding-bottom:5px;
 	background-position:left center;
 	background-repeat:no-repeat;
 	font-size:14;
@@ -23,47 +24,47 @@
 	cursor:default;		
 }
 
-#szDesignTools .szGrid
+.szDesignToolGrid
 {
 	background-image:url(../image/toolsImage/control_grid.png);
 }
 
-#szDesignTools .szHeader
+.szDesignToolHeader
 {
 	background-image:url(../image/toolsImage/control_header.png);
 }
 
-#szDesignTools .szPanel
+.szDesignToolPanel
 {
 	background-image:url(../image/toolsImage/control_panel.png);
 }
 
-#szDesignTools .szPrint
+.szDesignToolPrint
 {
 	background-image:url(../image/toolsImage/control_print.png);
 }
 
-#szDesignTools .szSave
+.szDesignToolSave
 {
 	background-image:url(../image/toolsImage/control_save.png);
 }
 
-#szDesignTools .szSecurity
+.szDesignToolSecurity
 {
 	background-image:url(../image/toolsImage/control_security.png);
 }
 
-#szDesignTools .szSelector
+.szDesignToolSelector
 {
 	background-image:url(../image/toolsImage/control_selector.png);
 }
 
-#szDesignTools .szSet
+.szDesignToolSet
 {
 	background-image:url(../image/toolsImage/control_set.png);
 }
 
-#szDesignTools .szView
+.szDesignToolView
 {
 	background-image:url(../image/toolsImage/control_view.png);
 }
