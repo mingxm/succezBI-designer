@@ -1,0 +1,34 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <script src="../js/jquery/jquery-1.5.2rc1.js">
+        </script>
+        <script>
+        	jQuery.noConflict();
+        </script>
+    </head>
+    <body>
+        <a t:zone="time" t:type="actionlink" t:id="refreshTime" href="javascript:undefined">刷新页面</a>
+        当前时间:
+        <label t:type="zone" t:id="time">
+            ${currentTime}
+        </label>
+    </body>
+    <script>
+    	Tapestry.onDOMLoaded(function(){
+	        jQuery("#refreshTime").click(function(){
+	            jQuery.ajax({
+	                url: "/succezBI-designer3/test/ajaxactionlink2.refreshTime",
+	                success: function(respData){
+	                    var lbl = jQuery("#time");
+	                    lbl.text(respData.time);
+						Tapestry.debug(respData.time);
+	                },
+	                error: function(jXHR, st, msg){
+	                    alert("ajax error!"+msg);
+	                }
+	            });
+	        });
+		});
+    </script>
+</html>

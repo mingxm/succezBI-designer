@@ -1,0 +1,41 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <script src="../js/jquery/jquery-1.5.2rc1.js">
+        </script>
+		<script>
+			jQuery.noConflict();
+        </script>
+    </head>
+    <body>
+    <form t:type="form" t:id="inputs" t:clientValidation="false">
+        firstName:<input t:id="firstName" t:defaultValue="ss" t:type="textField"/>
+		<input type="button" id="checkFirstName" value="检查firstName"/>
+        <label id="firstName-label"></label>
+    </form>
+    </body>
+    <script>
+        Tapestry.onDOMLoaded(function(){
+            jQuery("#checkFirstName").click(function(){
+				var firstName = jQuery("#firstName").val();
+                jQuery.ajax({
+                    url: "/succezBI-designer3/test/ajaxvalidators2.firstname:ajaxvalidate?param="+firstName,
+                    success: function(respData){
+						if(respData.error){
+							var lbl = jQuery("#firstName-label");
+							lbl.text("Error:"+respData.error);
+							lbl.css("backgroundColor", "red");
+						}else{
+							var lbl = jQuery("#firstName-label");
+							lbl.text("Ok!");
+							lbl.css("backgroundColor", "green");
+						}
+                    },
+                    error: function(jXHR){
+                    	alert(jXHR);
+                    }
+                });
+            });
+        });
+    </script>
+</html>
