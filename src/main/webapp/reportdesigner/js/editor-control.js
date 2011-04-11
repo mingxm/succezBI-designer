@@ -223,6 +223,18 @@
  	}
  }
  
+ ReportDesign.prototype.selectSelectionCells = function(r,ownerTable){
+ 	this.clearAllSelected();
+ 	var div = $("<div/>").addClass("selected_div").css({
+ 		"left":r.left,
+ 		"top":r.top,
+ 		"width":r.width,
+ 		"height":r.height
+ 	}).appendTo(this.container);
+ 	this.selects.push(ownerTable);
+ 	this.pControl.switchByObj(ownerTable);
+ }
+ 
  ReportDesign.prototype.select = function(obj,multi){
  	if(!obj) return;
  	if(!multi){

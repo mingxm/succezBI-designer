@@ -50,7 +50,8 @@ a:active {
 
 .text_editor{
 	min-height:24px;
-	overflow:visible;
+	min-width:50px;
+	overflow:auto;
 	position:absolute;
 	padding:0;
 	border:1px solid #E7E5E2;

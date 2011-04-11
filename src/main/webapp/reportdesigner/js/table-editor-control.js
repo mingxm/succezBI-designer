@@ -21,7 +21,7 @@
  	this.handler = $("<div/>").addClass("drag_handler").appendTo(this.container);
  	this.container.jTable({
  		defaultRowCount:30,
- 		defaultColCount:100,
+ 		defaultColCount:30,
  		defaultRowHeight:24,
  		defaultColWidth:72
  	});
@@ -57,10 +57,7 @@
 			      			_self.splitCell();
 			      		},
 			      		"combin":function(t){
-			      			var cell = _self.menuCell;
-			      			var fc = cell.attr("cellIndex");
-			      			var fr = cell.parent().attr("rowIndex")-1;
-			      			_self.combinCell(fc,fr,fc+2,fr+2);
+			      			_self.combinCell();
 			      		},
 			      		"addRow":function(t){
 			      			_self.addRow();
@@ -123,7 +120,7 @@
  	if(item.is("td")){
  		this.owner.endEdit();
  		new CellEditor(item,this).onClick();
- 	}else {
+ 	}else if(item.is("th") || item.is("div")) {
  		this.owner.select(this);
  	}
 	log("执行TableEditorControl.prototype.doClick完毕！耗时"+(new Date().getTime()-t1)+"ms");
@@ -140,10 +137,40 @@
  }
  
  TableEditorControl.prototype.selectCellByRect = function(r){
- 	//this.combinCell(2,3,5,6);
+ 	this.selection = this.getSelectionByRect(r);
+ 	var rect = this.getRectBySelection(this.selection);
+ 	this.owner.selectSelectionCells(rect,this);
  }
  
- TableEditorControl.prototype.combinCell = function(fc,fr,ec,er){
+ TableEditorControl.prototype.getSelectionByRect = function(r){
+ 	return {
+ 		left : this.getColIndexByPos(r.left),
+ 		right : this.getColIndexByPos(r.left+r.width),
+ 		top : this.getRowIndexByPos(r.top),
+ 		bottom : this.getRowIndexByPos(r.top+r.height)
+ 	}
+ }
+ 
+ TableEditorControl.prototype.getRectBySelection = function(s){
+ 	var c1 = this.cells[s.top][s.left];
+ 	var c2 = this.cells[s.bottom][s.right];
+ 	var l = this.getLeft();
+ 	var t = this.getTop();
+ 	var p1 = c1.position();
+ 	var p2 = c2.position();
+ 	return {
+ 		left : l + p1.left,
+ 		top : t + p1.top,
+ 		width : c2.width() + p2.left - p1.left,
+ 		height : c2.height() + p2.top - p1.top
+ 	}
+ }
+ 
+ TableEditorControl.prototype.combinCell = function(){
+ 	var fr = this.selection.top;
+ 	var er = this.selection.bottom;
+ 	var fc = this.selection.left;
+ 	var ec = this.selection.right;
  	for(var i=fr;i<=er;i++){
  		var row = this.cells[i];
  		for(var j=fc;j<=ec;j++){
@@ -180,5 +207,62 @@
  
  TableEditorControl.prototype.removeRow = function(){
  	
+ }
+ 
+ TableEditorControl.prototype.getRowCount = function(){
+ 	return this.cells.length;
+ }
+ 
+ TableEditorControl.prototype.getColCount = function(){
+ 	return this.cells.length?this.cells[0].length:0;
+ }
+ 
+ TableEditorControl.prototype.getRowHeight = function(index){
+ 	if(this.cells.length <= index) return 0;
+ 	return this.cells[index][0].parent().height();
+ }
+ 
+ TableEditorControl.prototype.getColWidth = function(index){
+ 	if(this.cells.length == 0) return 0;
+ 	for(var i=0;i<this.cells.length;i++){
+ 		var cs = this.cells[i];
+ 		if(cs.length<=index) continue;
+ 		var cell = cs[index];
+ 		/**
+ 		 * 当该表元没有被合并的时候就直接获取它的宽度当做列宽
+ 		 */
+ 		if(cell.is(":visible") && cell.attr("colSpan") == 1) return cell.width();
+ 	}
+ 	return this.container.find("th:eq("+index+")").width();
+ }
+ 
+ TableEditorControl.prototype.getRowIndexByPos = function(p){
+ 	var r = this.getRect();
+ 	var top = r.top+20;
+ 	var bottom = r.top + r.height;
+ 	if(p<=top) return 0;
+ 	if(p>=bottom) return this.getRowCount();
+ 	var len = this.getRowCount();
+ 	var count = top;
+ 	for(var i=0;i<len;i++){
+ 		count += this.getRowHeight(i);
+ 		if(count>=p) return i;
+ 	}
+ 	return len;
+ }
+ 
+ TableEditorControl.prototype.getColIndexByPos = function(p){
+ 	var r = this.getRect();
+ 	var left = r.left;
+ 	var right = left + r.width;
+ 	if(p<=left) return 0;
+ 	if(p>=right) return this.getColCount();
+ 	var len = this.getColCount();
+ 	var count = left;
+ 	for(var i=0;i<len;i++){
+ 		count += this.getColWidth(i);
+ 		if(count>=p) return i;
+ 	}
+ 	return len;
  }
  
