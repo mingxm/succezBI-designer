@@ -5,12 +5,14 @@
 <link rel="stylesheet" type="text/css" href="../js/jquery/download/jquery-layout/layout-default-latest.css" />
 <link rel="stylesheet" href="../js/jquery/download/jquery-ui-1.8.10.custom/development-bundle/themes/base/jquery.ui.all.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/toolsStyle.css">
 <link rel="stylesheet" href="../js/jquery/download/simpletree/jquery.simple.tree.css">
 <script type="text/javascript" src="../js/util/util.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-1.4.4.js"></script>
 <script type="text/javascript" src="../js/jquery/download/jquery-ui-1.8.10.custom/js/jquery-ui-1.8.10.custom.min.js"></script>
 <script type="text/javascript" src="../js/jquery/download/jquery-layout/jquery.layout-latest.js"></script>
 <script type="text/javascript" src="../js/jquery/download/simpletree/jquery.simple.tree.js"></script>
+<script type="text/javascript" src="../js/jquery/download/jquery-contextmenu/jquery.contextmenu.r2.js"></script>
 <script type="text/javascript" src="../js/jquery/myplugin/jquery.property.js"></script>
 <script type="text/javascript" src="../js/jquery/myplugin/jquery.table.js"></script>
 <script type="text/javascript" src="../js/jquery/myplugin/jquery.toolbar.js"></script>
@@ -22,7 +24,8 @@
 <script type="text/javascript" src="js/text-editor-control.js"></script>
 <script type="text/javascript" src="js/rich-editor.js"></script>
 <script type="text/javascript" src="js/editor-control.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" src="js/design-tools-control.js"></script>
+<script type="text/javascript">;
 	$(function(){
 		var myLayout = $('body').layout({
 			resizable:true,
@@ -65,7 +68,8 @@
                                 "Tool_DrawForm"
                                 ]}
 		});
-        _dsn.addComponent("reportStruct",{drag:false,animate:true});		
+        _dsn.addComponent("reportStruct",{drag:false,animate:true});
+		_dsn.addComponent("toolsControl");		
 	})	
 </script>
 <title>报表设计器</title>
@@ -74,9 +78,21 @@
 <div class="ui-layout-west">
 <div id="accordion1" class="basic">
 	<h3><a href="#">报表结构</a></h3>
-	<ul class='simpleTree' style="padding-top:0px;padding-left:10px"></ul>
+		<ul class='simpleTree' style="padding-top:0px;padding-left:10px"></ul>
 	<h3><a href="#" >控件列表</a></h3>
-
+		<div id ='szDesignTools'>
+			<ul>
+				<li class = "szGrid" objName = "table"> ReportDesignGrid </li>
+				<li class = "szHeader" objName = "text"> ReportDesignHeader </li>
+				<li class = "szView" objName = "view"> ReportDesignView </li>
+				<li class = "szPrint" objName = "print"> ReportDesignPrint </li>
+				<li class = "szPanel" objName = "panel"> ReportDesignPanel </li>
+				<li class = "szSave" objName = "save"> ReportDesignSave </li>
+				<li class = "szSecurity" objName = "security"> ReportDesignSecurity </li>
+				<li class = "szSelector" objName = "selector"> ReportDesignSelector </li>
+				<li class = "szSet" objName = "set"> ReportDesignSet </li>
+			</ul>
+		</div>
 </div>
 </div>
 <div class="ui-layout-north">
@@ -95,11 +111,27 @@
 			<a href="#" id="Tool_Chart"><img src="image/chart.gif"></img></a>
 			<a href="#" id="Tool_DrawForm"><img src="image/drawtable.gif"></img></a>
 		</td>
-	</tr>
+	</tr>;
 </div>
 <div class="ui-layout-center">
 	<div id="select_frameid" class="select_frame"></div>
 </div>
 <div class="ui-layout-east"></div>
+<div class="contextMenu" id="tableMenu">
+    <ul>
+        <li id="combin">
+            <img src="image/combin.jpg" />合并
+        </li>
+        <li id="split">
+            <img src="image/split.jpg" />拆分
+        </li>
+        <li id="addRow">
+            <img src="image/addrow.jpg" />添加行
+        </li>
+        <li id="removeRow">
+            <img src="image/deleterow.jpg" />删除行
+        </li>
+    </ul>
+</div>
 </body>
 </html>

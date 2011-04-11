@@ -81,6 +81,7 @@
  ReportDesign.prototype.onMouseDown = function(e){
  	log("开始执行ReportDesign.prototype.onMouseDown方法");
 	var t1 = new Date().getTime();
+	if(e.which !=1) return;
  	var target = $(e.target);
  	/**
  	 * 有可能是拖动界面上的某一个控件，那么这个时候就不需要有框选框
@@ -210,8 +211,15 @@
  			this.toolbar = this.addToolBar(defaultConfig);
  			return;
 	    case "reportStruct":
-			this.addReportStruct(defaultConfig);
- 			return;			
+			/*
+			 * 可以通过调用该对象内部提供的方法来对结构树的节点进行操作，内部的方法列表如下：
+			 * _update;_addNode(name);_deleteNode;_selectNode(name);_renameNode;_test
+			 */
+			this.reportStruct = this.addReportStruct(defaultConfig);
+ 			return;
+		case "toolsControl":
+			this.toolsControl = this.addToolsControl(defaultConfig);
+		return;				
  	}
  }
  
@@ -230,12 +238,28 @@
  	this.selects.push(obj);
  }
  
- ReportDesign.prototype.selectByRect = function(r){
+ ReportDesign.prototype.selectCellByRect = function(r){
+ 	for(var i=0;i<this.tables.size();i++){
+ 		var table = this.tables.get(i);
+ 		table.selectCellByRect(r);
+ 	}
+ }
+ 
+ ReportDesign.prototype.selectHeaderByRect = function(r){
+ 	var hasSelected = false;
  	for(var i=0;i<this.headers.size();i++){
  		var obj = this.headers.get(i);
  		if(obj.inRect(r)){
  			this.select(obj,true);
+ 			hasSelected = true;
  		}
+ 	}
+ 	return hasSelected;
+ }
+ 
+ ReportDesign.prototype.selectByRect = function(r){
+ 	if(!this.selectHeaderByRect(r)){
+ 		this.selectCellByRect(r);
  	}
  }
  
@@ -281,9 +305,14 @@
   }
 
   ReportDesign.prototype.addReportStruct = function(option){
- 	var rs = new ReportStructControl($(".simpleTree"),this,option);
+ 	var rs = $(".simpleTree").ReportStructControl(this,option);
 	return rs;
   }  
+  
+  ReportDesign.prototype.addToolsControl = function(option){
+  	var tc = $("#szDesignTools",document.body).DesignToolsControl(this,option)
+	return tc;
+  }
   
   ReportDesign.prototype.ToolBarVersion = function(){
  	alert(this.toolbar._getvision());

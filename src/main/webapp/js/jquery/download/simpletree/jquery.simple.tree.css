@@ -134,9 +134,8 @@ body
 .simpleTree .active
 {
 	cursor: default;
-	background-color:#F7BE77;
-	padding:0px 2px;
-	border: 1px dashed #444;
+	background-color:#0080c0;
+	border:1px dotted #000000;
 }
 
 #drag_container

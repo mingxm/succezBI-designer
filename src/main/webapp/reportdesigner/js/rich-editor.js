@@ -34,7 +34,8 @@
  	this.editor.css({
  		left:obj.getProperty("left"),
  		top:obj.getProperty("top"),
- 		height:obj.getProperty("height")
+ 		height:obj.getHeight(),
+ 		width:obj.getWidth()
  	});
  	this.editor.show();
  	this.editor.attr("value",obj.getValue());

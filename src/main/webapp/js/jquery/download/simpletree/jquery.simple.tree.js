@@ -163,7 +163,7 @@ $.fn.simpleTree = function(opt){
 				TREE.setSelected(this);
 				if(typeof TREE.option.afterClick == 'function')
 				{
-					TREE.option.afterClick($(target).parent());
+					TREE.option.afterClick($(this).parent());
 				}
 			}).dblclick(function(){
 				mousePressed = false;

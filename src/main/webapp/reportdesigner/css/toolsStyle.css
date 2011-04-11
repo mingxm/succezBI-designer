@@ -1,0 +1,69 @@
+#szDesignTools
+{
+	padding-left:0px;
+	padding-top:0px;
+	padding-right:1px;
+}
+
+#szDesignTools ul
+{
+	list-style:none;
+	padding-left:12px;
+}
+
+#szDesignTools li
+{
+	padding-left:40px;
+	padding-top:5px;
+	padding-bottom:10px;
+	background-position:left center;
+	background-repeat:no-repeat;
+	font-size:14;
+	font-weight:bold;
+	cursor:default;		
+}
+
+#szDesignTools .szGrid
+{
+	background-image:url(../image/toolsImage/control_grid.png);
+}
+
+#szDesignTools .szHeader
+{
+	background-image:url(../image/toolsImage/control_header.png);
+}
+
+#szDesignTools .szPanel
+{
+	background-image:url(../image/toolsImage/control_panel.png);
+}
+
+#szDesignTools .szPrint
+{
+	background-image:url(../image/toolsImage/control_print.png);
+}
+
+#szDesignTools .szSave
+{
+	background-image:url(../image/toolsImage/control_save.png);
+}
+
+#szDesignTools .szSecurity
+{
+	background-image:url(../image/toolsImage/control_security.png);
+}
+
+#szDesignTools .szSelector
+{
+	background-image:url(../image/toolsImage/control_selector.png);
+}
+
+#szDesignTools .szSet
+{
+	background-image:url(../image/toolsImage/control_set.png);
+}
+
+#szDesignTools .szView
+{
+	background-image:url(../image/toolsImage/control_view.png);
+}

@@ -412,6 +412,21 @@ function rectInRect(r1,r2){
 	return r1.left>=r2.left && r1.top>=r2.top && r1.left+r1.width<=r2.left+r2.width && r1.top+r1.height<=r2.top+r2.height;
 }
 
+function ptInRect(pt,rt){
+	return (rt.right>=pt.x)&&(pt.x>=rt.left)&&(rt.bottom>=pt.y)&&(pt.y>=rt.top);
+}
+
+/**
+ * 判断两个矩形是否相交
+ * @param {} rt1 矩形结构{left,right,top,bottom}
+ * @param {} rt2 矩形结构{left,right,top,bottom}
+ * @return {}
+ */
+function isIntersect(rt1,rt2){
+	return ptInRect({x:rt1.left,y:rt1.top},rt2) || ptInRect({x:rt1.right,y:rt1.top},rt2) 
+		|| ptInRect({x:rt1.left,y:rt1.bottom},rt2) || ptInRect({x:rt1.right,y:rt1.bottom},rt2);
+}
+
 /**
  *  功能绑定
  @example
