@@ -37,6 +37,9 @@
  	this.container.bind("mousedown",function(e){
  		_self.onMouseDown(e);
  	});
+ 	this.container.bind("scroll",function(e){
+ 		_self.onScroll(e);
+ 	});
  }
  
  ReportDesign.prototype.endEdit = function(){
@@ -160,6 +163,10 @@
  	this.selectFrame.css("visibility","hidden");
  	this.selectByRect(r);
 	log("执行ReportDesign.prototype.onMouseUp完毕！耗时"+(new Date().getTime()-t1)+"ms");
+ }
+ 
+ ReportDesign.prototype.onScroll = function(e){
+ 	var len = e.scrollTop;
  }
  
  ReportDesign.prototype.getName = function(){

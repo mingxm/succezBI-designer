@@ -36,3 +36,12 @@
  CellEditor.prototype.getTop = function(){
  	return this.container.position().top+this.owner.container.position().top+this.owner.owner.container.scrollTop();
  }
+ 
+ CellEditor.prototype.getCellType = function(){
+ 	var type = this.container.data("type");
+ 	return type?type:"data";
+ }
+ 
+ CellEditor.prototype.setCellType = function(value){
+ 	this.container.data("type",value);
+ }

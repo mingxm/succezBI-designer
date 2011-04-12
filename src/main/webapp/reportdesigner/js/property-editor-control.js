@@ -311,6 +311,23 @@
  					}
  				}]
  			},{
+ 				title:"类型",
+ 				type:"combobox",
+ 				defaultValue:_self.obj.getCellType(),
+ 				options:[{
+ 					caption:"数据表元",
+ 					value:"data"
+ 				},{
+ 					caption:"斜线表元",
+ 					value:"bias"
+ 				}],
+ 				events:[{
+ 					name:"change",
+ 					fn:function(e){
+ 						_self.obj.setCellType(e.data.attr("value"));
+ 					}
+ 				}]
+ 			},{
  				title:"字体",
  				type:"combobox",
  				options:[{

@@ -91,3 +91,11 @@ h3{
 	border:1px solid #EAF;
 	background-color:transparent;
 }
+
+.linediv{
+	position:absolute;
+	height:1px;
+	width:1px;
+	background:#f00;
+	overflow:hidden;
+}

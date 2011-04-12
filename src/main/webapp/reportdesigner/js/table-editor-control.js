@@ -120,7 +120,11 @@
  	if(item.is("td")){
  		this.owner.endEdit();
  		this.selectCell = item;
- 		new CellEditor(item,this).onClick();
+ 		if(item.data("type") == "bias"){
+ 			new BiasCellEditor(item,this).onClick();
+ 		}else{
+ 			new CellEditor(item,this).onClick();
+ 		}
  	}else if(item.is("th") || item.is("div")) {
  		this.owner.select(this);
  	}
@@ -132,7 +136,11 @@
 	var t1 = new Date().getTime();
  	var item = $(e.target);
  	if(item.is("td")){
- 		new CellEditor(item,this).beginEdit();
+ 		if(item.data("type") == "bias"){
+ 			new BiasCellEditor(item,this).beginEdit();
+ 		}else {
+ 			new CellEditor(item,this).beginEdit();
+ 		}
  	}
 	log("执行TableEditorControl.prototype.doDBLClick完毕！耗时"+(new Date().getTime()-t1)+"ms");
  }
