@@ -66,7 +66,7 @@
 								controlMoved =true;
 							}
 							_toolContainer.css("left",event.pageX-mousedownPoint.x);
-							_toolContainer.css("top",event.pageY);
+							_toolContainer.css("top",event.pageY-8);
 						}).bind("mouseup.toolContainer",function(event){
 							_toolContainer.hide("fast");
 							if (controlMoved) {
@@ -79,6 +79,7 @@
 										y:event.pageY-8
 									});
 								}
+								_owner.reportStruct._addNode(self.attr("objName"),self.attr("objName"));
 								controlMoved = false;
 							}
 						});							
@@ -90,6 +91,8 @@
 						})
 						offsetX +=10;
 						offsetY +=10;
+						_owner.reportStruct._addNode(self.attr("objName"),self.attr("objName"));
+						$("#accordion1").show();
 						return false;
 					})
 					.bind("selectstart",function(){

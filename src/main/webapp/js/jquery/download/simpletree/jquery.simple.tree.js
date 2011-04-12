@@ -433,11 +433,20 @@ $.fn.simpleTree = function(opt){
 			}
 		};
 
-		TREE.addNode = function(id, text, callback)
+		TREE.addNode = function(id, text,type,callback)
 		{
 			var temp_node = $('<li><ul><li id="'+id+'"><span>'+text+'</span></li></ul></li>');
 			TREE.setTreeNodes(temp_node);
-			dragNode_destination = TREE.getSelected();
+			/*
+			 * 除了表格和表头需要容器以外，其他所有控件都直接挂在根节点下面
+			 */			
+			if (type == "text"){
+				dragNode_destination = $("#reportStuct_headers",TREE);
+			} else if(type =="table"){
+				dragNode_destination = $("#reportStuct_tables",TREE);
+			}else{
+				dragNode_destination = $(".root",TREE);
+			} 			
 			dragNode_source = $('.doc-last',temp_node);
 			TREE.moveNodeToFolder(dragNode_destination);
 			temp_node.remove();
