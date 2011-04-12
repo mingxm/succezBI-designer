@@ -25,11 +25,10 @@
  			/*
  			 * name为新添加元素的名称，'reportStuct_'+name为新节点的id号
   			 */			
-			_addNode:function(name){
+			_addNode:function(name,type){
 				var id = 'reportStuct_'+name;
 				var text = name;
-				_reportStruct.addNode(id,name,function(){
-					alert("node has been added!");
+				_reportStruct.addNode(id,name,type,function(){
 				})				
 			},
  		   /*
@@ -69,26 +68,27 @@
   	*/
  	function getReportStruct(reportDesigner){
  		var self = reportDesigner;
-		var Structhtml =$("<li class='root'><span>ReportDesinger Structs</span></li>");
-		var node = $("<ul></ul>");
+		var Structhtml =$("<li class='root'><span>ReportDesinger Structs</span><ul></ul></li>");
+		var node = $("<li id = 'reportStuct_tables'><span>tables</span><ul></ul></li>");
 		var name = '';
 		//如果存在表格，那么将表格加进来
 		if (self.tables.len > 0){
 			for (var key in self.tables.elements) {
 				name = self.tables.elements[key].getName();
-				node.append($("<li id ="+"reportStuct_"+name+"><span>"+name+"</span></li>"));
+				node.find("ul").append($("<li id ="+"reportStuct_"+name+"><span>"+name+"</span></li>"));
     		};	
-			node.appendTo(Structhtml);
+			node.appendTo($("> ul",Structhtml));
 		}
 		//如果有表头，那么将表头加进来
 		if (self.headers.len > 0) {
-			node = $("<ul></ul>")
+			node = $("<li id = 'reportStuct_headers'><span>headers</span><ul></ul></li>")
 			for (var key in self.headers.elements) {
 				name = self.headers.elements[key].getName();
-				node.append($("<li id ="+"reportStuct_"+name+"><span>"+name+"</span></li>"));
+				node.find("ul").append($("<li id ="+"reportStuct_"+name+"><span>"+name+"</span></li>"));
 			}
-			node.appendTo(Structhtml);
+			node.appendTo($("> ul",Structhtml));
 		}
+		//如果还有其他控件，将其分别加入进来
 		return Structhtml;
  	};
 		
