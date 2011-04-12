@@ -35,7 +35,7 @@
  		left:obj.getProperty("left"),
  		top:obj.getProperty("top"),
  		height:obj.getHeight(),
- 		width:obj.getWidth()
+ 		width:obj.getWidth()+20
  	});
  	this.editor.show();
  	this.editor.attr("value",obj.getValue());
