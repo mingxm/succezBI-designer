@@ -1,0 +1,47 @@
+#szSearchDialog
+{
+	border:1px double #000;
+	position:absolute;
+	width:260px;
+	height:265px;
+	left:3px;
+	top:250px;
+	background-color:#fff7de;
+	z-index:999;	
+}
+#szSearchDialog .title{
+	background-color:#000;
+	position:absolute;
+	width:260px;
+	height:27px;
+	cursor:move;
+}
+#szSearchDialog .title p{
+	font-size:large;
+	margin-top:2px;
+	color:#fff;
+	display:inline;
+}
+#szSearchDialog #findSelect,#szSearchDialog #replaceSelect{
+	LEFT: 0px;
+	TOP: 1px; 
+	WIDTH: 150px;
+	height:20px;
+	POSITION: absolute"
+}
+#szSearchDialog #findInput, #szSearchDialog #replaceInput{
+	LEFT: 1px; 
+	TOP: 1px; 
+	WIDTH: 131px;
+	height:16px; 
+	POSITION: absolute;
+	border:0
+}
+#szSearchDialog .checkboxGroup{
+	border:1px solid #ccc;
+	position:absolute;
+	width:120px;
+	height:60px;
+	margin-left:10px;
+	padding-top:2px
+}

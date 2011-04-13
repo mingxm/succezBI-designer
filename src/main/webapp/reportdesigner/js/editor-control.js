@@ -226,6 +226,8 @@
  			return;
 		case "toolsControl":
 			this.toolsControl = this.addToolsControl(defaultConfig);
+		case "reportSearch":
+			this.reportSearch = this.addReportSearch(defaultConfig);	
 		return;				
  	}
  }
@@ -333,6 +335,10 @@
 	return tc;
   }
   
+  ReportDesign.prototype.addReportSearch = function(Option){
+  	var rs = $("#szSearchDialog").szSearch(this);
+	return rs;
+  }
   ReportDesign.prototype.ToolBarVersion = function(){
  	alert(this.toolbar._getvision());
   }

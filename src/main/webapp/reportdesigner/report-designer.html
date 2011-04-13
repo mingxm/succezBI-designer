@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../js/jquery/download/jquery-ui-1.8.10.custom/development-bundle/themes/base/jquery.ui.all.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/toolsStyle.css">
+<link rel="stylesheet" href="css/search-Dialog-Style.css">
 <link rel="stylesheet" href="../js/jquery/download/simpletree/jquery.simple.tree.css">
 <script type="text/javascript" src="../js/util/util.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery-1.4.4.js"></script>
@@ -19,14 +20,15 @@
 <script type="text/javascript" src="js/property-editor-control.js"></script>
 <script type="text/javascript" src="js/component-control.js"></script>
 <script type="text/javascript" src="js/cell-editor-control.js"></script>
-<script type="text/javascript" src="js/biascell-editor-control.js"></script>
 <script type="text/javascript" src="js/report-struct-editor.js"></script>
 <script type="text/javascript" src="js/table-editor-control.js"></script>
 <script type="text/javascript" src="js/text-editor-control.js"></script>
 <script type="text/javascript" src="js/rich-editor.js"></script>
 <script type="text/javascript" src="js/editor-control.js"></script>
 <script type="text/javascript" src="js/design-tools-control.js"></script>
-<script type="text/javascript">;
+<script type="text/javascript" src="js/report-Search.js"></script>
+<script type="text/javascript" src="js/searchTree-control.js"></script>
+<script type="text/javascript">
 	$(function(){
 		var myLayout = $('body').layout({
 			resizable:true,
@@ -70,7 +72,8 @@
                                 ]}
 		});
         _dsn.addComponent("reportStruct",{drag:false,animate:true});
-		_dsn.addComponent("toolsControl");		
+		_dsn.addComponent("toolsControl");	
+		_dsn.addComponent("reportSearch");
 	})	
 </script>
 <title>报表设计器</title>
@@ -134,5 +137,85 @@
         </li>
     </ul>
 </div>
+	<div id = "szSearchDialog">
+		<div class = "title">
+			<p>Find/Replace</p>
+			<a href="#" id ="searchClose"><img align="right" src="image/cancel.png"></img></a>
+		</div>
+		<br>
+		<br>
+		<br>
+		<p style="display:inline;padding-left:10px">Find:</p>
+		<DIV style="POSITION: absolute;display:inline;margin-left:53px">
+			<TABLE cellSpacing=0 cellPadding=0 border=0>
+				<TBODY>
+    				<TR>
+        				<TD>
+            				<SELECT id = "findSelect" onchange="document.getElementById('findInput').value=this.options[this.selectedIndex].value">
+                				<OPTION value="YangPu">YangPu</OPTION>
+                				<OPTION value="HongKou">HongKou</OPTION>
+                				<OPTION value="XuHui">XuHui</OPTION>
+                				<OPTION value="PuDong">PuDong</OPTION>
+           					</SELECT>
+            				<INPUT id="findInput">
+        				</TD>
+    				</TR>
+			</TBODY>
+		</TABLE>
+		</DIV>
+		<br>
+		<br>
+		<p style="display:inline;padding-left:10px">Replace:</p>
+		<DIV style="POSITION: absolute;display:inline;margin-left:30px">
+			<TABLE cellSpacing=0 cellPadding=0 border=0>
+				<TBODY>
+    				<TR>
+        				<TD>
+            				<SELECT id = "replaceSelect" onchange="document.getElementById('replaceInput').value=this.options[this.selectedIndex].value">
+                				<OPTION value="YangPu" selected>YangPu</OPTION>
+                				<OPTION value="HongKou">HongKou</OPTION>
+                				<OPTION value="XuHui">XuHui</OPTION>
+                				<OPTION value="PuDong">PuDong</OPTION>
+           					</SELECT>
+            				<INPUT id = "replaceInput">
+        				</TD>
+    				</TR>
+			</TBODY>
+		</TABLE>
+		</DIV>
+		<br>
+		<br>
+		<hr>
+		<br>
+		<div class="checkboxGroup">
+			<input type="checkbox" id="szIgnoreCase">ignoreCase</input>
+		<br>
+			<input type="checkbox" id = "szWholeWords">wholeWords</input>
+		<br>
+			<input type="checkbox" id = "szGenerateTree">generateTree</input>		
+		</div>
+		<div style ="position:absolute;left:180px">
+			<button style="width:65px" id = "szSearchNext">Next</button>
+			<br>
+			<br>	
+			<button style="width:65px" id = "szSearchPrev">prev</button>
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<hr>
+		<br>
+		<div style="position:absolute;left:5px">
+			<button id = "szFind">Find</button>
+		</div>
+		<div style="position:absolute;left:70px">
+			<button id = "szReplace">Replace</button>
+		</div>
+		<div style="position:absolute;left:160px">
+			<button id = "szReplaceAll">ReplaceAll</button>
+		</div>
+	</div>
 </body>
 </html>
