@@ -1,0 +1,54 @@
+@CHARSET "UTF-8";
+
+.splitclass{
+	border:1px solid #EE0000;
+	background:#EE0000;
+}
+
+html,body{
+	margin:0px;
+	height:100%;
+}
+
+#mydiv{
+height:100%;
+}
+
+.toppanel_v{
+	height:50%;
+ 	width:100%;
+}
+
+.toppanel_h{
+	height:100%;
+ 	width:50%;
+}
+
+.bottompanel_v{
+	width:100%;
+ 	position:absolute;
+}
+
+.bottompanel_h{
+	height:100%;
+ 	position:absolute;
+}
+
+
+.col_change_line{
+	width:1px;
+	height:100%;
+	top:0px;
+	border-left:1px solid #EE0000; 
+	position:absolute;
+	display:none
+}
+
+.row_change_line{
+	height:1px;
+	width:100%;
+	left:0px;
+	border-top:1px solid #EE0000; 
+	position:absolute;
+	display:none
+}
