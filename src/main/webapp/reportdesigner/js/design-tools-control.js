@@ -82,6 +82,7 @@
 								_owner.reportStruct._addNode(self.attr("objName"),self.attr("objName"));
 								controlMoved = false;
 							}
+							$(this).unbind(".toolContainer");
 						});							
 					})
 					.dblclick(function(){
@@ -98,10 +99,6 @@
 					.bind("selectstart",function(){
 						return false;
 					});					
-				});
-				//必须要在鼠标弹起的时候解除mousedown的时候进行的事件绑定
-				$(document).mouseup(function(){
-					$(document).unbind(".toolContainer");
 				});
 			},
 			/*

@@ -226,9 +226,10 @@
  			return;
 		case "toolsControl":
 			this.toolsControl = this.addToolsControl(defaultConfig);
+			return;
 		case "reportSearch":
 			this.reportSearch = this.addReportSearch(defaultConfig);	
-		return;				
+		    return;				
  	}
  }
  
