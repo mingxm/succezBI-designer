@@ -26,6 +26,7 @@
  	 * 以及对编辑内容的新建、保存、另存为等操作
  	 */
 	var _rptEditor={};
+	
 	$.fn.ToolBar=function(){
 		/*
 		 * 缺省设置，有待增加内容

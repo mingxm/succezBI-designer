@@ -105,6 +105,7 @@
  rptdsnComponent.prototype.doClick = function(e){
  	this.owner.endEdit();
  	this.owner.select(this);
+	this.owner.reportStruct._selectNode(this.name);
  }
  
  rptdsnComponent.prototype.onClick = function(e){
@@ -137,6 +138,7 @@
  
  rptdsnComponent.prototype.onDragStop = function(e){
  	this.owner.select(this);
+	this.owner.reportStruct._selectNode(this.name);	
  }
  
  rptdsnComponent.prototype.beginEdit = function(e){

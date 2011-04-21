@@ -7,7 +7,7 @@
 	left:3px;
 	top:250px;
 	background-color:#fff7de;
-	z-index:999;	
+	z-index:-1;	
 }
 #szSearchDialog .title{
 	background-color:#000;

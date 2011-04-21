@@ -26,9 +26,8 @@
  			 * name为新添加元素的名称，'reportStuct_'+name为新节点的id号
   			 */			
 			_addNode:function(name,type){
-				var id = 'reportStuct_'+name;
-				var text = name;
-				_reportStruct.addNode(id,name,type,function(){
+				var id = 'reportStruct_'+name;
+				_reportStruct.addNode(id,name,function(){
 				})				
 			},
  		   /*
@@ -36,7 +35,6 @@
   			*/			
 			_deleteNode:function(){
  				_reportStruct.delNode(function(){
-					alert('this node has been deleted')
 				})					
 			},
  		   /*
@@ -45,7 +43,7 @@
    			*/			
 			_selectNode:function(name){
 				var tempId = 'reportStruct_'+name;
-				_reportStruct.setSelected($('#'+tempId));				
+				_reportStruct.setSelected($('#'+tempId,_container));				
 			},
 			
 			_renameNode:function(){
@@ -54,6 +52,10 @@
 			//测试该这种形式的方法能否正常工作
 			_test:function(){
 				alert('this is a test!');
+			},
+			//按内容进行排序
+			_sort:function(){
+				
 			}			
 		});
 		
@@ -69,22 +71,26 @@
  	function getReportStruct(reportDesigner){
  		var self = reportDesigner;
 		var Structhtml =$("<li class='root'><span>ReportDesinger Structs</span><ul></ul></li>");
-		var node = $("<li id = 'reportStuct_tables'><span>tables</span><ul></ul></li>");
+		if (self.tables.len == 0 && self.headers.len == 0){
+			$(">ul",Structhtml).append($("<li class='line-last'><li>"));
+			return Structhtml;
+		}
+		var node = $("<li id = 'reportStruct_tables'><span>tables</span><ul></ul></li>");
 		var name = '';
 		//如果存在表格，那么将表格加进来
 		if (self.tables.len > 0){
 			for (var key in self.tables.elements) {
 				name = self.tables.elements[key].getName();
-				node.find("ul").append($("<li id ="+"reportStuct_"+name+"><span>"+name+"</span></li>"));
+				node.find("ul").append($("<li><span id ="+"reportStruct_"+name+">"+name+"</span></li>"));
     		};	
 			node.appendTo($("> ul",Structhtml));
 		}
 		//如果有表头，那么将表头加进来
 		if (self.headers.len > 0) {
-			node = $("<li id = 'reportStuct_headers'><span>headers</span><ul></ul></li>")
+			node = $("<li id = 'reportStruct_headers'><span>headers</span><ul></ul></li>")
 			for (var key in self.headers.elements) {
 				name = self.headers.elements[key].getName();
-				node.find("ul").append($("<li id ="+"reportStuct_"+name+"><span>"+name+"</span></li>"));
+				node.find("ul").append($("<li><span id ="+"reportStruct_"+name+">"+name+"</span></li>"));
 			}
 			node.appendTo($("> ul",Structhtml));
 		}
@@ -101,14 +107,13 @@
 		
 		if (_owner.tables.containsKey(name)) 
 		{
-		    alert(_owner.tables.get(name).getName());
+		    _owner.select(_owner.tables.get(name));
 		} 
 		else if(_owner.headers.containsKey(name)) 
 		{
-			alert(_owner.headers.get(name).getName());	
+			_owner.select(_owner.headers.get(name));	
 		} 
 		else{
-			alert("It is wrong!");
 		}
  	}		
 }

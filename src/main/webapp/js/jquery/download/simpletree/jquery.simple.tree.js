@@ -35,7 +35,6 @@ $.fn.simpleTree = function(opt){
 	return this.each(function(){
 		var TREE = this;
 		var ROOT = $('.root',this);
-		var ROOT0 = $('#root0',this);
 		var mousePressed = false;
 		var mouseMoved = false;
 		var dragMoveType = false;
@@ -58,27 +57,22 @@ $.fn.simpleTree = function(opt){
 			docToFolderConvert:false
 		};
 		TREE.option = $.extend(TREE.option,opt);
-		/*
-		 * 获取被选择的节点，也可以这样写
-		 * this.getSelected = function(){
-		 * 		return $('span.active',this).parent();		
-		 * }
-		 * 该方法可以被外部调用，因为this作为返回值被返回
-		 */
-		$.extend(this, {getSelected: function(){
-			return $('span.active', this).parent();
-		//add by wangyg
-		//@param target为设置选中的节点对象			
-		},setSelected:function(target){
-			$('.active',TREE).attr('class','text');
-			if(target.className=='text')
-			{
-				target.className='active';
+		$.extend(this, {
+			getSelected: function(){
+				return $('span.active', this).parent();
+			},
+			//add by wangyg
+			//@param target为设置选中的节点对象			
+			setSelected:function(target){
+				$('.active',TREE).attr('class','text');
+				if(target.hasClass('text'))
+				{
+					target.removeClass();
+					target.addClass("active");
+				}
+				return false;	
 			}
-			return false;
-		},test:function(){
-			alert(2);	
-		}});
+		});
 		TREE.closeNearby = function(obj)
 		{
 			$(obj).siblings().filter('.folder-open, .folder-open-last').each(function(){
@@ -105,8 +99,7 @@ $.fn.simpleTree = function(opt){
 				}else{
 					childUl.hide();
 				}
-			}else{				
-				if(obj.className)
+			}else{
 				obj.className = obj.className.replace('close','open');
 				if(TREE.option.animate)
 				{
@@ -158,13 +151,13 @@ $.fn.simpleTree = function(opt){
 			$('li>span', obj).addClass('text')
 			.bind('selectstart', function() {
 				return false;
-			}).click(function(){
-				//modified by wangyg
-				TREE.setSelected(this);
+			}).click(function(e){
+				TREE.setSelected($(this));		
 				if(typeof TREE.option.afterClick == 'function')
 				{
 					TREE.option.afterClick($(this).parent());
 				}
+				return false;
 			}).dblclick(function(){
 				mousePressed = false;
 				TREE.nodeToggle($(this).parent().get(0));
@@ -433,23 +426,17 @@ $.fn.simpleTree = function(opt){
 			}
 		};
 
-		TREE.addNode = function(id, text,type,callback)
+		TREE.addNode = function(id, text, callback)
 		{
-			var temp_node = $('<li><ul><li id="'+id+'"><span>'+text+'</span></li></ul></li>');
-			TREE.setTreeNodes(temp_node);
-			/*
-			 * 除了表格和表头需要容器以外，其他所有控件都直接挂在根节点下面
-			 */			
-			if (type == "text"){
-				dragNode_destination = $("#reportStuct_headers",TREE);
-			} else if(type =="table"){
-				dragNode_destination = $("#reportStuct_tables",TREE);
-			}else{
+			var temp_node = $('<li><ul><li><span id="'+id+'">'+text+'</span></li></ul></li>');		
+			TREE.setTreeNodes(temp_node);	
+			dragNode_destination = TREE.getSelected();
+			if (dragNode_destination.length == 0 || dragNode_destination.attr("class").indexOf("folder")==-1){
 				dragNode_destination = $(".root",TREE);
-			} 			
+			}						
 			dragNode_source = $('.doc-last',temp_node);
 			TREE.moveNodeToFolder(dragNode_destination);
-			temp_node.remove();
+			temp_node.remove();			
 			if(typeof(callback) == 'function')
 			{
 				callback(dragNode_destination, dragNode_source);
@@ -466,12 +453,25 @@ $.fn.simpleTree = function(opt){
 				callback(dragNode_destination);
 			}
 		};
-		
+		TREE.sort = function(currentNode){
+			var sortmap = new Map();
+			currentNode.children().each(function(){
+				var name = $(">span",this).text();
+				if (sortmap.contains(name)){
+					dragNode_destination = sortmap.element[key];
+					dragNode_source = $('.doc-last',this);
+					TREE.moveNodeToFolder(dragNode_destination);
+					this.remove();
+				}else{
+					sortmap.push(name,$(this));
+				}					
+			});
+		};
+
 		TREE.init = function(obj)
 		{
-			TREE.setTreeNodes(obj, false);			
-			TREE.nodeToggle(ROOT0);
-		};		
-		TREE.init(ROOT);	
+			TREE.setTreeNodes(obj, false);
+		};
+		TREE.init(ROOT);
 	});
 }

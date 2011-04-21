@@ -1,0 +1,23 @@
+﻿.sp_xjCheckBox
+{
+	height:16px;
+	line-height:18px;
+	text-indent:20px;
+	background:url(../images/jcheckbox/checkbox.png) no-repeat left 0px;
+	position:relative;
+	cursor:pointer;
+	float:left;
+	clear:both;
+	}
+.sp_xjCheckBox_N
+{
+	background-position:left 0;
+	}
+.sp_xjCheckBox_H
+{
+	background-position:left -16px;
+	}
+.sp_xjCheckBox_C
+{
+	background-position:left -32px;
+	}

@@ -127,6 +127,7 @@
  		}
  	}else if(item.is("th") || item.is("div")) {
  		this.owner.select(this);
+		this.owner.reportStruct._selectNode(this.name);
  	}
 	log("执行TableEditorControl.prototype.doClick完毕！耗时"+(new Date().getTime()-t1)+"ms");
  }

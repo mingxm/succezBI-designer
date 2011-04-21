@@ -8,8 +8,10 @@
 <link rel="stylesheet" href="css/toolsStyle.css">
 <link rel="stylesheet" href="css/search-Dialog-Style.css">
 <link rel="stylesheet" href="../js/jquery/download/simpletree/jquery.simple.tree.css">
+<link rel="stylesheet" href="../js/jquery/download/jcheckbox/css/jquery.jcheckbox.css">
 <script type="text/javascript" src="../js/util/util.js"></script>
-<script type="text/javascript" src="../js/jquery/jquery-1.4.4.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-1.5.2rc1.js"></script>
+<script type="text/javascript" src="../js/jquery/download/jcheckbox/js/jquery.jcheckbox.js"></script>
 <script type="text/javascript" src="../js/jquery/download/jquery-ui-1.8.10.custom/js/jquery-ui-1.8.10.custom.min.js"></script>
 <script type="text/javascript" src="../js/jquery/download/jquery-layout/jquery.layout-latest.js"></script>
 <script type="text/javascript" src="../js/jquery/download/simpletree/jquery.simple.tree.js"></script>
@@ -49,9 +51,9 @@
 		//工具栏容器 
 		var toolBarContainer = myLayout.panes.north;
 		var _dsn = new ReportDesign(myLayout.panes.center,"B2390");
+        _dsn.addComponent("reportStruct",{drag:false,animate:true});		
 		_dsn.addComponent("table",{});
 		_dsn.addComponent("text",{
-			name:"HHH0",
 			x:150,
 			y:150,
 			value:"这是一个表头"
@@ -64,15 +66,14 @@
                                 "Tool_Underline",
                                 "Tool_Cut",
                                 "Tool_Paste",
+								"Tool_Undo",
                                 "Tool_Redo",
-                                "Tool_Undo",
                                 "Tool_Do",
                                 "Tool_NewFxq",
                                 "Tool_Chart",
                                 "Tool_DrawForm"
                                 ]}
 		});
-        _dsn.addComponent("reportStruct",{drag:false,animate:true});
 		_dsn.addComponent("toolsControl");	
 		_dsn.addComponent("reportSearch");
 	})	
@@ -83,19 +84,16 @@
 <div class="ui-layout-west">
 <div id="accordion1" class="basic">
 	<h3><a href="#">报表结构</a></h3>
-		<ul class='simpleTree' style="padding-top:0px;padding-left:10px"></ul>
+		<div style="padding-top:0px;padding-left:10px">
+		<ul class='simpleTree'>
+		</ul>
+		<ul class='searchTree'></ul>
+		</div>
 	<h3><a href="#" >控件列表</a></h3>
 		<div id ='szDesignTools'>
 			<ul>
-				<li class = "szDesignToolGrid" objName = "table"> ReportDesignGrid </li>
-				<li class = "szDesignToolHeader" objName = "text"> ReportDesignHeader </li>
-				<li class = "szDesignToolView" objName = "view"> ReportDesignView </li>
-				<li class = "szDesignToolPrint" objName = "print"> ReportDesignPrint </li>
-				<li class = "szDesignToolPanel" objName = "panel"> ReportDesignPanel </li>
-				<li class = "szDesignToolSave" objName = "save"> ReportDesignSave </li>
-				<li class = "szDesignToolSecurity" objName = "security"> ReportDesignSecurity </li>
-				<li class = "szDesignToolSelector" objName = "selector"> ReportDesignSelector </li>
-				<li class = "szDesignToolSet" objName = "set"> ReportDesignSet </li>
+				<li class = "szDesignToolGrid" objName = "table"> Table </li>
+				<li class = "szDesignToolView" objName = "checkBox">CheckBox</li>
 			</ul>
 		</div>
 </div>
@@ -109,14 +107,14 @@
 			<a href="#" id="Tool_Underline"><img src="image/underlin.gif"></img></a>
 			<a href="#" id="Tool_Cut"><img src="image/cut.gif"></img></a>
 			<a href="#" id="Tool_Paste"><img src="image/paste.gif"></img></a>
-			<a href="#" id="Tool_Redo"><img src="image/redo.gif"></img></a>
 			<a href="#" id="Tool_Undo"><img src="image/undo.gif"></img></a>
+			<a href="#" id="Tool_Redo"><img src="image/redo.gif"></img></a>
 			<a href="#" id="Tool_Do"><img src="image/run.gif"></img></a>
 			<a href="#" id="Tool_NewFxq"><img src="image/fxq.gif"></img></a>
 			<a href="#" id="Tool_Chart"><img src="image/chart.gif"></img></a>
 			<a href="#" id="Tool_DrawForm"><img src="image/drawtable.gif"></img></a>
 		</td>
-	</tr>;
+	</tr>
 </div>
 <div class="ui-layout-center">
 	<div id="select_frameid" class="select_frame"></div>

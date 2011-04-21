@@ -90,6 +90,7 @@
  	 * 有可能是拖动界面上的某一个控件，那么这个时候就不需要有框选框
  	 */
  	if(target.hasClass("drag_handler") || !target.draggable("option","disabled") || target.is("th")) return;
+	if (target.attr("id").indexOf("checkBox") !=-1 ) return;
  	this.mousedown = true;
  	var _self = this;
 	if(!this._mouseMoveEvent)
@@ -210,6 +211,9 @@
  		case "text":
  			this.addTextHeader(defaultConfig);
  			return;
+		case "checkBox":
+			this.addCheckBox(defaultConfig);
+			return;
  		case "toolbar":
  			/*
  		 	 * toolbar对象会开放一些函数出来，供reportDesign调用，从而来设置
@@ -298,7 +302,7 @@
  ReportDesign.prototype.addTable = function(defaultConfig){
  	var x = defaultConfig.x || 100;
  	var y = defaultConfig.y || 100;
- 	var name = defaultConfig.name || this.getUniqueTableName();
+ 	var name = defaultConfig.name || this.getUniqueName("table",this.tables);
  	var div = $("<div/>").appendTo(this.container).draggable({
  		handle:".drag_handler",
  	//	refreshPositions:false,
@@ -307,17 +311,32 @@
  	});
 	var table = new TableEditorControl(div,this,name,x,y);
 	this.tables.put(table.getName(),table);
+    this.reportStruct._addNode(name,name);		
  }
  
  ReportDesign.prototype.addTextHeader = function(defaultConfig){
  	var x = defaultConfig.x || 100;
  	var y = defaultConfig.y || 100;
- 	var name = defaultConfig.name || this.getUniqueHeadersName();
+ 	var name = defaultConfig.name || this.getUniqueName("HHH",this.headers);
  	var initValue = defaultConfig.value || "";
  	var div = $("<div/>").addClass("textheader").appendTo(this.container).draggable();
  	var th = new TextHeader(div,this,name,initValue,x,y);
  	this.headers.put(th.getName(),th);
+    this.reportStruct._addNode(name,name);	
  	return th;
+ }
+ 
+ ReportDesign.prototype.addCheckBox = function(defaultConfig){
+	if (this.checkBoxMap == undefined)
+	{
+		this.checkBoxMap = new Map();
+	}
+ 	var name = defaultConfig.name || this.getUniqueName("checkBox",this.checkBoxMap);
+	var div = $("<div><input type='checkbox' text="+name+" value="+name+" id="+name+" /></div>");
+ 	div.appendTo(this.container).draggable();
+	var checkBox = div.find(">input").jCheckbox()[0];
+	this.checkBoxMap.put(name,checkBox);
+	this.reportStruct._addNode(name,name);
  }
  
   ReportDesign.prototype.addToolBar = function(option){
@@ -367,22 +386,13 @@
  	this.headers.remove(name);
  }
  
- ReportDesign.prototype.getUniqueTableName = function(){
- 	var name = "table";
- 	var i = 0;
- 	while(this.tables.contains(name)){
- 		name = "table"+i;
+ ReportDesign.prototype.getUniqueName = function(name,map){
+ 	var i = 1;
+	var result = name;
+	name = name+1;
+ 	while(map.contains(name)){
+ 		name = result+i;
  		i++;
  	}
- 	return name;
- }
- 
- ReportDesign.prototype.getUniqueHeadersName = function(){
- 	var name = "header";
- 	var i = 0;
- 	while(this.headers.contains(name)){
- 		name = "header"+i;
- 		i++;
- 	}
- 	return name;
+	return name;	
  }

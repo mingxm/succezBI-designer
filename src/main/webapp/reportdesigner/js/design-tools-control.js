@@ -69,7 +69,9 @@
 							_toolContainer.css("top",event.pageY-8);
 						}).bind("mouseup.toolContainer",function(event){
 							_toolContainer.hide("fast");
+							$(this).unbind(".toolContainer");
 							if (controlMoved) {
+								controlMoved = false;
 								var topLeft = divLayOutCenter.offset(),
 									right = topLeft.left + divLayOutCenter.width(),
 									bottom = topLeft.top + divLayOutCenter.height();
@@ -79,10 +81,7 @@
 										y:event.pageY-8
 									});
 								}
-								_owner.reportStruct._addNode(self.attr("objName"),self.attr("objName"));
-								controlMoved = false;
 							}
-							$(this).unbind(".toolContainer");
 						});							
 					})
 					.dblclick(function(){
@@ -92,7 +91,6 @@
 						})
 						offsetX +=10;
 						offsetY +=10;
-						_owner.reportStruct._addNode(self.attr("objName"),self.attr("objName"));
 						$("#accordion1").show();
 						return false;
 					})

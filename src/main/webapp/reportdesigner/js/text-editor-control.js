@@ -39,6 +39,9 @@
  	//这两行代码顺序不能颠倒，否则在ff中会有问题
  	this.container.show();
  	this.setValue(this.owner.getTextEditor().getHtml());
+	if (this.owner.getTextEditor().getHtml()==''){
+		this.owner.reportStruct._deleteNode();
+	}
  }
  
  TextHeader.prototype.setName = function(value){
